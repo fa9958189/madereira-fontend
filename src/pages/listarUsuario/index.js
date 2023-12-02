@@ -45,7 +45,7 @@ export default function Listausuario() {
         <div className='principal'>
         <Head title="listar de Usuario" />
            
-           <Link className='btn-novo'>Novo Cadastro</Link>
+           <Link to="/CadastroUsuario" className='btn-novo'>Novo Cadastro</Link>
            <table>
              <tr>
                     <th>Id</th>

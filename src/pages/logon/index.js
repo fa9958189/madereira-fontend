@@ -1,6 +1,7 @@
 import './styles.css'
 import Logo from '../../assets/img/Logo.png';
 import {useNavigate} from 'react-router-dom';
+import backgroundImg from '../../assets/img/capa para o projeto.svg';
 
 
 
@@ -26,6 +27,7 @@ const logar =(e)=>{
           <a href="#">Novo Cadastro</a>
         </form>
       </section>
+      
     </div>
 
   )

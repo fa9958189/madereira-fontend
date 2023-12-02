@@ -21,6 +21,15 @@
     margin: 5px;
     padding: 5px;
 }
+.dashboard-container {
+    background-image: url('/src/assets/img/capa para o projeto.svg');
+    background-size: cover;
+    height: 100vh;
+    display: flex;
+    flex-direction: row;
+    width: 90%;
+    margin: auto;
+}
 table{
     width: 100%;
 
@@ -31,6 +40,10 @@ table{
 td{
     border: solid 0.5px #adb9d3;
     padding: 5px;
+    color: aliceblue;
+}
+th{
+    color: aliceblue;
 }
 .botoes:hover{
     cursor: pointer;
@@ -51,4 +64,56 @@ td{
     background-color: #061a44;
     cursor: pointer;
     color: aliceblue;
+}
+.botoes{
+    background-color: #1e4cb0;
+    cursor: pointer;
+    color: aliceblue;
+}
+form input{
+    padding: 5px;
+    border: #061a44;
+}
+input:focus{
+    box-shadow: 0 0 0 0;
+    border: 0 none;
+    outline: 0;
+}
+.btn-save{
+    padding: 10px;
+    background-color: #1e4cb0;
+    color: white;
+    border-radius: 5px;
+    border: solid 0.5px #6c9aff;
+    margin-bottom: 10px;
+    width: 120px;
+}
+.btn-cancel{
+    padding: 10px;
+    background-color:red;
+    color:white;
+    border-radius: 5px;
+    border: solid 0.5px #6c9aff;
+    margin-bottom: 10px;
+    width: 120px;
+}
+.acao{
+    margin: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+.form-container{
+    display: flex;
+    align-items: center;
+    height: 80vh;
+}
+form{
+    background-color: #061a44;
+    border: 1px solid #adb9d3;
+    box-shadow: 0px 0px 10px #1a58dd;
+    padding: 20px;
+    border-radius: 5px;
+
+
 }
