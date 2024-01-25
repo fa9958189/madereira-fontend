@@ -1,6 +1,7 @@
 import './styles.css'
-import Logo from '../../assets/img/Logo.png';
+import Logo from '../../assets/img/Logo.png'
 import {useNavigate} from 'react-router-dom';
+import { useState } from 'react';
 import backgroundImg from '../../assets/img/capa para o projeto.svg';
 
 
