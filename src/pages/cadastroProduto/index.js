@@ -5,11 +5,11 @@ import { FiEdit,FiTranh,FiDelete,FiFilePlus, FiTrash }from "react-icons/fi";
 import { FaAngry } from "react-icons/fa";
 import { FaSave } from "react-icons/fa";
 import { ImCancelCircle } from "react-icons/im";
-import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
+
 import { useNavigate } from 'react-router-dom'; 
 import Head from '../../componente/Head';
 
-export default function cadastroProduto() {
+export default function Cadastroproduto() {
     const navigate = useNavigate ();
     const [status,setStatus]  = useState("");
     const [descricao,setDescricao]  = useState("");

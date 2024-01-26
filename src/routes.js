@@ -4,7 +4,7 @@ import Logon from './pages/logon'
 import Dashbord from './pages/dashboard';
 import Listausuario from './pages/listarUsuario';
 import CadastroUsuario from './pages/cadastroUsuario';
-import cadastroProduto from './pages/cadastroProduto';
+import Cadastroproduto from './pages/cadastroProduto';
 
 
 export default function Rotas(){
@@ -14,9 +14,10 @@ export default function Rotas(){
              <Route path="/" exact element={<Logon />} />
              <Route path="/dashboard" element={<Dashbord />} />
              <Route path="/listausuario" element={<Listausuario />} />
-             <Route path="/CadastroUsuario" element={<CadastroUsuario />} />
-             <Route path="/CadastroProduto" element={<cadastroProduto />} />
-             <Route path="/editarusuario/:id" element={<Editarusuario />} />
+             <Route path="/cadastroUsuario" element={<CadastroUsuario />} />
+             <Route path="/cadastroproduto" element={<Cadastroproduto />} />
+       
+             {/* <Route path="/editarusuario/:id" element={<Editarusuario />} /> */}
 
           </Routes>  
        </BrowserRouter>
