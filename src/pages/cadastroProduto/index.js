@@ -8,7 +8,7 @@ import { ImCancelCircle } from "react-icons/im";
 
 import { useNavigate } from 'react-router-dom'; 
 import Head from '../../componente/Head';
-
+/*modificando */
 export default function Cadastroproduto() {
     const navigate = useNavigate ();
     const [status,setStatus]  = useState("");
