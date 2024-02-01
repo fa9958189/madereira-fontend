@@ -1,6 +1,6 @@
 import React,{useState} from 'react';
 import '../../pages/global.css';
-import Menu from '../../componente/menu';
+import Menu from '../../componente/Menu';
 import { FiEdit,FiTranh,FiDelete,FiFilePlus, FiTrash }from "react-icons/fi";
 import { FaAngry } from "react-icons/fa";
 import { FaSave } from "react-icons/fa";

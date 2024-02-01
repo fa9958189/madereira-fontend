@@ -1,5 +1,5 @@
 import '../../pages/global.css';
-import Menu from '../../componente/menu';
+import Menu from '../../componente/Menu';
 import { FiEdit,FiTranh,FiDelete,FiFilePlus, FiTrash }from "react-icons/fi";
 import { FaAngry } from "react-icons/fa";
 import { confirmAlert } from 'react-confirm-alert'; // Import
@@ -72,9 +72,9 @@ export default function Listaproduto() {
                             <td>{pro.estoque_maximo}</td>
 
                             <td className='botoes'>  
-                                <FiEdit size={18}
-                                 color='white' 
-                                 cursor="pointer"/>                                    
+                                    <Link to={`/editarusuario/${pro.id}`}>
+                                 <FiEdit size={18} color='yellow'  /> 
+                               </Link>       
                             </td>
 
                             <td className='botoes'>  
