@@ -7,7 +7,7 @@ import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 import { Link } from 'react-router-dom'; 
 import Head from '../../componente/Head';
 
-export default function Listausuario() {
+export default function Listaentrada() {
 
       //  const dados=[
       //       {id:1,nome:"carlos",email:"carlos@gmail.com",senha:"123"},
@@ -16,7 +16,7 @@ export default function Listausuario() {
     
       //  ]
 
-       const banco =JSON.parse(localStorage.getItem("cd-usuarios") || "[]");
+       const banco =JSON.parse(localStorage.getItem("cd-entradas") || "[]");
 
        const apagar = (id) => {
         confirmAlert({
@@ -39,42 +39,40 @@ export default function Listausuario() {
 
     <div className="dashboard-container">
        
-/*fgsdfgsf */
+
         <div className='menu'>
 
             <Menu />
         </div>
         <div className='principal'>
-        <Head title="listar de Usuario" />
+        <Head title="Entrada Produto" />
            
-           <Link to="/CadastroUsuario" className='btn-novo'>Novo Cadastro</Link>
+           <Link to="/entrada_produto" className='btn-novo'>Novo Produto</Link>
            <table>
              <tr>
                     <th>Id</th>
-                    <th>Nome</th>
-                    <th>Email</th>
+                    <th>Id produto</th>
+                    <th>Quantidade</th>
+                    <th>Valor Unitario</th>
+                    <th>Data Entrada</th>
                     <th></th>
                     <th></th>
              </tr> 
              {
-                banco.map((usu)=>{
+                banco.map((enpr)=>{
                     return(
-                        <tr key={usu.toString()}>
-                            <td>{usu.id}</td>
-                            <td>{usu.nome}</td>
-                            <td>{usu.email}</td>
+                        <tr key={enpr.toString()}>
+                            <td>{enpr.id_produto}</td>
+                            <td>{enpr.quantidade}</td>
+                            <td>{enpr.valor_unitario}</td>
+                            <td>{enpr.data_entrada}</td>
 
-                            <td className='botoes'>  
-                                    <Link to={`/editarusuario/${usu.id}`}>
-                                 <FiEdit size={18} color='yellow'  /> 
-                               </Link>       
-                            </td>
 
                             <td className='botoes'>  
                                 <FiTrash 
                                 size={18}
                                 color='red'
-                                onClick={(e)=>apagar(usu.id)}
+                                onClick={(e)=>apagar(enpr.id)}
                                 cursor="pointer"/> 
                             </td>
 

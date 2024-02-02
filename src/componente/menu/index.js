@@ -7,6 +7,7 @@ export default function Menu(){
             <nav>
                 <Link to="/listausuario" className='link'>Usuário</Link>
                 <Link to="/listaprodutos" className='link'>Produto</Link>
+                <Link to="/listaEntrada_Produto" className='link'>Entrada produto</Link>
             </nav>
         </div>
     )
