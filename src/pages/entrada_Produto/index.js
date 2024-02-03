@@ -11,11 +11,11 @@ import Head from '../../componente/Head';
 
 export default function Entrada() {
     const navigate = useNavigate ();
-    const [id,setid]  = useState("");
+
     const [id_produto,setid_produto]  = useState("");
     const [quantidade,setquantidade]  = useState("");
     const [valor_unitario,setvalor_unitario]  = useState("");
-    const [data_entrada,set_entrada]  = useState("");
+    const [data_entrada,setdata_entrada]  = useState("");
     
     const usuario={
         id: Date.now().toString(36)+Math.floor(Math.pow(10,12)+Math.random()*9*Math.pow(10,12)).toString(36),
@@ -42,7 +42,7 @@ export default function Entrada() {
         banco.push(usuario);
         localStorage.setItem("cd-entradas",JSON.stringify(banco));
        alert("Usuário salvo com sucesso");
-       navigate("/listaentrada");
+       navigate("/listaentrada_produto");
     }
 
     }
@@ -52,7 +52,7 @@ export default function Entrada() {
     <div className="dashboard-container">
        
 
-        <div className='menu'>
+        <div className='Menu'>
 
             <Menu />
         </div>
@@ -64,7 +64,7 @@ export default function Entrada() {
     <form className='form-cadastro' onSubmit={salvardados}>
             <input type='text'
             value={id_produto}
-            onChange={e=>setid(e.target.value)}
+            onChange={e=>setid_produto(e.target.value)}
              placeholder='Digite o Id produto'
               /> 
             <input 
@@ -82,7 +82,7 @@ export default function Entrada() {
             <input 
             type='text' 
             value={data_entrada}
-            onChange={e=>setvalor_unitario(e.target.value)}
+            onChange={e=>setdata_entrada(e.target.value)}
             placeholder='Digite data entrada' 
             /> 
          
