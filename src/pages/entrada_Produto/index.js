@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React,{useEffect, useState} from 'react';
 import '../../pages/global.css';
 import Menu from '../../componente/Menu';
 import { FiEdit,FiTranh,FiDelete,FiFilePlus, FiTrash }from "react-icons/fi";
@@ -16,15 +16,25 @@ export default function Entrada() {
     const [quantidade,setquantidade]  = useState("");
     const [valor_unitario,setvalor_unitario]  = useState("");
     const [data_entrada,setdata_entrada]  = useState("");
-    
-    const usuario={
+    const [produtos, setProdutos] = useState([]);
+    useEffect(()=>{
+        buscarprodutos();
+    },[])
+     
+    function buscarprodutos(){
+        setProdutos(JSON.parse(localStorage.getItem("cd-produtos") || "[]"));
+    }
+    const entrada={
         id: Date.now().toString(36)+Math.floor(Math.pow(10,12)+Math.random()*9*Math.pow(10,12)).toString(36),
     
         id_produto,
         quantidade,
-        valor_unitario
+        valor_unitario,
+        data_entrada
     }
-  
+
+
+       
     function salvardados(e){
       e.preventDefault();
      // console.log(usuario);
@@ -39,9 +49,9 @@ export default function Entrada() {
     else{
    
         const banco =JSON.parse(localStorage.getItem("cd-entradas") || "[]");
-        banco.push(usuario);
+        banco.push(entrada);
         localStorage.setItem("cd-entradas",JSON.stringify(banco));
-       alert("Usuário salvo com sucesso");
+       alert("Entrada salva com sucesso");
        navigate("/listaentrada_produto");
     }
 
@@ -62,11 +72,22 @@ export default function Entrada() {
        
     <div className='form-container'>
     <form className='form-cadastro' onSubmit={salvardados}>
-            <input type='text'
+            {/* <input type='text' disabled
             value={id_produto}
             onChange={e=>setid_produto(e.target.value)}
              placeholder='Digite o Id produto'
-              /> 
+              />  */}
+             <select value={id_produto} onChange={e=>setid_produto(e.target.value)} >
+                <option value>Produtos</option>
+             {
+              produtos.map((linha)=>{
+               return (
+                <option value={linha.id}>{linha.descricao}</option>
+               )
+              })
+             }
+
+             </select>
             <input 
             type='text' 
             value={quantidade}
@@ -80,7 +101,7 @@ export default function Entrada() {
             placeholder='Digite valor unitario' 
             /> 
             <input 
-            type='text' 
+            type='date' 
             value={data_entrada}
             onChange={e=>setdata_entrada(e.target.value)}
             placeholder='Digite data entrada' 

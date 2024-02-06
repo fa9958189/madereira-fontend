@@ -70,9 +70,15 @@ th{
     cursor: pointer;
     color: aliceblue;
 }
-form input{
+form input select{
     padding: 5px;
     border: #061a44;
+}
+form select{
+    padding: 5px;
+    border: #061a44;
+    height: 28px;
+    
 }
 input:focus{
     box-shadow: 0 0 0 0;
