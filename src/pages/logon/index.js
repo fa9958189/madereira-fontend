@@ -25,7 +25,7 @@ const logar =(e)=>{
           <input placeholder="Email" />
           <input placeholder="Senha" type='password' />
           <button type="submit">Entrar</button>
-          <a href="#">Novo Cadastro</a>
+          <a href="/cadastroUsuario1">Novo Cadastro</a>
         </form>
       </section>
       

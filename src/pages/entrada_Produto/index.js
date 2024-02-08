@@ -32,6 +32,14 @@ export default function Entrada() {
         valor_unitario,
         data_entrada
     }
+    const dadosestoque={
+        id: Date.now().toString(36)+Math.floor(Math.pow(10,12)+Math.random()*9*Math.pow(10,12)).toString(36),
+    
+        id_produto,
+        quantidade,
+        valor_unitario,
+    
+    }
 
 
        
@@ -48,9 +56,13 @@ export default function Entrada() {
     alert("preencha data entrada")
     else{
    
+        const banco =JSON.parse(localStorage.getItem("cd-estoques") || "[]");
+
         const banco =JSON.parse(localStorage.getItem("cd-entradas") || "[]");
+
         banco.push(entrada);
         localStorage.setItem("cd-entradas",JSON.stringify(banco));
+        localStorage.setItem("cd-estoques",JSON.stringify(dadosestoque));
        alert("Entrada salva com sucesso");
        navigate("/listaentrada_produto");
     }
