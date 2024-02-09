@@ -8,7 +8,7 @@ import CadastroUsuario from './pages/cadastroUsuario';
 import Cadastroproduto from './pages/cadastroProduto';
 import Editarusuario from './pages/editarUsuario';
 import Listaentrada from './pages/listaEntrada';
-import Entrada from './pages/entrada_Produto';
+import Entradaproduto from './pages/entradaProduto';
 import CadastroUsuario1 from './pages/cadastroUsuario1';
 
 export default function Rotas() {
@@ -23,7 +23,7 @@ export default function Rotas() {
              <Route path="/cadastrousuario" element={<CadastroUsuario />} />
              <Route path="/cadastrousuario1" element={<CadastroUsuario1 />} />
              <Route path="/cadastroproduto" element={<Cadastroproduto />} />
-             <Route path="/entrada_produto" element={<Entrada />} />
+             <Route path="/entradaproduto" element={<Entradaproduto />} />
              <Route path="/editarusuario/:id" element={<Editarusuario />} />
          
              {/* <Route path="/editarusuario/:id" element={<Editarusuario />} /> */}

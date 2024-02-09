@@ -31,7 +31,7 @@ export default function Head({title}){
     
         };
     return(
-        <div className="head">
+        <div className="Head">
             <FaReply onClick={retornar} size={24} color='blue' />
             <h2>{title}</h2>
             <FiLogOut onClick={confirmarsaida} size={24} color='blue' />

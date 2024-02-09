@@ -11,16 +11,8 @@ export default function Listaentrada() {
   const banco = JSON.parse(localStorage.getItem("cd-entradas") || "[]");
 
   const removerEntrada = (id) => {
-    // Filtra as entradas mantendo apenas aquelas com IDs diferentes do ID fornecido
     const novasEntradas = banco.filter(entrada => entrada.id !== id);
-    
-    // Atualiza o localStorage com a nova lista de entradas
     localStorage.setItem("cd-entradas", JSON.stringify(novasEntradas));
-    
-    // Atualiza o estado ou recarrega a página para refletir as mudanças
-    // (Você pode usar estado se estiver usando um estado de componente)
-    // setState({ entradas: novasEntradas });
-    // Ou recarrega a página
     window.location.reload();
   };
 
@@ -48,7 +40,7 @@ export default function Listaentrada() {
       </div>
       <div className='principal'>
         <Head title="Entrada de Produto" />
-        <Link to="/entrada_produto" className='btn-novo'>Nova Entrada</Link>
+        <Link to="/entradaproduto" className='btn-novo'>Nova Entrada</Link>
         <table>
           <thead>
             <tr>
@@ -65,7 +57,7 @@ export default function Listaentrada() {
               <tr key={enpr.id}>
                 <td>{enpr.id}</td>
                 <td>{enpr.id_produto}</td>
-                <td>{enpr.quantidade}</td>
+                <td>{enpr.qtde}</td>
                 <td>{enpr.valor_unitario}</td>
                 <td>{enpr.data_entrada}</td>
                 <td className='botoes'>
