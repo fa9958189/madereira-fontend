@@ -1,5 +1,5 @@
+import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-
 import Logon from './pages/logon';
 import Dashbord from './pages/dashboard';
 import Listausuario from './pages/listarUsuario';
@@ -10,6 +10,9 @@ import Editarusuario from './pages/editarUsuario';
 import Listaentrada from './pages/listaEntrada';
 import Entradaproduto from './pages/entradaProduto';
 import CadastroUsuario1 from './pages/cadastroUsuario1';
+import Listaestoque from './pages/listarEstoque';
+import Listasaida from './pages/listarSaida';  
+import Saidaproduto from './pages/saidaProduto';
 
 export default function Rotas() {
    return (
@@ -25,8 +28,9 @@ export default function Rotas() {
              <Route path="/cadastroproduto" element={<Cadastroproduto />} />
              <Route path="/entradaproduto" element={<Entradaproduto />} />
              <Route path="/editarusuario/:id" element={<Editarusuario />} />
-         
-             {/* <Route path="/editarusuario/:id" element={<Editarusuario />} /> */}
+             <Route path="/listaestoque" element={<Listaestoque />} />
+             <Route path="/listarsaida" element={<Listasaida />} />
+             <Route path="/saidaProduto" element={<Saidaproduto />} />
 
           </Routes>  
        </BrowserRouter>

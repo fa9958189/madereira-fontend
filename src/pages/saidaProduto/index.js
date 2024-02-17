@@ -6,12 +6,12 @@ import { MdCancel } from "react-icons/md";
 import { useNavigate } from 'react-router-dom';
 import Head from '../../componente/Head';
 
-export default function Entradaproduto() {
+export default function Saidaproduto() {
   const navigate = useNavigate();
   const [id_produto, setId_produto] = useState("");
   const [qtde, setQtde] = useState("");
   const [valor_unitario, setValor_unitario] = useState("");
-  const [data_entrada, setData_entrada] = useState("");
+  const [data_saida, setData_saida] = useState(""); // Alterado para data_saida
   const [produtos, setProdutos] = useState([]);
 
   useEffect(() => {
@@ -26,37 +26,36 @@ export default function Entradaproduto() {
   function salvardados(e) {
     e.preventDefault();
 
-    if (!id_produto || !qtde || !valor_unitario || !data_entrada) {
+    if (!id_produto || !qtde || !valor_unitario || !data_saida) {
       alert("Preencha todos os campos!");
       return;
     }
 
-    const entrada = {
+    const saida = {
       id: Date.now().toString(36) + Math.floor(Math.pow(10, 12) + Math.random() * 9 * Math.pow(10, 12)).toString(36),
       id_produto,
       qtde: parseInt(qtde),
       valor_unitario: parseFloat(valor_unitario),
-      data_entrada
+      data_saida // Alterado para data_saida
     };
 
-    const entradas = JSON.parse(localStorage.getItem("cd-entradas") || "[]");
+    const saidas = JSON.parse(localStorage.getItem("cd-saidas") || "[]");
 
-    const entradaExistente = entradas.find(entrada => entrada.id_produto === id_produto);
+    const saidaExistente = saidas.find(saida => saida.id_produto === id_produto);
 
-    if (entradaExistente) {
-      entradaExistente.qtde += entrada.qtde;
+    if (saidaExistente) {
+      saidaExistente.qtde += saida.qtde;
     } else {
-      entradas.push(entrada);
+      saidas.push(saida);
     }
 
-    localStorage.setItem("cd-entradas", JSON.stringify(entradas));
+    localStorage.setItem("cd-saidas", JSON.stringify(saidas));
 
-    atualizarEstoque(id_produto, parseInt(qtde));
+    atualizarEstoque(id_produto, -parseInt(qtde)); // Subtraindo a quantidade do estoque
 
-    alert("Entrada salva com sucesso!");
-    navigate('/entradaproduto');
+    alert("Saída salva com sucesso!");
+    navigate('/saidaproduto');
   }
-
 
   function atualizarEstoque(idProduto, quantidade) {
     const estoque = JSON.parse(localStorage.getItem("cd-estoques") || "[]");
@@ -81,15 +80,9 @@ export default function Entradaproduto() {
         <Menu />
       </div>
       <div className='principal'>
-        <Head title="Cadastro de Entrada" />
+        <Head title="Saída de Produto" /> {/* Alterado para Saída de Produto */}
         <div className='form-container'>
           <form className='form-cadastro' onSubmit={salvardados}>
-            <input
-              type='text'
-              value={id_produto}
-              onChange={e => setId_produto(e.target.value)}
-              placeholder='Digite o id do produto'
-            />
             <select value={id_produto} onChange={e => setId_produto(e.target.value)}>
               <option>Selecione um produto</option>
               {produtos.map(produto => (
@@ -112,9 +105,9 @@ export default function Entradaproduto() {
             />
             <input
               type='date'
-              value={data_entrada}
-              onChange={e => setData_entrada(e.target.value)}
-              placeholder='Data da Entrada'
+              value={data_saida}
+              onChange={e => setData_saida(e.target.value)} // Alterado para data_saida
+              placeholder='Data da Saída' // Alterado para Data da Saída
             />
             <div className='acao'>
               <button className='btn-save'>

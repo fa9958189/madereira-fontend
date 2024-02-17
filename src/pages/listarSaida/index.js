@@ -8,12 +8,21 @@ import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 
 export default function Listaentrada() {
-  const banco = JSON.parse(localStorage.getItem("cd-entradas") || "[]");
+  const entradas = JSON.parse(localStorage.getItem("cd-entradas") || "[]");
+  const saidas = JSON.parse(localStorage.getItem("cd-saidas") || "[]");
 
   const removerEntrada = (id) => {
-    const novasEntradas = banco.filter(entrada => entrada.id !== id);
+    const novasEntradas = entradas.filter(entrada => entrada.id !== id);
     localStorage.setItem("cd-entradas", JSON.stringify(novasEntradas));
     window.location.reload();
+  };
+
+  const calcularQuantidadeSaida = (id_produto) => {
+    const quantidadeEntrada = entradas.filter(entrada => entrada.id_produto === id_produto)
+                                       .reduce((total, entrada) => total + entrada.qtde, 0);
+    const quantidadeSaida = saidas.filter(saida => saida.id_produto === id_produto)
+                                  .reduce((total, saida) => total + saida.qtde, 0);
+    return quantidadeSaida;
   };
 
   const apagar = (id) => {
@@ -57,35 +66,29 @@ export default function Listaentrada() {
         <Menu />
       </div>
       <div className='principal'>
-        <Head title="Entrada de Produto" />
-        <Link to="/entradaproduto" className='btn-novo'>Nova Entrada</Link>
+        <Head title="Saida" />
+        <Link to="/Saidaproduto" className='btn-novo'>Vendas</Link>
         <table>
           <thead>
             <tr>
               <th>Id</th>
               <th>Id do Produto</th>
               <th>Quantidade</th>
+              <th>Quantidade Vendida</th>
               <th>Valor Unitário</th>
-              <th>Data de Entrada</th>
+              <th>Data de Saida</th>
               <th></th>
             </tr>
           </thead>
           <tbody>
-            {banco.map((enpr) => (
-              <tr key={enpr.id}>
-                <td>{enpr.id}</td>
-                <td>{mostrarnome(enpr.id_produto)}</td>
-                <td>{enpr.qtde}</td>
-                <td>{enpr.valor_unitario}</td>
-                <td>{enpr.data_entrada}</td>
-                <td className='botoes'>
-                  <FiTrash
-                    size={18}
-                    color='red'
-                    onClick={() => apagar(enpr.id)}
-                    cursor="pointer"
-                  />
-                </td>
+            {entradas.map((entrada) => (
+              <tr key={entrada.id}>
+                <td>{entrada.id}</td>
+                <td>{mostrarnome(entrada.id_produto)}</td>
+                <td>{entrada.qtde}</td>
+                <td>{calcularQuantidadeSaida(entrada.id_produto)}</td>
+                <td>{entrada.valor_unitario}</td>
+                <td>{entrada.data_entrada}</td>
               </tr>
             ))}
           </tbody>
