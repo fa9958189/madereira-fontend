@@ -48,7 +48,7 @@ export default function Listaproduto() {
       </div>
       <div className='principal'>
         <Head title="Lista de Produtos" />
-        <Link to="/CadastroProduto" className='btn-novo'>Novo Cadastro</Link>
+        <Link to="/CadastroProduto" className='btn-novo'>Cadastro Produto</Link>
         <table>
           <thead>
             <tr>
