@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import '../../pages/global.css';
 import Menu from '../../componente/Menu';
 import { FiEdit, FiTrash } from "react-icons/fi";
@@ -6,9 +6,32 @@ import { Link } from 'react-router-dom';
 import Head from '../../componente/Head';
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
+import api from '../../server/api';
 
 export default function Listausuario() {
-  const banco = JSON.parse(localStorage.getItem("cd-usuarios") || "[]");
+const [banco,setBanco] = useState([])
+
+  function cep(){
+    const url ="https://viacep.com.br/ws/77807270/json/"
+    fetch(url)
+      .then(function (response){
+        //return response.json();
+        return response.json();
+      })
+  }
+  function mostrardados();
+
+  {
+   // setBanco(JSON.parse(localStorage.getItem("cd-usuarios") || "[]"));
+   api.get('/usuario')
+       .then(res=>{
+        console.log(res.data)
+        setBanco(res.data)
+       })
+  }
+  useEffect(()=>{
+      mostrardados();
+  },[]);
 
   const removerUsuario = (id) => {
     // Filtra os usuários mantendo apenas aqueles com IDs diferentes do ID fornecido
