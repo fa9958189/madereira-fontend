@@ -9,41 +9,41 @@ import 'react-confirm-alert/src/react-confirm-alert.css';
 import api from '../../server/api';
 
 export default function Listausuario() {
-const [banco,setBanco] = useState([])
+  const [banco, setBanco] = useState([]);
 
-  function cep(){
-    const url ="https://viacep.com.br/ws/77807270/json/"
-    fetch(url)
-      .then(function (response){
-        //return response.json();
+  async function consultarCEP(cep) {
+    const url = `https://viacep.com.br/ws/${cep}/json/`;
+
+    return fetch(url)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`Erro ao consultar o CEP: ${response.status}`);
+        }
         return response.json();
       })
+      .then(data => {
+        return data;
+      })
+      .catch(error => {
+        console.error('Erro na requisição:', error);
+      });
   }
-  function mostrardados();
 
-  {
-   // setBanco(JSON.parse(localStorage.getItem("cd-usuarios") || "[]"));
-   api.get('/usuario')
-       .then(res=>{
-        console.log(res.data)
-        setBanco(res.data)
-       })
+  function mostrardados() {
+    api.get('/usuario')
+      .then(res => {
+        console.log(res.data);
+        setBanco(res.data);
+      });
   }
-  useEffect(()=>{
-      mostrardados();
-  },[]);
+
+  useEffect(() => {
+    mostrardados();
+  }, []);
 
   const removerUsuario = (id) => {
-    // Filtra os usuários mantendo apenas aqueles com IDs diferentes do ID fornecido
     const novosUsuarios = banco.filter(usuario => usuario.id !== id);
-    
-    // Atualiza o localStorage com a nova lista de usuários
     localStorage.setItem("cd-usuarios", JSON.stringify(novosUsuarios));
-    
-    // Atualiza o estado ou recarrega a página para refletir as mudanças
-    // (Você pode usar estado se estiver usando um estado de componente)
-    // setState({ usuarios: novosUsuarios });
-    // Ou recarrega a página
     window.location.reload();
   };
 
