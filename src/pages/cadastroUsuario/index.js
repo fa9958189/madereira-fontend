@@ -8,6 +8,7 @@ import { ImCancelCircle } from "react-icons/im";
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 import { useNavigate } from 'react-router-dom'; 
 import Head from '../../componente/Head';
+import api from '../../server/api';
 
 export default function CadastroUsuario() {
     const navigate = useNavigate ();
@@ -32,11 +33,18 @@ export default function CadastroUsuario() {
     else if(senha==="")
     alert("preencha o campo senha")
     else{
-        const banco =JSON.parse(localStorage.getItem("cd-usuarios") || "[]");
-        banco.push(usuario);
-        localStorage.setItem("cd-usuarios",JSON.stringify(banco));
-       alert("Usuário salvo com sucesso");
-       navigate("/listausuario");
+        // const banco =JSON.parse(localStorage.getItem("cd-usuarios") || "[]");
+        // banco.push(usuario);
+        // localStorage.setItem("cd-usuarios",JSON.stringify(banco));
+
+        api.post('/usuario',usuario,
+        {headers:{"Content-Type":"application/json"}})
+        .then(function(response){
+            console.log(response.data)
+            alert(response.data.mensagem);
+        })
+
+    //    navigate("/listausuario");
     }
 
     }
