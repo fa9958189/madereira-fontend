@@ -32,8 +32,8 @@ export default function Listausuario() {
   function mostrardados() {
     api.get('/usuario')
       .then(res => {
-        console.log(res.data);
-        setBanco(res.data);
+        console.log(res.data.usuarios);
+        setBanco(res.data.usuarios);
       });
   }
 
@@ -54,7 +54,21 @@ export default function Listausuario() {
       buttons: [
         {
           label: 'Sim',
-          onClick: () => removerUsuario(id)
+          onClick: () =>{
+
+            api.delete(`/usuario/${id}`)
+            .then(res=>{
+              if(res.status==200){
+                alert(`Voce apagou o usuario id:${id}`);
+                mostrardados();
+                 
+              }else{
+                alert("Houve um proplema no servodor")
+              }
+            })
+          
+
+          } 
         },
         {
           label: 'Não',
