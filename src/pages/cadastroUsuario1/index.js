@@ -4,35 +4,28 @@ import { FaSave } from "react-icons/fa";
 import { ImCancelCircle } from "react-icons/im";
 import { useNavigate } from 'react-router-dom';
 import Head from '../../componente/Head';
-import './cadastro.css'; // Importe o arquivo CSS renomeado
+import api from '../../server/api';
 
 export default function CadastroUsuario1() {
     const navigate = useNavigate();
-    const [nome, setNome] = useState("");
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
 
-    const usuario = {
-        id: Date.now().toString(36) + Math.floor(Math.pow(10, 12) + Math.random() * 9 * Math.pow(10, 12)).toString(36),
-        nome,
-        email,
-        senha
-    }
-
-    function salvardados(e) {
+    const salvarUsuario = async (e) => {
         e.preventDefault();
-        if (nome === "")
-            alert("Preencha o campo nome");
-        else if (email === "")
-            alert("Preencha o campo email");
+        if (email === "")
+            alert("Preencha o campo de email");
         else if (senha === "")
-            alert("Preencha o campo senha");
+            alert("Preencha o campo de senha");
         else {
-            const banco = JSON.parse(localStorage.getItem("cd-usuarios1") || "[]");
-            banco.push(usuario);
-            localStorage.setItem("cd-usuarios1", JSON.stringify(banco));
-            alert("Usuário salvo com sucesso");
-            navigate("/logon");
+            try {
+                await api.post('/usuario', { email, senha }); // Alterado para '/usuario'
+                alert("Usuário salvo com sucesso");
+                navigate("/logon"); // Alterado para redirecionar para a tela de logon
+            } catch (error) {
+                console.error('Erro ao salvar o usuário:', error);
+                alert('Houve um problema ao tentar salvar o usuário');
+            }
         }
     }
 
@@ -40,23 +33,18 @@ export default function CadastroUsuario1() {
         <div className="dashboard-container">
             <Head title="Cadastro de Usuario" />
             <div className='form-container'>
-                <form className='form-cadastro' onSubmit={salvardados}>
-                    <input type='text'
-                        value={nome}
-                        onChange={e => setNome(e.target.value)}
-                        placeholder='Digite o nome do Usuario'
-                    />
+                <form className='form-cadastro' onSubmit={salvarUsuario}>
                     <input
-                        type='text'
+                        type='email' // Alterado para o tipo email
                         value={email}
                         onChange={e => setEmail(e.target.value)}
-                        placeholder='Digite o E-mail'
+                        placeholder='Digite o seu email'
                     />
                     <input
-                        type='text'
+                        type='password'
                         value={senha}
                         onChange={e => setSenha(e.target.value)}
-                        placeholder='Digite a Senha'
+                        placeholder='Digite a sua senha'
                     />
                     <div className='acao'>
                         <button className='btn-save'>
