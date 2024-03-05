@@ -1,55 +1,60 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import api from '../../server/api';
-import Logo from '../../assets/img/Logo.png'; // Importando a imagem do logo
-import './styles.css'; // Importando o arquivo de estilo para centralizar a tela
+import axios from 'axios'; // Importe o axios
+import Logo from "../../assets/img/Logo.png";
+import "./styles.css"; // Importe o arquivo de estilos CSS
 
-export default function Logon() {
-  const navigate = useNavigate();
-  const [email, setEmail] = useState('');
-  const [senha, setSenha] = useState('');
+function Login() {
+    const navigate = useNavigate();
+    const [email, setEmail] = useState("");
+    const [senha, setSenha] = useState("");
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
+    const api = axios.create({
+        baseURL: 'http://sua-url-da-api.com' // Substitua pelo URL da sua API
+    });
 
-    try {
-      const response = await api.post('/usuario/logon', { email, senha }); // Alterado para '/logon'
-      if (response.status === 200) {
-        alert('Login bem-sucedido');
-        navigate('/dashboard');
-      } else {
-        alert('Credenciais inválidas');
-      }
-    } catch (error) {
-      console.error('Erro ao fazer login:', error);
-      alert('Houve um problema ao tentar fazer login');
-    }
-  };
+    const handleLogin = async (e) => {
+        e.preventDefault();
+        try {
+            const resposta = await api.post("/usuario/login", { email, senha });
+            if (resposta.status === 200) {
+                alert(resposta.data.mensagem);
+                navigate('/dashboard');
+            }
+        } catch (error) {
+            if (error.response && error.response.status === 404) {
+                alert(error.response.data.mensagem);
+            } else {
+                console.error('Erro ao fazer login:', error);
+            }
+        }
+    };
 
-  return (
-    <div className="logon-container">
-      <div className='logo'>
-        <img src={Logo} alt="Logo"></img> {/* Usando a variável Logo para exibir a imagem do logo */}
-      </div>
-      <section className="form">
-        <h1>Faça seu login</h1>
-        <form onSubmit={handleLogin}>
-          <input
-            placeholder="Email"
-            type="email" // Definindo o tipo de entrada como email
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <input
-            placeholder="Senha"
-            type="password"
-            value={senha}
-            onChange={(e) => setSenha(e.target.value)}
-          />
-          <button type="submit">Entrar</button>
-          <a href="/cadastroUsuario1">Novo Cadastro</a>
-        </form>
-      </section>
-    </div>
-  );
+    return (
+        <div className="logon-container">
+            <div className='logo-container'>
+                <img src={Logo} alt="Logo" className="logo-image" /> {/* Substitua pelo caminho correto da sua imagem */}
+            </div>
+            <section className="form">
+                <h1>Faça seu login</h1>
+                <form onSubmit={handleLogin}>
+                    <input
+                        placeholder="Email"
+                        type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                    />
+                    <input
+                        placeholder="Senha"
+                        type="password"
+                        value={senha}
+                        onChange={(e) => setSenha(e.target.value)}
+                    />
+                    <button type="submit">Entrar</button>
+                </form>
+            </section>
+        </div>
+    );
 }
+
+export default Login;
