@@ -9,11 +9,14 @@
 }
 
 .logo-image {
-  width: 200px; /* Defina a largura desejada para a imagem */
+  width: 500px; /* Defina a largura desejada para a imagem */
 }
 
 .form {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+.preto{
+  background-color: black;
 }

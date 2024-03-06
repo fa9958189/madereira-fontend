@@ -1,42 +1,52 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios'; // Importe o axios
+import axios from 'axios';
 import Logo from "../../assets/img/Logo.png";
-import "./styles.css"; // Importe o arquivo de estilos CSS
+import "./styles.css";
 
 function Login() {
     const navigate = useNavigate();
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
 
     const api = axios.create({
-        baseURL: 'http://sua-url-da-api.com' // Substitua pelo URL da sua API
+        baseURL: 'http://localhost:5000/usuario'
     });
 
     const handleLogin = async (e) => {
         e.preventDefault();
+        setIsLoading(true);
+        setErrorMessage("");
+
         try {
-            const resposta = await api.post("/usuario/login", { email, senha });
-            if (resposta.status === 200) {
-                alert(resposta.data.mensagem);
+            const resposta = await api.post("/login", { email, senha });
+            if (resposta.status >= 200 && resposta.status < 300) {
+                alert(resposta.data.mensagem); // Use um método de feedback mais amigável
                 navigate('/dashboard');
             }
         } catch (error) {
-            if (error.response && error.response.status === 404) {
-                alert(error.response.data.mensagem);
+            if (error.response) {
+                setErrorMessage(error.response.data.error || "Erro desconhecido");
             } else {
-                console.error('Erro ao fazer login:', error);
+                setErrorMessage("Erro ao fazer login. Por favor, tente novamente.");
             }
+        } finally {
+            setIsLoading(false);
         }
     };
 
     return (
         <div className="logon-container">
             <div className='logo-container'>
-                <img src={Logo} alt="Logo" className="logo-image" /> {/* Substitua pelo caminho correto da sua imagem */}
+                <img src={Logo} alt="Logo" className="logo-image" />
             </div>
             <section className="form">
-                <h1>Faça seu login</h1>
+             <div className='preto'>
+             <h1>Faça seu login</h1>
+             </div>  
+                {errorMessage && <p className="error-message">{errorMessage}</p>}
                 <form onSubmit={handleLogin}>
                     <input
                         placeholder="Email"
@@ -50,7 +60,7 @@ function Login() {
                         value={senha}
                         onChange={(e) => setSenha(e.target.value)}
                     />
-                    <button type="submit">Entrar</button>
+                    <button type="submit" disabled={isLoading}>Entrar</button>
                 </form>
             </section>
         </div>

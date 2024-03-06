@@ -1,109 +1,77 @@
-import React,{useState} from 'react';
-import '../../pages/global.css';
-import Menu from '../../componente/Menu';
-import { FiEdit,FiTranh,FiDelete,FiFilePlus, FiTrash }from "react-icons/fi";
-import { FaAngry } from "react-icons/fa";
-import { FaSave } from "react-icons/fa";
-import { ImCancelCircle } from "react-icons/im";
-import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
-import { useNavigate } from 'react-router-dom'; 
-import Head from '../../componente/Head';
-import api from '../../server/api';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import Logo from "../../assets/img/Logo.png";
+import "./styles.css";
 
-export default function CadastroUsuario() {
-    const navigate = useNavigate ();
-    const [nome,setNome]  = useState("");
-    const [email,setEmail]  = useState("");
-    const [senha,setSenha]  = useState("");
-    
-    const usuario={
-        id: Date.now().toString(36)+Math.floor(Math.pow(10,12)+Math.random()*9*Math.pow(10,12)).toString(36),
-        nome,
-        email,
-        senha
-    }
-  
-    function salvardados(e){
-      e.preventDefault();
-     // console.log(usuario);
-     if(nome==="")
-     alert("preencha o campo nome")
-    else if(email==="")
-    alert("preencha o campo email")
-    else if(senha==="")
-    alert("preencha o campo senha")
-    else{
-        // const banco =JSON.parse(localStorage.getItem("cd-usuarios") || "[]");
-        // banco.push(usuario);
-        // localStorage.setItem("cd-usuarios",JSON.stringify(banco));
+function Cadastro() {
+    const navigate = useNavigate();
+    const [nome, setNome] = useState("");
+    const [email, setEmail] = useState("");
+    const [senha, setSenha] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
 
-        api.post('/usuario',usuario,
-        {headers:{"Content-Type":"application/json"}})
-        .then(function(response){
-            console.log(response.data)
-            alert(response.data.mensagem);
-        })
+    const api = axios.create({
+        baseURL: 'http://localhost:5000/usuario'
+    });
 
-    //    navigate("/listausuario");
-    }
+    const handleCadastro = async (e) => {
+        e.preventDefault();
+        setIsLoading(true);
+        setErrorMessage("");
 
-    }
+        try {
+            const resposta = await api.post("/", { nome, email, senha });
+            if (resposta.status >= 200 && resposta.status < 300) {
+                alert(resposta.data.mensagem); // Use um método de feedback mais amigável
+                navigate('/dashboard');
+            }
+        } catch (error) {
+            if (error.response) {
+                setErrorMessage(error.response.data.error || "Erro desconhecido");
+            } else {
+                setErrorMessage("Erro ao fazer cadastro. Por favor, tente novamente.");
+            }
+        } finally {
+            setIsLoading(false);
+        }
+    };
 
     return (
-
-    <div className="dashboard-container">
-       
-
-        <div className='menu'>
-
-            <Menu />
-        </div>
-        <div className='principal'>
-        <Head title="Cadastro de Usuario" />
-        
-       
-    <div className='form-container'>
-    <form className='form-cadastro' onSubmit={salvardados}>
-            <input type='text'
-            value={nome}
-            onChange={e=>setNome(e.target.value)}
-             placeholder='Digite o nome do Usuario'
-              /> 
-            <input 
-            type='text' 
-            value={email}
-            onChange={e=>setEmail(e.target.value)}
-            placeholder='Digite o E-mail' 
-            /> 
-            <input 
-            type='text' 
-            value={senha}
-            onChange={e=>setSenha(e.target.value)}
-            placeholder='Digite a Senha' 
-            /> 
-
-            <div className='acao'>
-
-            <button className='btn-save'>
-            <FaSave />
-            Salvar
-            </button>
-            
-            
-            <button className='btn-cancel'>
-            <ImCancelCircle />
-            Cancelar
-            </button>  
-
-            </div> 
-           </form>
-   
-
-
+        <div className="logon-container">
+            <div className='logo-container'>
+                <img src={Logo} alt="Logo" className="logo-image" />
             </div>
-        </div>       
-    </div>
-  
-    )
-  
-  }
+            <section className="form">
+             <div className='preto'>
+             <h1>Faça seu Cadastro</h1>
+             </div>  
+                {errorMessage && <p className="error-message">{errorMessage}</p>}
+                <form onSubmit={handleCadastro}>
+                    <input
+                        placeholder="Nome"
+                        type="text"
+                        value={nome}
+                        onChange={(e) => setNome(e.target.value)}
+                    />
+                    <input
+                        placeholder="Email"
+                        type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                    />
+                    <input
+                        placeholder="Senha"
+                        type="password"
+                        value={senha}
+                        onChange={(e) => setSenha(e.target.value)}
+                    />
+                    <button type="submit" disabled={isLoading}>Cadastrar</button>
+                </form>
+            </section>
+        </div>
+    );
+}
+
+export default Cadastro;
