@@ -39,6 +39,13 @@ export default function CadastroUsuario() {
             <div className='menu'>
                 <Menu />
             </div>
+
+
+
+
+
+
+            
             <div className='principal'>
                 <Head title="Cadastro de Cliente" />
                 <div className='form-container'>
@@ -67,6 +74,12 @@ export default function CadastroUsuario() {
                     </form>
                 </div>
             </div>
+
+
+
+
+
+
         </div>
     )
 }

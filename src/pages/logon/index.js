@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '../../server/api';
 import Logo from "../../assets/img/Logo.png";
 import "./styles.css";
 
@@ -11,9 +11,7 @@ function Login() {
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
 
-    const api = axios.create({
-        baseURL: 'http://localhost:5000/usuario'
-    });
+
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -21,7 +19,7 @@ function Login() {
         setErrorMessage("");
 
         try {
-            const resposta = await api.post("/login", { email, senha });
+            const resposta = await api.post("/usuario/login", { email, senha });
             if (resposta.status >= 200 && resposta.status < 300) {
                 alert(resposta.data.mensagem); // Use um método de feedback mais amigável
                 navigate('/dashboard');

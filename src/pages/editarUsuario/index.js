@@ -2,7 +2,6 @@ import React,{useState, useEffect} from 'react';
 
 import '../../pages/global.css';
 import Menu from '../../componente/Menu';
-import{ FiFilePlus } from "react-icons/fi";
 import { MdCancel } from "react-icons/md";
 import { FaSave } from "react-icons/fa";
 import {useNavigate,useParams} from 'react-router-dom';
@@ -16,7 +15,8 @@ export default function Editarusuario(){
   const [email,setEmail]  = useState("");
   const [senha,setSenha]  = useState("");
   const [banco,setBanco] = useState([]);
-  const [status, setStatus] = useState(true);
+  const [status, setStatus] = useState(false);
+
   
   
   const usuario={    
@@ -33,27 +33,17 @@ export default function Editarusuario(){
    
   },[])
   async function mostrardados(idu) {
-    // let listaUser =JSON.parse(localStorage.getItem("cd-usuarios"));
-      
-    //        listaUser.
-    //            filter(value => value.id ==idu).
-    //            map(value => {
-    //                setNome(value.nome);
-    //                setEmail(value.email);
-    //                setSenha(value.senha);
-                   
-       
-    //    })
-       api.get(`/usuario/${idu}`)
-       .then(res=>{
-        console.log(res.data.usuario);
-        if(res.status===200){
-          setNome(res.data.usuario[0].nome);
-          setEmail(res.data.usuario[0].email);
-          setSenha(res.data.usuario[0].senha);
-        }
-       })
-     }
+
+      const response = await api.get(`/usuario/${idu}`);
+
+      setNome(response.data.usuario.nome || "");
+      setEmail(response.data.usuario.email || "");
+ 
+
+  
+}
+  
+  
 
 
   function salvardados(e){
@@ -107,9 +97,11 @@ if(i==0)
             <input 
                 type='email' 
                 value={email}
-                onChange={e=>setEmail(e.target.value)}
+               
                 placeholder='Digite o email'
              />
+          
+          
             <input 
                     type='password' 
                     value={senha}
