@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import '../../pages/global.css';
 import Menu from '../../componente/Menu';
 import { FiEdit, FiTrash } from "react-icons/fi";
@@ -6,22 +6,38 @@ import { Link } from 'react-router-dom';
 import Head from '../../componente/Head';
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
+import api from '../../server/api';
 
 export default function Listaproduto() {
-  const banco = JSON.parse(localStorage.getItem("cd-produtos") || "[]");
+  const [produtos, setProdutos] = useState([]);
+
+  useEffect(() => {
+    mostrarProdutos();
+  }, []);
+
+  const mostrarProdutos = () => {
+    api.get('/produto')
+      .then(res => {
+        setProdutos(res.data.produtos);
+      })
+      .catch(error => {
+        console.error('Erro ao buscar produtos:', error);
+      });
+  };
 
   const removerProduto = (id) => {
-    // Filtra os produtos mantendo apenas aqueles com IDs diferentes do ID fornecido
-    const novosProdutos = banco.filter(produto => produto.id !== id);
-    
-    // Atualiza o localStorage com a nova lista de produtos
-    localStorage.setItem("cd-produtos", JSON.stringify(novosProdutos));
-    
-    // Atualiza o estado ou recarrega a página para refletir as mudanças
-    // (Você pode usar estado se estiver usando um estado de componente)
-    // setState({ produtos: novosProdutos });
-    // Ou recarrega a página
-    window.location.reload();
+    api.delete(`/produto/${id}`)
+      .then(res => {
+        if (res.status === 200) {
+          alert(`Produto ID ${id} foi excluído com sucesso.`);
+          mostrarProdutos();
+        } else {
+          alert("Houve um problema no servidor");
+        }
+      })
+      .catch(error => {
+        console.error('Erro ao excluir produto:', error);
+      });
   };
 
   const apagar = (id) => {
@@ -48,7 +64,7 @@ export default function Listaproduto() {
       </div>
       <div className='principal'>
         <Head title="Lista de Produtos" />
-        <Link to="/CadastroProduto" className='btn-novo'>Cadastro Produto</Link>
+        <Link to="/CadastroProduto" className='btn-novo'>Novo Cadastro</Link>
         <table>
           <thead>
             <tr>
@@ -62,15 +78,15 @@ export default function Listaproduto() {
             </tr>
           </thead>
           <tbody>
-            {banco.map((pro) => (
-              <tr key={pro.id}>
-                <td>{pro.id}</td>
-                <td>{pro.status}</td>
-                <td>{pro.descricao}</td>
-                <td>{pro.estoque_minimo}</td>
-                <td>{pro.estoque_maximo}</td>
+            {produtos.map((produto) => (
+              <tr key={produto.id}>
+                <td>{produto.id}</td>
+                <td>{produto.status}</td>
+                <td>{produto.descricao}</td>
+                <td>{produto.estoque_minimo}</td>
+                <td>{produto.estoque_maximo}</td>
                 <td className='botoes'>
-                  <Link to={`/editarproduto/${pro.id}`}>
+                  <Link to={`/editarproduto/${produto.id}`}>
                     <FiEdit size={18} color='yellow' />
                   </Link>
                 </td>
@@ -78,7 +94,7 @@ export default function Listaproduto() {
                   <FiTrash
                     size={18}
                     color='red'
-                    onClick={() => apagar(pro.id)}
+                    onClick={() => apagar(produto.id)}
                     cursor="pointer"
                   />
                 </td>
