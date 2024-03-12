@@ -1,50 +1,60 @@
-import React,{useState} from 'react';
+import React, { useState, useEffect } from 'react';
 import '../../pages/global.css';
 import Menu from '../../componente/Menu';
+import { MdCancel } from "react-icons/md";
 import { FaSave } from "react-icons/fa";
-import { ImCancelCircle } from "react-icons/im";
-import api from '../../server/api';
-import { useNavigate } from 'react-router-dom'; 
+import { useNavigate, useParams } from 'react-router-dom';
 import Head from '../../componente/Head';
+import api from '../../server/api';
 
-export default function Cadastroproduto() {
+
+export default function EditarProduto() {
+    let { id } = useParams();
     const navigate = useNavigate();
     const [status, setStatus] = useState("");
     const [descricao, setDescricao] = useState("");
-    const [estoque_minimo, setEstoque_minimo] = useState("0");
-    const [estoque_maximo, setEstoque_maximo] = useState("10");
+    const [estoque_minimo, setEstoque_minimo] = useState("");
+    const [estoque_maximo, setEstoque_maximo] = useState("");
 
-    function salvardados(e) {
+    useEffect(() => {
+        mostrarDados(id);
+    }, [])
+
+    async function mostrarDados(id) {
+        const response = await api.get(`/produto/${id}`);
+        const produto = response.data.produto;
+
+        setStatus(produto.status);
+        setDescricao(produto.descricao);
+        setEstoque_minimo(produto.estoque_minimo);
+        setEstoque_maximo(produto.estoque_maximo);
+    }
+
+    function salvarDados(e) {
         e.preventDefault();
 
-        // Validação dos campos
-        let i = 0;
-        if (status === "") i++;
-        if (descricao === "") i++;
-        if (estoque_minimo === "" || estoque_minimo === 0) i++;
-        if (estoque_maximo === "" || estoque_maximo === 0) i++;
-
-        if (i === 0) {
-            const novoProduto = {
-                status,
-                descricao,
-                estoque_minimo,
-                estoque_maximo
-            };
-
-            api.post('/produto', novoProduto,{ headers: { "content-type": "application/json" } })
-                .then(function (response) {
-                    console.log(response.data);
-                    alert(response.data.mensagem);
-                    navigate("/listaprodutos"); 
-                })
-                .catch(function (error) {
-                    console.error("Erro ao cadastrar produto:", error);
-                });
-                
-        } else {
+        if (status === "" || descricao === "" || estoque_minimo === "" || estoque_maximo === "") {
             alert("Por favor, preencha todos os campos.");
+            return;
         }
+
+        const produto = {
+            id,
+            status,
+            descricao,
+            estoque_minimo,
+            estoque_maximo
+        };
+
+        api.put('/produto', produto, { headers: { "Content-Type": "application/json" } })
+            .then(function (response) {
+                console.log(response.data);
+                alert(response.data.mensagem);
+                navigate('/listaprodutos');
+            })
+            .catch(function (error) {
+                console.error("Erro ao editar produto:", error);
+            });
     }
 
     return (
@@ -53,9 +63,9 @@ export default function Cadastroproduto() {
                 <Menu />
             </div>
             <div className='principal'>
-                <Head title="Cadastro de Produto" />
+                <Head title="Editar Produto" />
                 <div className='form-container'>
-                    <form className='form-cadastro' onSubmit={salvardados}>
+                    <form className='form-cadastro' onSubmit={salvarDados}>
                         <input type='text'
                             value={status}
                             onChange={e => setStatus(e.target.value)}
@@ -71,26 +81,24 @@ export default function Cadastroproduto() {
                             type='number'
                             value={estoque_minimo}
                             onChange={e => setEstoque_minimo(e.target.value)}
+                            placeholder='Digite o estoque mínimo'
                         />
                         <input
                             type='number'
                             value={estoque_maximo}
                             onChange={e => setEstoque_maximo(e.target.value)}
+                            placeholder='Digite o estoque máximo'
                         />
 
                         <div className='acao'>
-
                             <button className='btn-save'>
                                 <FaSave />
                                 Salvar
                             </button>
-
-
                             <button className='btn-cancel'>
-                                <ImCancelCircle />
+                                <MdCancel />
                                 Cancelar
                             </button>
-
                         </div>
                     </form>
                 </div>
