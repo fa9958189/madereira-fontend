@@ -22,7 +22,7 @@ export default function EditarProduto() {
 
     async function mostrarDados(id) {
         const response = await api.get(`/produto/${id}`);
-        const produto = response.data.produto;
+        const produto = response.data.produtos;
 
         setStatus(produto.status);
         setDescricao(produto.descricao);

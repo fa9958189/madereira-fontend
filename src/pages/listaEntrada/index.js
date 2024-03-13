@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import '../../pages/global.css';
 import Menu from '../../componente/Menu';
 import { FiTrash } from "react-icons/fi";
@@ -8,12 +8,39 @@ import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 
 export default function Listaentrada() {
-  const banco = JSON.parse(localStorage.getItem("cd-entradas") || "[]");
+  const [entradas, setEntradas] = useState([]);
+
+  useEffect(() => {
+    mostrarEntradas();
+  }, []);
+
+  function mostrarEntradas() {
+    const requestOptions = {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' },
+    };
+
+    fetch('/api/entradas', requestOptions)
+      .then(response => response.json())
+      .then(data => {
+        setEntradas(data.produtos);
+      })
+      .catch(error => console.error('Erro ao buscar entradas de produto:', error));
+  }
 
   const removerEntrada = (id) => {
-    const novasEntradas = banco.filter(entrada => entrada.id !== id);
-    localStorage.setItem("cd-entradas", JSON.stringify(novasEntradas));
-    window.location.reload();
+    const requestOptions = {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+    };
+
+    fetch(`/api/entradas/${id}`, requestOptions)
+      .then(response => response.json())
+      .then(data => {
+        alert(data.mensagem);
+        mostrarEntradas();
+      })
+      .catch(error => console.error('Erro ao excluir entrada de produto:', error));
   };
 
   const apagar = (id) => {
@@ -35,21 +62,14 @@ export default function Listaentrada() {
 
   function mostrarnome(idproduto){
     let nome= "";
-     const listarproduto = JSON.parse(localStorage.getItem("cd-produtos") || "[]");
-     listarproduto.
-                  filter(value => value.id ==idproduto).
-                  map(value => {
-                   
-                  nome=value.descricao;
-  
-  
-                      
-  
-  
-                })
-          return nome;
-          
-    }
+    const listarproduto = JSON.parse(localStorage.getItem("cd-produtos") || "[]");
+    listarproduto
+      .filter(value => value.id === idproduto)
+      .map(value => {
+        nome = value.descricao;
+      });
+    return nome;
+  }
 
   return (
     <div className="dashboard-container">
@@ -63,7 +83,7 @@ export default function Listaentrada() {
           <thead>
             <tr>
               <th>Id</th>
-              <th>Id do Produto</th>
+              <th>Nome do Produto</th>
               <th>Quantidade</th>
               <th>Valor Unitário</th>
               <th>Data de Entrada</th>
@@ -71,7 +91,7 @@ export default function Listaentrada() {
             </tr>
           </thead>
           <tbody>
-            {banco.map((enpr) => (
+            {entradas.map((enpr) => (
               <tr key={enpr.id}>
                 <td>{enpr.id}</td>
                 <td>{mostrarnome(enpr.id_produto)}</td>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Logon from './pages/logon';
-import Dashbord from './pages/dashboard';
+import Dashboard from './pages/dashboard';
 import Listausuario from './pages/listarUsuario';
 import Listaproduto from './pages/listarProduto';
 import CadastroUsuario from './pages/cadastroUsuario';
@@ -21,7 +21,7 @@ export default function Rotas() {
        <BrowserRouter>
           <Routes>
              <Route path="/" element={<Logon />} />
-             <Route path="/dashboard" element={<Dashbord />} />
+             <Route path="/dashboard" element={<Dashboard />} />
              <Route path="/listausuario" element={<Listausuario />} />
              <Route path="/listaprodutos" element={<Listaproduto />} />
              <Route path="/listaentradaproduto" element={<Listaentrada />} />

@@ -5,6 +5,7 @@ import { FaSave } from "react-icons/fa";
 import { MdCancel } from "react-icons/md";
 import { useNavigate } from 'react-router-dom';
 import Head from '../../componente/Head';
+import api from '../../server/api';
 
 export default function Entradaproduto() {
   const navigate = useNavigate();
@@ -19,8 +20,24 @@ export default function Entradaproduto() {
   }, []);
 
   function mostrarProdutos() {
-    const produtos = JSON.parse(localStorage.getItem("cd-produtos") || "[]");
-    setProdutos(produtos);
+    api.get('/produto')
+      .then(res => {
+        setProdutos(res.data.produtos);
+      })
+      .catch(error => {
+        console.error('Erro ao buscar produtos:', error);
+      });
+  }
+
+  function buscarProdutoPorId(id) {
+    const produtoEncontrado = produtos.find(produto => produto.id === id);
+    if (produtoEncontrado) {
+      setQtde(""); // Limpar o campo de quantidade
+      setValor_unitario(""); // Limpar o campo de valor unitário
+      // Preencher as informações do produto encontrado
+      setQtde(produtoEncontrado.qtde.toString());
+      setValor_unitario(produtoEncontrado.valor_unitario.toString());
+    }
   }
 
   function salvardados(e) {
@@ -32,47 +49,18 @@ export default function Entradaproduto() {
     }
 
     const entrada = {
-      id: Date.now().toString(36) + Math.floor(Math.pow(10, 12) + Math.random() * 9 * Math.pow(10, 12)).toString(36),
       id_produto,
       qtde: parseInt(qtde),
       valor_unitario: parseFloat(valor_unitario),
       data_entrada
     };
 
-    const entradas = JSON.parse(localStorage.getItem("cd-entradas") || "[]");
-
-    const entradaExistente = entradas.find(entrada => entrada.id_produto === id_produto);
-
-    if (entradaExistente) {
-      entradaExistente.qtde += entrada.qtde;
-    } else {
-      entradas.push(entrada);
-    }
-
-    localStorage.setItem("cd-entradas", JSON.stringify(entradas));
-
-    atualizarEstoque(id_produto, parseInt(qtde));
-
-    alert("Entrada salva com sucesso!");
-    navigate('/entradaproduto');
-  }
-
-
-  function atualizarEstoque(idProduto, quantidade) {
-    const estoque = JSON.parse(localStorage.getItem("cd-estoques") || "[]");
-    const produtoExistente = estoque.find(item => item.id_produto === idProduto);
-
-    if (produtoExistente) {
-      produtoExistente.qtde += quantidade;
-    } else {
-      estoque.push({
-        id: Date.now().toString(36) + Math.floor(Math.pow(10, 12) + Math.random() * 9 * Math.pow(10, 12)).toString(36),
-        id_produto,
-        qtde: quantidade
-      });
-    }
-
-    localStorage.setItem("cd-estoques", JSON.stringify(estoque));
+    api.post('/entradaProduto', entrada)
+      .then(response => {
+        alert(response.data.mensagem);
+        navigate('/listaentradaproduto');
+      })
+      .catch(error => console.error('Erro ao cadastrar entrada de produto:', error));
   }
 
   return (
@@ -84,20 +72,21 @@ export default function Entradaproduto() {
         <Head title="Cadastro de Entrada" />
         <div className='form-container'>
           <form className='form-cadastro' onSubmit={salvardados}>
-            <input
-              type='text'
-              value={id_produto}
-              onChange={e => setId_produto(e.target.value)}
-              placeholder='Digite o id do produto'
-            />
             <select value={id_produto} onChange={e => setId_produto(e.target.value)}>
-              <option>Selecione um produto</option>
+              <option value="">Selecione um produto</option>
               {produtos.map(produto => (
                 <option key={produto.id} value={produto.id}>
                   {produto.descricao}
                 </option>
               ))}
             </select>
+            <input
+              type='text'
+              value={id_produto}
+              onChange={e => setId_produto(e.target.value)}
+              onBlur={e => buscarProdutoPorId(e.target.value)}
+              placeholder='Ou digite o ID do produto'
+            />
             <input
               type='number'
               value={qtde}
@@ -117,7 +106,7 @@ export default function Entradaproduto() {
               placeholder='Data da Entrada'
             />
             <div className='acao'>
-              <button className='btn-save'>
+              <button className='btn-save' type="submit">
                 <FaSave />
                 Salvar
               </button>
