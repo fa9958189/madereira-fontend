@@ -6,6 +6,7 @@ import { MdCancel } from "react-icons/md";
 import { useNavigate } from 'react-router-dom';
 import Head from '../../componente/Head';
 import api from '../../server/api';
+import './entrada.css'; // Importe o arquivo CSS aqui
 
 export default function Entradaproduto() {
   const navigate = useNavigate();
@@ -16,10 +17,10 @@ export default function Entradaproduto() {
   const [produtos, setProdutos] = useState([]);
 
   useEffect(() => {
-    mostrarProdutos();
+    mostrardados();
   }, []);
 
-  function mostrarProdutos() {
+  function mostrardados() {
     api.get('/produto')
       .then(res => {
         setProdutos(res.data.produtos);
@@ -27,17 +28,6 @@ export default function Entradaproduto() {
       .catch(error => {
         console.error('Erro ao buscar produtos:', error);
       });
-  }
-
-  function buscarProdutoPorId(id) {
-    const produtoEncontrado = produtos.find(produto => produto.id === id);
-    if (produtoEncontrado) {
-      setQtde(""); // Limpar o campo de quantidade
-      setValor_unitario(""); // Limpar o campo de valor unitário
-      // Preencher as informações do produto encontrado
-      setQtde(produtoEncontrado.qtde.toString());
-      setValor_unitario(produtoEncontrado.valor_unitario.toString());
-    }
   }
 
   function salvardados(e) {
@@ -55,7 +45,7 @@ export default function Entradaproduto() {
       data_entrada
     };
 
-    api.post('/entradaProduto', entrada)
+    api.post('/entrada', entrada)
       .then(response => {
         alert(response.data.mensagem);
         navigate('/listaentradaproduto');
@@ -72,7 +62,7 @@ export default function Entradaproduto() {
         <Head title="Cadastro de Entrada" />
         <div className='form-container'>
           <form className='form-cadastro' onSubmit={salvardados}>
-            <select value={id_produto} onChange={e => setId_produto(e.target.value)}>
+            <select className='select-produto' value={id_produto} onChange={e => setId_produto(e.target.value)}>
               <option value="">Selecione um produto</option>
               {produtos.map(produto => (
                 <option key={produto.id} value={produto.id}>
@@ -84,7 +74,6 @@ export default function Entradaproduto() {
               type='text'
               value={id_produto}
               onChange={e => setId_produto(e.target.value)}
-              onBlur={e => buscarProdutoPorId(e.target.value)}
               placeholder='Ou digite o ID do produto'
             />
             <input
@@ -110,7 +99,7 @@ export default function Entradaproduto() {
                 <FaSave />
                 Salvar
               </button>
-              <button className='btn-cancel'>
+              <button className='btn-cancel' type="button">
                 <MdCancel />
                 Cancelar
               </button>

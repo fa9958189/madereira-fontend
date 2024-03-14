@@ -20,10 +20,10 @@ export default function Listaentrada() {
       headers: { 'Content-Type': 'application/json' },
     };
 
-    fetch('/api/entradas', requestOptions)
+    fetch('http://localhost:5000/entrada', requestOptions)
       .then(response => response.json())
       .then(data => {
-        setEntradas(data.produtos);
+        setEntradas(data.entradas);
       })
       .catch(error => console.error('Erro ao buscar entradas de produto:', error));
   }
@@ -60,10 +60,10 @@ export default function Listaentrada() {
     });
   };
 
-  function mostrarnome(idproduto){
+  function mostrarNome(idproduto){
     let nome= "";
-    const listarproduto = JSON.parse(localStorage.getItem("cd-produtos") || "[]");
-    listarproduto
+    const listarProduto = JSON.parse(localStorage.getItem("cd-produtos") || "[]");
+    listarProduto
       .filter(value => value.id === idproduto)
       .map(value => {
         nome = value.descricao;
@@ -77,12 +77,12 @@ export default function Listaentrada() {
         <Menu />
       </div>
       <div className='principal'>
-        <Head title="Entrada de Produto" />
+        <Head title="Listar Entrada " />
         <Link to="/entradaproduto" className='btn-novo'>Nova Entrada</Link>
         <table>
           <thead>
             <tr>
-              <th>Id</th>
+              <th>ID</th>
               <th>Nome do Produto</th>
               <th>Quantidade</th>
               <th>Valor Unitário</th>
@@ -94,7 +94,7 @@ export default function Listaentrada() {
             {entradas.map((enpr) => (
               <tr key={enpr.id}>
                 <td>{enpr.id}</td>
-                <td>{mostrarnome(enpr.id_produto)}</td>
+                <td>{mostrarNome(enpr.id_produto)}</td>
                 <td>{enpr.qtde}</td>
                 <td>{enpr.valor_unitario}</td>
                 <td>{enpr.data_entrada}</td>

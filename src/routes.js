@@ -8,7 +8,7 @@ import CadastroUsuario from './pages/cadastroUsuario';
 import Cadastroproduto from './pages/cadastroProduto';
 import Editarusuario from './pages/editarUsuario';
 import Listaentrada from './pages/listaEntrada';
-import Entradaproduto from './pages/entradaProduto';
+import Entradaproduto from './pages/cadastroEntrada';
 import Listaestoque from './pages/listarEstoque';
 import Listasaida from './pages/listarSaida';  
 import Saidaproduto from './pages/saidaProduto';
