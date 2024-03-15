@@ -1,0 +1,12 @@
+/* style.css */
+
+.chart-container {
+    display: flex;
+    justify-content: center; /* Centralizando o gráfico horizontalmente */
+    align-items: center; /* Centralizando o gráfico verticalmente */
+  }
+  
+  .table-description {
+    color: white; /* Definindo a cor do texto da descrição como branco */
+  }
+  

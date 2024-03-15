@@ -94,7 +94,7 @@ export default function Listaentrada() {
             {entradas.map((enpr) => (
               <tr key={enpr.id}>
                 <td>{enpr.id}</td>
-                <td>{mostrarNome(enpr.id_produto)}</td>
+                <td>{enpr.descricao}</td>
                 <td>{enpr.qtde}</td>
                 <td>{enpr.valor_unitario}</td>
                 <td>{enpr.data_entrada}</td>

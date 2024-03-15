@@ -11,15 +11,15 @@ import Listaentrada from './pages/listaEntrada';
 import Entradaproduto from './pages/cadastroEntrada';
 import Listaestoque from './pages/listarEstoque';
 import Listasaida from './pages/listarSaida';  
-import Saidaproduto from './pages/saidaProduto';
-import CadastroCliente from './pages/cadastroCliente'; 
-import ListarCliente from './pages/listarCliente'; 
+import CadastroSaida from './pages/cadastroSaida'; // Atualizado
+import ListarGraficos from './pages/listarGraficos'; // Alterado
 import Editarproduto from './pages/editarProduto'; 
+
 
 export default function Rotas() {
    return (
        <BrowserRouter>
-          <Routes>
+         <Routes>
              <Route path="/" element={<Logon />} />
              <Route path="/dashboard" element={<Dashboard />} />
              <Route path="/listausuario" element={<Listausuario />} />
@@ -31,9 +31,8 @@ export default function Rotas() {
              <Route path="/editarusuario/:id" element={<Editarusuario />} />
              <Route path="/listaestoque" element={<Listaestoque />} />
              <Route path="/listarsaida" element={<Listasaida />} />
-             <Route path="/saidaProduto" element={<Saidaproduto />} />
-             <Route path="/cadastroCliente" element={<CadastroCliente />} /> 
-             <Route path="/listaCliente" element={<ListarCliente />} />
+             <Route path="/cadastroSaida" element={<CadastroSaida />} /> 
+             <Route path="/listarGraficos" element={<ListarGraficos />} /> 
              <Route path="/editarproduto/:id" element={<Editarproduto />} /> 
           </Routes>  
        </BrowserRouter>
