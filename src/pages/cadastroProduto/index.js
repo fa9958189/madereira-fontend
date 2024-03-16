@@ -7,6 +7,8 @@ import api from '../../server/api';
 import { useNavigate } from 'react-router-dom'; 
 import Head from '../../componente/Head';
 
+
+
 export default function Cadastroproduto() {
     const navigate = useNavigate();
     const [status, setStatus] = useState("");
@@ -54,7 +56,7 @@ export default function Cadastroproduto() {
             </div>
             <div className='principal'>
                 <Head title="Cadastro de Produto" />
-                <div className='form-container'>
+                <div className='form'>
                     <form className='form-cadastro' onSubmit={salvardados}>
                         <input type='text'
                             value={status}

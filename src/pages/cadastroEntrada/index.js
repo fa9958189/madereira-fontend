@@ -6,7 +6,7 @@ import { MdCancel } from "react-icons/md";
 import { useNavigate } from 'react-router-dom';
 import Head from '../../componente/Head';
 import api from '../../server/api';
-import './entrada.css'; // Importe o arquivo CSS aqui
+
 
 export default function Entradaproduto() {
   const navigate = useNavigate();
@@ -60,7 +60,7 @@ export default function Entradaproduto() {
       </div>
       <div className='principal'>
         <Head title="Cadastro de Entrada" />
-        <div className='form-container'>
+        <div className='form'>
           <form className='form-cadastro' onSubmit={salvardados}>
             <select className='select-produto' value={id_produto} onChange={e => setId_produto(e.target.value)}>
               <option value="">Selecione um produto</option>

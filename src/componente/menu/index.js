@@ -1,18 +1,18 @@
 import './styles.css';
 import { Link } from 'react-router-dom';
-import { FiUser, FiPackage, FiArrowUpCircle, FiArchive, FiArrowDownCircle } from "react-icons/fi"; // Importando ícones do React
+import { FiUser, FiPackage, FiArrowUpCircle, FiArchive, FiArrowDownCircle, FiBarChart2 } from "react-icons/fi"; // Importing React icons
 
 export default function Menu() {
     return (
         <div>
             <h1>Menu</h1>
             <nav>
-                <Link to="/listausuario" className='link'><FiUser className='icos' />Usuário</Link> {/* Adicionando ícone de usuário */}
-                <Link to="/listacliente" className='link'><FiUser className='icos' />Cliente</Link> {/* Adicionando ícone de usuário */}
-                <Link to="/listaprodutos" className='link'><FiPackage className='icos' />Produto</Link> {/* Adicionando ícone de produto */}
-                <Link to="/listaentradaProduto" className='link'><FiArrowUpCircle className='icos' />Entrada produto</Link> {/* Adicionando ícone de entrada de produto */}
-                <Link to="/listaestoque" className='link'><FiArchive className='icos' />Estoque</Link> {/* Adicionando ícone de estoque */}
-                <Link to="/listarSaida" className='link'><FiArrowDownCircle className='icos' />Saída</Link> {/* Adicionando ícone de saída */}
+                <Link to="/listausuario" className='link'><FiUser className='icos' />Usuário</Link> {/* User icon */}
+                <Link to="/listarGraficos" className='link'><FiBarChart2 className='icos' />Gráficos</Link> {/* Graphs icon - Change to the appropriate route */}
+                <Link to="/listaprodutos" className='link'><FiPackage className='icos' />Produto</Link> {/* Product icon */}
+                <Link to="/listaentradaProduto" className='link'><FiArrowUpCircle className='icos' />Entrada produto</Link> {/* Product entry icon */}
+                <Link to="/listaestoque" className='link'><FiArchive className='icos' />Estoque</Link> {/* Stock icon */}
+                <Link to="/listarSaida" className='link'><FiArrowDownCircle className='icos' />Saída</Link> {/* Exit icon */}
             </nav>
         </div>
     )

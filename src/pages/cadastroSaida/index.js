@@ -60,7 +60,7 @@ export default function CadastroSaida() {
       </div>
       <div className='principal'>
         <Head title="Cadastro de Saída" />
-        <div className='form-container'>
+        <div className='form'>
           <form className='form-cadastro' onSubmit={salvardados}>
             <select className='select-produto' value={id_produto} onChange={e => setId_produto(e.target.value)}>
               <option value="">Selecione um produto</option>

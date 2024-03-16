@@ -77,30 +77,30 @@ export default function Listaproduto() {
               <th></th>
             </tr>
           </thead>
-          <tbody>
-            {produtos.map((produto) => (
-              <tr key={produto.id}>
-                <td>{produto.id}</td>
-                <td>{produto.status}</td>
-                <td>{produto.descricao}</td>
-                <td>{produto.estoque_minimo}</td>
-                <td>{produto.estoque_maximo}</td>
-                <td className='botoes'>
-                  <Link to={`/editarproduto/${produto.id}`}>
-                    <FiEdit size={18} color='yellow' />
-                  </Link>
-                </td>
-                <td className='botoes'>
-                  <FiTrash
-                    size={18}
-                    color='red'
-                    onClick={() => apagar(produto.id)}
-                    cursor="pointer"
-                  />
-                </td>
-              </tr>
-            ))}
-          </tbody>
+              <tbody>
+                {produtos.map((produto) => (
+                  <tr key={produto.id}>
+                    <td>{produto.id}</td>
+                    <td>{produto.status}</td>
+                    <td className="table-description">{produto.descricao}</td> {/* Aplicando a classe CSS 'table-description' */}
+                    <td>{produto.estoque_minimo}</td>
+                    <td>{produto.estoque_maximo}</td>
+                    <td className='botoes'>
+                      <Link to={`/editarproduto/${produto.id}`}>
+                        <FiEdit size={18} color='yellow' />
+                      </Link>
+                    </td>
+                    <td className='botoes'>
+                      <FiTrash
+                        size={18}
+                        color='red'
+                        onClick={() => apagar(produto.id)}
+                        cursor="pointer"
+                      />
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
         </table>
       </div>
     </div>
