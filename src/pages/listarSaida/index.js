@@ -15,12 +15,7 @@ export default function Listasaida() {
   }, []);
 
   function mostrarSaidas() {
-    const requestOptions = {
-      method: 'GET',
-      headers: { 'Content-Type': 'application/json' },
-    };
-
-    fetch('http://localhost:5000/saida', requestOptions)
+    fetch('http://localhost:5000/saida')
       .then(response => response.json())
       .then(data => {
         setSaidas(data.saidas);
@@ -34,7 +29,7 @@ export default function Listasaida() {
       headers: { 'Content-Type': 'application/json' },
     };
 
-    fetch(`/api/saidas/${id}`, requestOptions)
+    fetch(`http://localhost:5000/saida/${id}`, requestOptions)
       .then(response => response.json())
       .then(data => {
         alert(data.mensagem);

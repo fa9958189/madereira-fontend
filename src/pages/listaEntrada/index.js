@@ -34,7 +34,7 @@ export default function Listaentrada() {
       headers: { 'Content-Type': 'application/json' },
     };
 
-    fetch(`/api/entradas/${id}`, requestOptions)
+    fetch(`http://localhost:5000/entrada/${id}`, requestOptions)
       .then(response => response.json())
       .then(data => {
         alert(data.mensagem);
@@ -59,17 +59,6 @@ export default function Listaentrada() {
       ]
     });
   };
-
-  function mostrarNome(idproduto){
-    let nome= "";
-    const listarProduto = JSON.parse(localStorage.getItem("cd-produtos") || "[]");
-    listarProduto
-      .filter(value => value.id === idproduto)
-      .map(value => {
-        nome = value.descricao;
-      });
-    return nome;
-  }
 
   return (
     <div className="dashboard-container">
