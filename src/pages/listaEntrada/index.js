@@ -1,3 +1,5 @@
+// Listaentrada.js
+
 import React, { useState, useEffect } from 'react';
 import '../../pages/global.css';
 import Menu from '../../componente/Menu';
@@ -9,10 +11,15 @@ import 'react-confirm-alert/src/react-confirm-alert.css';
 
 export default function Listaentrada() {
   const [entradas, setEntradas] = useState([]);
+  const [produtosEntrada, setProdutosEntrada] = useState([]);
 
   useEffect(() => {
     mostrarEntradas();
   }, []);
+
+  useEffect(() => {
+    setProdutosEntrada(entradas.map(entrada => entrada.id_produto));
+  }, [entradas]);
 
   function mostrarEntradas() {
     const requestOptions = {
