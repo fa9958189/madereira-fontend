@@ -1,3 +1,5 @@
+// Entradaproduto.js
+
 import React, { useState, useEffect } from 'react';
 import '../../pages/global.css';
 import Menu from '../../componente/Menu';
@@ -70,12 +72,6 @@ export default function Entradaproduto() {
                 </option>
               ))}
             </select>
-            <input
-              type='text'
-              value={id_produto}
-              onChange={e => setId_produto(e.target.value)}
-              placeholder='Ou digite o ID do produto'
-            />
             <input
               type='number'
               value={qtde}

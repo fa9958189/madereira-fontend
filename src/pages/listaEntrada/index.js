@@ -8,43 +8,27 @@ import { Link } from 'react-router-dom';
 import Head from '../../componente/Head';
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
+import api from '../../server/api';
 
 export default function Listaentrada() {
   const [entradas, setEntradas] = useState([]);
-  const [produtosEntrada, setProdutosEntrada] = useState([]);
 
   useEffect(() => {
     mostrarEntradas();
   }, []);
 
-  useEffect(() => {
-    setProdutosEntrada(entradas.map(entrada => entrada.id_produto));
-  }, [entradas]);
-
   function mostrarEntradas() {
-    const requestOptions = {
-      method: 'GET',
-      headers: { 'Content-Type': 'application/json' },
-    };
-
-    fetch('http://localhost:5000/entrada', requestOptions)
-      .then(response => response.json())
-      .then(data => {
-        setEntradas(data.entradas);
+    api.get('/entrada')
+      .then(res => {
+        setEntradas(res.data.entradas);
       })
       .catch(error => console.error('Erro ao buscar entradas de produto:', error));
   }
 
   const removerEntrada = (id) => {
-    const requestOptions = {
-      method: 'DELETE',
-      headers: { 'Content-Type': 'application/json' },
-    };
-
-    fetch(`http://localhost:5000/entrada/${id}`, requestOptions)
-      .then(response => response.json())
-      .then(data => {
-        alert(data.mensagem);
+    api.delete(`/entrada/${id}`)
+      .then(response => {
+        alert(response.data.mensagem);
         mostrarEntradas();
       })
       .catch(error => console.error('Erro ao excluir entrada de produto:', error));

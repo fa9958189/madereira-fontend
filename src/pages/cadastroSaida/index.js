@@ -14,7 +14,6 @@ export default function CadastroSaida() {
   const [valor_unitario, setValor_unitario] = useState("");
   const [data_saida, setData_saida] = useState("");
   const [produtos, setProdutos] = useState([]);
-  const [entradaExistente, setEntradaExistente] = useState(false);
 
   useEffect(() => {
     mostrardados();
@@ -30,32 +29,11 @@ export default function CadastroSaida() {
       });
   }
 
-  function verificarEntrada(id_produto) {
-    api.get(`/saida/entrada/${id_produto}`)
-      .then(res => {
-        if (res.data.mensagem === "Produto possui entrada.") {
-          setEntradaExistente(true);
-        } else {
-          setEntradaExistente(false);
-          alert("Produto não possui entrada. Não é possível cadastrar uma saída.");
-        }
-      })
-      .catch(error => {
-        console.error('Erro ao verificar entrada do produto:', error);
-        alert("Erro ao verificar entrada do produto.");
-      });
-  }
-
   async function salvardados(e) {
     e.preventDefault();
 
     if (!id_produto || !qtde || !valor_unitario || !data_saida) {
       alert("Preencha todos os campos!");
-      return;
-    }
-
-    if (!entradaExistente) {
-      alert("Produto não possui entrada. Não é possível cadastrar uma saída.");
       return;
     }
 
@@ -83,10 +61,7 @@ export default function CadastroSaida() {
         <Head title="Cadastro de Saída" />
         <div className='form'>
           <form className='form-cadastro' onSubmit={salvardados}>
-            <select className='select-produto' value={id_produto} onChange={e => {
-              setId_produto(e.target.value);
-              verificarEntrada(e.target.value);
-            }}>
+            <select className='select-produto' value={id_produto} onChange={e => setId_produto(e.target.value)}>
               <option value="">Selecione um produto</option>
               {produtos.map(produto => (
                 <option key={produto.id} value={produto.id}>
