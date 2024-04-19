@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../../server/api';
-import Logo from "../../assets/img/Logo.png";
+import Logo from "../../assets/img/Logo.svg";
 import "./styles.css";
 
 function Login() {
@@ -10,8 +10,6 @@ function Login() {
     const [senha, setSenha] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
-
-
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -37,31 +35,26 @@ function Login() {
 
     return (
         <div className="logon-container">
-            <div className='logo-container'>
+            <div className="logo-container">
                 <img src={Logo} alt="Logo" className="logo-image" />
             </div>
-            <section className="form">
-             <div className='preto'>
-             <h1>Faça seu login
-             </h1>
-             </div>  
+            <form className="login-form" onSubmit={handleLogin}>
+                <h2>Login</h2>
                 {errorMessage && <p className="error-message">{errorMessage}</p>}
-                <form onSubmit={handleLogin}>
-                    <input
-                        placeholder="Email"
-                        type="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                    />
-                    <input
-                        placeholder="Senha"
-                        type="password"
-                        value={senha}
-                        onChange={(e) => setSenha(e.target.value)}
-                    />
-                    <button type="submit" disabled={isLoading}>Entrar</button>
-                </form>
-            </section>
+                <input
+                    placeholder="Email"
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                />
+                <input
+                    placeholder="Senha"
+                    type="password"
+                    value={senha}
+                    onChange={(e) => setSenha(e.target.value)}
+                />
+                <button type="submit" disabled={isLoading}>Entrar</button>
+            </form>
         </div>
     );
 }

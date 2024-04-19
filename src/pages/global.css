@@ -51,7 +51,7 @@ th{
 }
 .btn-novo{
     padding: 10px;
-    background-color: #6c9aff;
+    background-color:#b8ccde;
     color: black;
     border-radius: 5px;
     border: solid 0.5px #1a58dd;
@@ -61,12 +61,12 @@ th{
     width: 20%;
 }
 .btn-novo:hover{
-    background-color: #061a44;
+    background-color: #b8ccde;
     cursor: pointer;
     color: aliceblue;
 }
 .botoes{
-    background-color: #1e4cb0;
+    background-color: #b8ccde;
     cursor: pointer;
     color: aliceblue;
 }
@@ -87,7 +87,7 @@ input:focus{
 }
 .btn-save{
     padding: 10px;
-    background-color: #1e4cb0;
+    background-color: #b8ccde;
     color: white;
     border-radius: 5px;
     border: solid 0.5px #6c9aff;
@@ -111,15 +111,22 @@ input:focus{
 }
 .form-container{
     display: flex;
+    justify-content: center;
     align-items: center;
-    height: 80vh;
+    height: 100vh;
 }
 form{
-    background-color: #061a44;
-    border: 1px solid #adb9d3;
-    box-shadow: 0px 0px 10px #1a58dd;
-    padding: 20px;
+    border: 1px solid #ccc;
     border-radius: 5px;
-
+    padding: 20px;
+    width: 300px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    color: blue;
 
 }
+
+
+
+

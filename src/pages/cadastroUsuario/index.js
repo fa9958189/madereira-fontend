@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import Head from '../../componente/Head';
 import api from '../../server/api';
 
+
 export default function Cadastro() {
     const navigate = useNavigate();
     const [nome, setNome] = useState("");

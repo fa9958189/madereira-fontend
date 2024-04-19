@@ -8,6 +8,7 @@ import { MdCancel } from "react-icons/md";
 import { useNavigate } from 'react-router-dom';
 import Head from '../../componente/Head';
 import api from '../../server/api';
+import "./entrada.css";
 
 
 export default function Entradaproduto() {
