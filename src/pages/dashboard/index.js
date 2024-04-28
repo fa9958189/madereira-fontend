@@ -4,7 +4,7 @@ import './styles.css';
 import logo from '../../assets/img/Logo.svg';
 import backgroundImg from '../../assets/img/capa para o projeto.svg';
 import Menu from '../../componente/Menu';
-import imagem from '../../assets/img/lapis.svg'; // Adjust the filename accordingly
+import imagem from '../../assets/img/Logo.svg'; // Adjust the filename accordingly
 
 export default function Dashboard() {
     return (

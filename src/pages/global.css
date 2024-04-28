@@ -22,7 +22,7 @@
     padding: 5px;
 }
 .dashboard-container {
-    background-image: url('/src/assets/img/capa para o projeto.svg');
+    background-image: url('/src/assets/img/Preto.svg');
     background-size: cover;
     height: 100vh;
     display: flex;
@@ -54,7 +54,7 @@ th{
     background-color:#b8ccde;
     color: black;
     border-radius: 5px;
-    border: solid 0.5px #1a58dd;
+    border: solid 0.5px #062022;
     margin-bottom: 10px;
     text-decoration: none;
     display: flex;
@@ -90,7 +90,7 @@ input:focus{
     background-color: #b8ccde;
     color: white;
     border-radius: 5px;
-    border: solid 0.5px #6c9aff;
+    border: solid 0.5px #062022;
     margin-bottom: 10px;
     width: 120px;
 }
@@ -99,7 +99,7 @@ input:focus{
     background-color:red;
     color:white;
     border-radius: 5px;
-    border: solid 0.5px #6c9aff;
+    border: solid 0.5px #062022;
     margin-bottom: 10px;
     width: 120px;
 }
@@ -123,7 +123,7 @@ form{
     text-align: center;
     display: flex;
     flex-direction: column;
-    color: blue;
+    color: #062022;
 
 }
 

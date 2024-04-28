@@ -5,7 +5,7 @@ nav{
 .link{
 
     text-decoration: none;
-    background-color: #007bff;
+    background-color: #062022;
     border-radius: 5px;
     padding: 10px;
     color:#ffffff;
@@ -16,7 +16,7 @@ nav{
     
 }
 .link:hover{
- background-color:#0056b3 ;
+ background-color:#062022 ;
 }
 .icos{
     font-size: 20px;
