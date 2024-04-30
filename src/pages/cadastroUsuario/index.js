@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import '../../pages/global.css';
 import Menu from '../../componente/Menu';
+import Barrasuperior from '../../componente/Barrasuperior';
 import { useNavigate } from 'react-router-dom';
 import Head from '../../componente/Head';
 import api from '../../server/api';
@@ -42,6 +43,8 @@ export default function Cadastro() {
 
     return (
         <div className="dashboard-container">
+                  <Barrasuperior />
+      <div className='dashboard-main'>
             <div className='menu'>
                 <Menu />
             </div>
@@ -70,6 +73,7 @@ export default function Cadastro() {
                         <button type="submit">Cadastrar</button>
                     </form>
                 </section>
+            </div>
             </div>
         </div>
     );

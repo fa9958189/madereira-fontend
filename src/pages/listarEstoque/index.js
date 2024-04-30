@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import '../../pages/global.css';
 import Menu from '../../componente/Menu';
 import { FiTrash } from "react-icons/fi";
+import Barrasuperior from '../../componente/Barrasuperior';
 import { Link } from 'react-router-dom';
 import Head from '../../componente/Head';
 import { confirmAlert } from 'react-confirm-alert';
@@ -66,6 +67,8 @@ export default function ListaEstoque() {
 
   return (
     <div className="dashboard-container">
+                        <Barrasuperior />
+      <div className='dashboard-main'>
       <div className='menu'>
         <Menu />
       </div>
@@ -104,6 +107,7 @@ export default function ListaEstoque() {
             ))}
           </tbody>
         </table>
+      </div>
       </div>
     </div>
   );

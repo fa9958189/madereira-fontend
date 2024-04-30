@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Menu from '../../componente/Menu';
 import Head from '../../componente/Head';
 import { confirmAlert } from 'react-confirm-alert';
+import Barrasuperior from '../../componente/Barrasuperior';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import api from '../../server/api';
 import { Chart } from "react-google-charts";
@@ -64,6 +65,8 @@ export default function ListarGraficos() {
 
   return (
     <div className="dashboard-container">
+                        <Barrasuperior />
+      <div className='dashboard-main'>
       <div className='menu'>
         <Menu />
       </div>
@@ -86,6 +89,7 @@ export default function ListarGraficos() {
             }}
           />
         </div>
+      </div>
       </div>
     </div>
   );

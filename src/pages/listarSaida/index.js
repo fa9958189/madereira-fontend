@@ -3,6 +3,7 @@ import '../../pages/global.css';
 import Menu from '../../componente/Menu';
 import { FiTrash } from "react-icons/fi";
 import { Link } from 'react-router-dom';
+import Barrasuperior from '../../componente/Barrasuperior';
 import Head from '../../componente/Head';
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
@@ -57,6 +58,8 @@ export default function Listasaida() {
 
   return (
     <div className="dashboard-container">
+                        <Barrasuperior />
+      <div className='dashboard-main'>
       <div className='menu'>
         <Menu />
       </div>
@@ -94,6 +97,7 @@ export default function Listasaida() {
               ))}
             </tbody>
         </table>
+      </div>
       </div>
     </div>
   );

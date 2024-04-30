@@ -1,40 +1,43 @@
-import {FiLogOut} from 'react-icons/fi';
-import { FaReply } from "react-icons/fa";
-import {useNavigate} from 'react-router-dom';
+import { FiLogOut } from 'react-icons/fi';
+import { FaHamburger, FaReply, FaAlignJustify } from "react-icons/fa";
+import { useNavigate, Link } from 'react-router-dom';
 import { confirmAlert } from 'react-confirm-alert';
-import './styles.css';
+import '../../pages/global.css';
 
-export default function Head({title}){
+export default function Head({ title, to="" }) {
     const navigate = useNavigate();
-    function retornar(){
-      navigate(-1);
+
+    function retornar() {
+        navigate(-1);
     }
-    function sair(){
-       navigate("/");
+
+    function sair() {
+        navigate("/");
     }
-   const confirmarsaida=()=> {
-       confirmAlert({
-           message: "Deseja realmente sair?",
-           buttons: [
-          {
-              label: 'Sim',
-              onClick: () => {
-                sair();
-             }
-          },
-          {
-             label: 'Não',
-            // onClick: () => alert('Click No')
-           }
-           ]
-       });
-    
-        };
-    return(
+
+    const confirmarSaida = () => {
+        confirmAlert({
+            message: "Deseja realmente sair?",
+            buttons: [
+                {
+                    label: 'Sim',
+                    onClick: () => {
+                        sair();
+                    }
+                },
+                {
+                    label: 'Não',
+                    // onClick: () => alert('Click No')
+                }
+            ]
+        });
+    };
+
+    return (
         <div className="Head">
-            <FaReply onClick={retornar} size={24} color='blue' />
-            <h2>{title}</h2>
-            <FiLogOut onClick={confirmarsaida} size={24} color='blue' />
+            <FaAlignJustify className='btn-menu' size={24} color="blue" />
+            {to !== "" && <Link to={to} className='btn-novo'>Novo Cadastro</Link>}
+            <h3>{title}</h3>
         </div>
-    )
+    );
 }

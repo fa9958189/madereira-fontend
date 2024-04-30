@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import '../../pages/global.css';
 import Menu from '../../componente/Menu';
+import Barrasuperior from '../../componente/Barrasuperior';
 import { FiEdit, FiTrash } from "react-icons/fi";
 import { Link } from 'react-router-dom';
 import Head from '../../componente/Head';
@@ -59,6 +60,8 @@ export default function Listaproduto() {
 
   return (
     <div className="dashboard-container">
+            <Barrasuperior />
+      <div className='dashboard-main'>
       <div className='menu'>
         <Menu />
       </div>
@@ -104,5 +107,6 @@ export default function Listaproduto() {
         </table>
       </div>
     </div>
+  </div>
   );
 }

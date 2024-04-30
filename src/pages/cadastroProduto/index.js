@@ -1,6 +1,7 @@
 import React,{useState} from 'react';
 import '../../pages/global.css';
 import Menu from '../../componente/Menu';
+import Barrasuperior from '../../componente/Barrasuperior';
 import { FaSave } from "react-icons/fa";
 import { ImCancelCircle } from "react-icons/im";
 import api from '../../server/api';
@@ -51,6 +52,8 @@ export default function Cadastroproduto() {
 
     return (
         <div className="dashboard-container">
+                <Barrasuperior />
+      <div className='dashboard-main'>
             <div className='menu'>
                 <Menu />
             </div>
@@ -97,6 +100,7 @@ export default function Cadastroproduto() {
                     </form>
                 </div>
             </div>
+        </div>
         </div>
     )
 }

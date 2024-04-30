@@ -1,10 +1,36 @@
-.head{
+.barra{
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: space-between;
+    padding: 10px;
 }
 h2{
-    color: aliceblue;
+    color: #061a44;
     text-align: center;
     width: 95%;
 }
+
+.Head{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+ 
+}
+
+.btn-menu{
+    display: none;
+}
+
+
+@media only screen and (max-device-width: 900px) {
+    /* .menu { width:100%; } */
+    .btn-menu{
+      display: block;
+    } 
+    .btn-novo{
+        font-size: 8px;
+        width: 60px;
+    }
+
+
+    }

@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import '../../pages/global.css';
 import Menu from '../../componente/Menu';
@@ -7,6 +8,7 @@ import Head from '../../componente/Head';
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import api from '../../server/api';
+import Barrasuperior from '../../componente/Barrasuperior';
 
 export default function Listausuario() {
   const [banco, setBanco] = useState([]);
@@ -80,45 +82,48 @@ export default function Listausuario() {
 
   return (
     <div className="dashboard-container">
-      <div className='menu'>
-        <Menu />
-      </div>
-      <div className='principal'>
-        <Head title="Lista de Usuários" />
-        <Link to="/CadastroUsuario" className='btn-novo'>Novo Cadastro</Link>
-        <table>
-          <thead>
-            <tr>
-              <th>Id</th>
-              <th>Nome</th>
-              <th>Email</th>
-              <th></th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            {banco.map((usu) => (
-              <tr key={usu.id}>
-                <td>{usu.id}</td>
-                <td>{usu.nome}</td>
-                <td>{usu.email}</td>
-                <td className='botoes'>
-                  <Link to={`/editarusuario/${usu.id}`}>
-                    <FiEdit size={18} color='yellow' />
-                  </Link>
-                </td>
-                <td className='botoes'>
-                  <FiTrash
-                    size={18}
-                    color='red'
-                    onClick={() => apagar(usu.id)}
-                    cursor="pointer"
-                  />
-                </td>
+      <Barrasuperior />
+      <div className='dashboard-main'>
+        <div className='menu'> {/* Adicione a classe 'menu' aqui */}
+          <Menu />
+        </div>
+        <div className='principal'>
+          <Head title="Lista de Usuários" to="/CadastroUsuario" />
+          
+          <table>
+            <thead>
+              <tr>
+                <th>Id</th>
+                <th>Nome</th>
+                <th>Email</th>
+                <th></th>
+                <th></th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {banco.map((usu) => (
+                <tr key={usu.id}>
+                  <td>{usu.id}</td>
+                  <td>{usu.nome}</td>
+                  <td>{usu.email}</td>
+                  <td className='botoes'>
+                    <Link to={`/editarusuario/${usu.id}`}>
+                      <FiEdit size={18} color='yellow' />
+                    </Link>
+                  </td>
+                  <td className='botoes'>
+                    <FiTrash
+                      size={18}
+                      color='red'
+                      onClick={() => apagar(usu.id)}
+                      cursor="pointer"
+                    />
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

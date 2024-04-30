@@ -1,4 +1,5 @@
-import './styles.css';
+
+import '../../pages/global.css';
 import { Link } from 'react-router-dom';
 import { FiUser, FiPackage, FiArrowUpCircle, FiArchive, FiArrowDownCircle, FiBarChart2 } from "react-icons/fi"; // Importing React icons
 

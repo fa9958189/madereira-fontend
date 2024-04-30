@@ -5,6 +5,7 @@ import '../../pages/global.css';
 import Menu from '../../componente/Menu';
 import { FaSave } from "react-icons/fa";
 import { MdCancel } from "react-icons/md";
+import Barrasuperior from '../../componente/Barrasuperior';
 import { useNavigate } from 'react-router-dom';
 import Head from '../../componente/Head';
 import api from '../../server/api';
@@ -58,6 +59,8 @@ export default function Entradaproduto() {
 
   return (
     <div className="dashboard-container">
+                        <Barrasuperior />
+      <div className='dashboard-main'>
       <div className='menu'>
         <Menu />
       </div>
@@ -103,6 +106,7 @@ export default function Entradaproduto() {
             </div>
           </form>
         </div>
+      </div>
       </div>
     </div>
   );

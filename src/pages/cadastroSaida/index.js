@@ -4,6 +4,7 @@ import Menu from '../../componente/Menu';
 import Head from '../../componente/Head';
 import { FaSave } from "react-icons/fa";
 import { MdCancel } from "react-icons/md";
+import Barrasuperior from '../../componente/Barrasuperior';
 import { useNavigate } from 'react-router-dom';
 import api from '../../server/api';
 
@@ -54,6 +55,8 @@ export default function CadastroSaida() {
 
   return (
     <div className="dashboard-container">
+                        <Barrasuperior />
+      <div className='dashboard-main'>
       <div className='menu'>
         <Menu />
       </div>
@@ -99,6 +102,7 @@ export default function CadastroSaida() {
             </div>
           </form>
         </div>
+      </div>
       </div>
     </div>
   );
