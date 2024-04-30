@@ -54,11 +54,13 @@ table{
 td{
     border: solid 0.5px #adb9d3;
     padding: 5px;
-    color: #061a44
+    color: black
 }
+
 th{
-    color: aliceblue;
+    color: black;
 }
+
 .botoes:hover{
     cursor: pointer;
     background-color: rgba(0, 255, 255, 0);

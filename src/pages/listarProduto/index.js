@@ -85,7 +85,7 @@ export default function Listaproduto() {
                   <tr key={produto.id}>
                     <td>{produto.id}</td>
                     <td>{produto.status}</td>
-                    <td className="table-description">{produto.descricao}</td> {/* Aplicando a classe CSS 'table-description' */}
+                    <td>{produto.descricao}</td> {/* Aplicando a classe CSS 'table-description' */}
                     <td>{produto.estoque_minimo}</td>
                     <td>{produto.estoque_maximo}</td>
                     <td className='botoes'>
