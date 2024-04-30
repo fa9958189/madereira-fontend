@@ -60,53 +60,53 @@ export default function Listaproduto() {
 
   return (
     <div className="dashboard-container">
-            <Barrasuperior />
+      <Barrasuperior />
       <div className='dashboard-main'>
-      <div className='menu'>
-        <Menu />
-      </div>
-      <div className='principal'>
-        <Head title="Lista de Produtos" />
-        <Link to="/CadastroProduto" className='btn-novo'>Novo Cadastro</Link>
-        <table>
-          <thead>
-            <tr>
-              <th>Id</th>
-              <th>Status</th>
-              <th>Descrição</th>
-              <th>Estoque Mínimo</th>
-              <th>Estoque Máximo</th>
-              <th></th>
-              <th></th>
-            </tr>
-          </thead>
-              <tbody>
-                {produtos.map((produto) => (
-                  <tr key={produto.id}>
-                    <td>{produto.id}</td>
-                    <td>{produto.status}</td>
-                    <td>{produto.descricao}</td> {/* Aplicando a classe CSS 'table-description' */}
-                    <td>{produto.estoque_minimo}</td>
-                    <td>{produto.estoque_maximo}</td>
-                    <td className='botoes'>
-                      <Link to={`/editarproduto/${produto.id}`}>
-                        <FiEdit size={18} color='yellow' />
-                      </Link>
-                    </td>
-                    <td className='botoes'>
-                      <FiTrash
-                        size={18}
-                        color='red'
-                        onClick={() => apagar(produto.id)}
-                        cursor="pointer"
-                      />
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-        </table>
+        <div className='menu'>
+          <Menu />
+        </div>
+        <div className='principal'>
+          <Head title="Lista de Produtos" />
+          <Link to="/CadastroProduto" className='btn-novo'>Novo Cadastro</Link>
+          <table>
+            <thead>
+              <tr>
+                <th>Id</th>
+                <th>Status</th>
+                <th>Descrição</th>
+                <th>Estoque Mínimo (m)</th> {/* Atualização do cabeçalho da coluna */}
+                <th>Estoque Máximo (m)</th> {/* Atualização do cabeçalho da coluna */}
+                <th></th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              {produtos.map((produto) => (
+                <tr key={produto.id}>
+                  <td>{produto.id}</td>
+                  <td>{produto.status}</td>
+                  <td>{produto.descricao}</td>
+                  <td>{produto.estoque_minimo}</td>
+                  <td>{produto.estoque_maximo}</td>
+                  <td className='botoes'>
+                    <Link to={`/editarproduto/${produto.id}`}>
+                      <FiEdit size={18} color='yellow' />
+                    </Link>
+                  </td>
+                  <td className='botoes'>
+                    <FiTrash
+                      size={18}
+                      color='red'
+                      onClick={() => apagar(produto.id)}
+                      cursor="pointer"
+                    />
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
-  </div>
   );
 }

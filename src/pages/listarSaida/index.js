@@ -1,3 +1,5 @@
+// Listasaida.js
+
 import React, { useState, useEffect } from 'react';
 import '../../pages/global.css';
 import Menu from '../../componente/Menu';
@@ -58,31 +60,31 @@ export default function Listasaida() {
 
   return (
     <div className="dashboard-container">
-                        <Barrasuperior />
+      <Barrasuperior />
       <div className='dashboard-main'>
-      <div className='menu'>
-        <Menu />
-      </div>
-      <div className='principal'>
-        <Head title="Listar Saída" />
-        <Link to="/cadastroSaida" className='btn-novo'>Nova Saída</Link>
-        <table>
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Nome do Produto</th>
-              <th>Quantidade</th>
-              <th>Valor Unitário</th>
-              <th>Data de Saída</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
+        <div className='menu'>
+          <Menu />
+        </div>
+        <div className='principal'>
+          <Head title="Listar Saída" />
+          <Link to="/cadastroSaida" className='btn-novo'>Nova Saída</Link>
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Nome do Produto</th>
+                <th>Quantidade (m)</th> {/* Alteração do cabeçalho para representar metros */}
+                <th>Valor Unitário</th>
+                <th>Data de Saída</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
               {saidas && saidas.map((saida) => (
                 <tr key={saida.id}>
                   <td>{saida.id}</td>
                   <td>{saida.descricao}</td>
-                  <td>{saida.qtde}</td>
+                  <td>{saida.qtde}</td> {/* Modificação para representar a quantidade em metros */}
                   <td>{saida.valor_unitario}</td>
                   <td>{saida.data_saida}</td>
                   <td className='botoes'>
@@ -96,8 +98,8 @@ export default function Listasaida() {
                 </tr>
               ))}
             </tbody>
-        </table>
-      </div>
+          </table>
+        </div>
       </div>
     </div>
   );

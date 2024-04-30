@@ -44,7 +44,7 @@ export default function Entradaproduto() {
 
     const entrada = {
       id_produto,
-      qtde: parseInt(qtde),
+      qtde: parseFloat(qtde), // Convertendo para float
       valor_unitario: parseFloat(valor_unitario),
       data_entrada
     };
@@ -59,54 +59,55 @@ export default function Entradaproduto() {
 
   return (
     <div className="dashboard-container">
-                        <Barrasuperior />
+      <Barrasuperior />
       <div className='dashboard-main'>
-      <div className='menu'>
-        <Menu />
-      </div>
-      <div className='principal'>
-        <Head title="Cadastro de Entrada" />
-        <div className='form'>
-          <form className='form-cadastro' onSubmit={salvardados}>
-            <select className='select-produto' value={id_produto} onChange={e => setId_produto(e.target.value)}>
-              <option value="">Selecione um produto</option>
-              {produtos.map(produto => (
-                <option key={produto.id} value={produto.id}>
-                  {produto.descricao}
-                </option>
-              ))}
-            </select>
-            <input
-              type='number'
-              value={qtde}
-              onChange={e => setQtde(e.target.value)}
-              placeholder='Digite a quantidade'
-            />
-            <input
-              type='number'
-              value={valor_unitario}
-              onChange={e => setValor_unitario(e.target.value)}
-              placeholder='Digite o valor unitário'
-            />
-            <input
-              type='date'
-              value={data_entrada}
-              onChange={e => setData_entrada(e.target.value)}
-              placeholder='Data da Entrada'
-            />
-            <div className='acao'>
-              <button className='btn-save' type="submit">
-                <FaSave />
-                Salvar
-              </button>
-              <button className='btn-cancel' type="button">
-                <MdCancel />
-                Cancelar
-              </button>
-            </div>
-          </form>
+        <div className='menu'>
+          <Menu />
         </div>
-      </div>
+        <div className='principal'>
+          <Head title="Cadastro de Entrada" />
+          <div className='form'>
+            <form className='form-cadastro' onSubmit={salvardados}>
+              <select className='select-produto' value={id_produto} onChange={e => setId_produto(e.target.value)}>
+                <option value="">Selecione um produto</option>
+                {produtos.map(produto => (
+                  <option key={produto.id} value={produto.id}>
+                    {produto.descricao}
+                  </option>
+                ))}
+              </select>
+              <input
+                type='number'
+                step='0.01' // Permitindo valores decimais
+                value={qtde}
+                onChange={e => setQtde(e.target.value)}
+                placeholder='Digite a quantidade (m)'
+              />
+              <input
+                type='number'
+                value={valor_unitario}
+                onChange={e => setValor_unitario(e.target.value)}
+                placeholder='Digite o valor unitário'
+              />
+              <input
+                type='date'
+                value={data_entrada}
+                onChange={e => setData_entrada(e.target.value)}
+                placeholder='Data da Entrada'
+              />
+              <div className='acao'>
+                <button className='btn-save' type="submit">
+                  <FaSave />
+                  Salvar
+                </button>
+                <button className='btn-cancel' type="button">
+                  <MdCancel />
+                  Cancelar
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
       </div>
     </div>
   );
