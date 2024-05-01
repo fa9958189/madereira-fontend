@@ -11,44 +11,44 @@ import api from '../../server/api';
 export default function CadastroOrcamento() {
   const navigate = useNavigate();
   const [id_produto, setId_produto] = useState("");
-  const [qtde, setQtde] = useState("");
+  const [quantidade, setQuantidade] = useState("");
   const [valor_unitario, setValor_unitario] = useState("");
   const [data_saida, setData_saida] = useState("");
   const [produtos, setProdutos] = useState([]);
 
   useEffect(() => {
-    mostrardados();
+    mostrarProdutos();
   }, []);
 
-  function mostrardados() {
-    api.get('/produto')
+  function mostrarProdutos() {
+    api.get('/entrada')
       .then(res => {
-        setProdutos(res.data.produtos);
+        setProdutos(res.data.entradas);
       })
       .catch(error => {
         console.error('Erro ao buscar produtos:', error);
       });
   }
 
-  async function salvardados(e) {
+  function salvarOrcamento(e) {
     e.preventDefault();
 
-    if (!id_produto || !qtde || !valor_unitario || !data_saida) {
+    if (!id_produto || !quantidade || !valor_unitario || !data_saida) {
       alert("Preencha todos os campos!");
       return;
     }
 
     const orcamento = {
       id_produto,
-      qtde: parseFloat(qtde), // Alteração aqui para considerar a quantidade como decimal
+      quantidade: parseFloat(quantidade),
       valor_unitario: parseFloat(valor_unitario),
       data_saida
     };
 
-    api.post('/orcamento', orcamento) // Rota alterada para '/orcamento'
+    api.post('/orcamento', orcamento)
       .then(response => {
         alert(response.data.mensagem);
-        navigate('/listarOrcamento'); // Rota alterada para '/listarOrcamento'
+        navigate('/listarOrcamento');
       })
       .catch(error => console.error('Erro ao cadastrar orçamento:', error));
   }
@@ -63,27 +63,21 @@ export default function CadastroOrcamento() {
         <div className='principal'>
           <Head title="Cadastro de Orçamento" />
           <div className='form'>
-            <form className='form-cadastro' onSubmit={salvardados}>
+            <form className='form-cadastro' onSubmit={salvarOrcamento}>
               <select className='select-produto' value={id_produto} onChange={e => setId_produto(e.target.value)}>
                 <option value="">Selecione um produto</option>
                 {produtos.map(produto => (
                   <option key={produto.id} value={produto.id}>
-                    {produto.descricao}
+                    {produto.descricao} - R$ {produto.valor_unitario}
                   </option>
                 ))}
               </select>
               <input
                 type='number'
-                step='0.01' // Permitir a entrada de números decimais
-                value={qtde}
-                onChange={e => setQtde(e.target.value)}
-                placeholder='Digite a quantidade (metros)'
-              />
-              <input
-                type='number'
-                value={valor_unitario}
-                onChange={e => setValor_unitario(e.target.value)}
-                placeholder='Digite o valor unitário'
+                step='0.01'
+                value={quantidade}
+                onChange={e => setQuantidade(e.target.value)}
+                placeholder='Digite a quantidade'
               />
               <input
                 type='date'
