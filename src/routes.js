@@ -11,10 +11,11 @@ import Listaentrada from './pages/listaEntrada';
 import Entradaproduto from './pages/cadastroEntrada';
 import Listaestoque from './pages/listarEstoque';
 import Listasaida from './pages/listarSaida';  
-import CadastroSaida from './pages/cadastroSaida'; // Atualizado
-import ListarGraficos from './pages/listarGraficos'; // Alterado
-import Editarproduto from './pages/editarProduto'; 
-
+import CadastroSaida from './pages/cadastroSaida';
+import ListarGraficos from './pages/listarGraficos';
+import Editarproduto from './pages/editarProduto';
+import CadastroOrcamento from './pages/cadastroOrcamento';
+import ListarOrcamento from './pages/listarOrcamento'; // Importação do novo componente
 
 export default function Rotas() {
    return (
@@ -24,7 +25,7 @@ export default function Rotas() {
              <Route path="/dashboard" element={<Dashboard />} />
              <Route path="/listausuario" element={<Listausuario />} />
              <Route path="/listaprodutos" element={<Listaproduto />} />
-             <Route path="/listaentradaproduto" element={<Listaentrada />} />
+             <Route path="/listaentradaProduto" element={<Listaentrada />} />
              <Route path="/cadastrousuario" element={<CadastroUsuario />} />
              <Route path="/cadastroproduto" element={<Cadastroproduto />} />
              <Route path="/entradaproduto" element={<Entradaproduto />} />
@@ -34,6 +35,8 @@ export default function Rotas() {
              <Route path="/cadastroSaida" element={<CadastroSaida />} /> 
              <Route path="/listarGraficos" element={<ListarGraficos />} /> 
              <Route path="/editarproduto/:id" element={<Editarproduto />} /> 
+             <Route path="/cadastroOrcamento" element={<CadastroOrcamento />} />
+             <Route path="/listarOrcamento" element={<ListarOrcamento />} /> {/* Nova rota para listar orçamento */}
           </Routes>  
        </BrowserRouter>
    );
