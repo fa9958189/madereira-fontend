@@ -15,7 +15,8 @@ import CadastroSaida from './pages/cadastroSaida';
 import ListarGraficos from './pages/listarGraficos';
 import Editarproduto from './pages/editarProduto';
 import CadastroOrcamento from './pages/cadastroOrcamento';
-import ListarOrcamento from './pages/listarOrcamento'; // Importação do novo componente
+import ListarOrcamento from './pages/listarOrcamento';
+import ListarTabela from './pages/listarTabela'; // Importe o componente
 
 export default function Rotas() {
    return (
@@ -36,7 +37,8 @@ export default function Rotas() {
              <Route path="/listarGraficos" element={<ListarGraficos />} /> 
              <Route path="/editarproduto/:id" element={<Editarproduto />} /> 
              <Route path="/cadastroOrcamento" element={<CadastroOrcamento />} />
-             <Route path="/listarOrcamento" element={<ListarOrcamento />} /> {/* Nova rota para listar orçamento */}
+             <Route path="/listarOrcamento" element={<ListarOrcamento />} />
+             <Route path="/listarTabela" element={<ListarTabela />} /> {/* Adiciona a rota para listar tabelas */}
           </Routes>  
        </BrowserRouter>
    );

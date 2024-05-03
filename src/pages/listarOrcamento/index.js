@@ -59,7 +59,18 @@ export default function ListarOrcamento() {
         </div>
         <div className='principal'>
           <Head title="Listar Orçamentos" />
-          <Link to="/cadastroOrcamento" className='btn-novo'>Novo Orçamento</Link>
+        
+          <div class="container text-center">
+            <div class="row">
+              <div class="col">
+              <Link to="/cadastroOrcamento" className='btn-novo'>Novo Orçamento</Link>
+              </div>
+              <div class="col">
+              <Link to="/listarTabela" className='btn-novo'>Tabela Preço</Link>
+              </div>
+            </div>
+          </div>
+
           <table>
             <thead>
               <tr>

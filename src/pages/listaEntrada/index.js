@@ -68,7 +68,7 @@ export default function Listaentrada() {
               <th>ID</th>
               <th>Nome do Produto</th>
               <th>Quantidade</th>
-              <th>Valor Unitário</th>
+              <th>Valor (m)</th>
               <th>Data de Entrada</th>
               <th></th>
             </tr>

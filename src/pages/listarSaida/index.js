@@ -74,7 +74,7 @@ export default function Listasaida() {
                 <th>ID</th>
                 <th>Nome do Produto</th>
                 <th>Quantidade (m)</th> {/* Alteração do cabeçalho para representar metros */}
-                <th>Valor Unitário</th>
+                <th>Valor (m)</th>
                 <th>Data de Saída</th>
                 <th></th>
               </tr>
