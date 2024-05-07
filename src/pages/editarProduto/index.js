@@ -6,7 +6,7 @@ import { FaSave } from "react-icons/fa";
 import { useNavigate, useParams } from 'react-router-dom';
 import Head from '../../componente/Head';
 import api from '../../server/api';
-
+import Barrasuperior from '../../componente/Barrasuperior';
 
 export default function EditarProduto() {
     let { id } = useParams();
@@ -17,12 +17,12 @@ export default function EditarProduto() {
     const [estoque_maximo, setEstoque_maximo] = useState("");
 
     useEffect(() => {
-        mostrarDados(id);
-    }, [])
+        mostrarDados(id); // Passar o ID para a função mostrarDados
+    }, [id]); // Adicionar id como dependência para o useEffect
 
     async function mostrarDados(id) {
         const response = await api.get(`/produto/${id}`);
-        const produto = response.data.produtos;
+        const produto = response.data.produto;
 
         setStatus(produto.status);
         setDescricao(produto.descricao);
@@ -59,50 +59,52 @@ export default function EditarProduto() {
 
     return (
         <div className="dashboard-container">
-            <div className='menu'>
-                <Menu />
-            </div>
-            <div className='principal'>
-                <Head title="Editar Produto" />
-                <div className='form-container'>
-                    <form className='form-cadastro' onSubmit={salvarDados}>
-                        <input type='text'
-                            value={status}
-                            onChange={e => setStatus(e.target.value)}
-                            placeholder='Digite o status'
-                        />
-                        <input
-                            type='text'
-                            value={descricao}
-                            onChange={e => setDescricao(e.target.value)}
-                            placeholder='Digite a descrição'
-                        />
-                        <input
-                            type='number'
-                            value={estoque_minimo}
-                            onChange={e => setEstoque_minimo(e.target.value)}
-                            placeholder='Digite o estoque mínimo'
-                        />
-                        <input
-                            type='number'
-                            value={estoque_maximo}
-                            onChange={e => setEstoque_maximo(e.target.value)}
-                            placeholder='Digite o estoque máximo'
-                        />
-
-                        <div className='acao'>
-                            <button className='btn-save'>
-                                <FaSave />
-                                Salvar
-                            </button>
-                            <button className='btn-cancel'>
-                                <MdCancel />
-                                Cancelar
-                            </button>
-                        </div>
-                    </form>
+            <Barrasuperior />
+            <div className="dashboard-main">
+                <div className='menu'>
+                    <Menu />
+                </div>
+                <div className='principal'>
+                    <Head title="Editar Produto" />
+                    <div className='form-container'>
+                        <form className='form-cadastro' onSubmit={salvarDados}>
+                            <input type='text'
+                                value={status}
+                                onChange={e => setStatus(e.target.value)}
+                                placeholder='Digite o status'
+                            />
+                            <input
+                                type='text'
+                                value={descricao}
+                                onChange={e => setDescricao(e.target.value)}
+                                placeholder='Digite a descrição'
+                            />
+                            <input
+                                type='number'
+                                value={estoque_minimo}
+                                onChange={e => setEstoque_minimo(e.target.value)}
+                                placeholder='Digite o estoque mínimo'
+                            />
+                            <input
+                                type='number'
+                                value={estoque_maximo}
+                                onChange={e => setEstoque_maximo(e.target.value)}
+                                placeholder='Digite o estoque máximo'
+                            />
+                            <div className='acao'>
+                                <button className='btn-save'>
+                                    <FaSave />
+                                    Salvar
+                                </button>
+                                <button className='btn-cancel'>
+                                    <MdCancel />
+                                    Cancelar
+                                </button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
-    )
+    );
 }

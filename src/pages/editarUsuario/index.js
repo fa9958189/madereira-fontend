@@ -7,6 +7,7 @@ import { FaSave } from "react-icons/fa";
 import {useNavigate,useParams} from 'react-router-dom';
 import Head from '../../componente/Head';
 import api from '../../server/api';
+import Barrasuperior from '../../componente/Barrasuperior';
 
 export default function Editarusuario(){
   let { id } = useParams();
@@ -79,6 +80,8 @@ if(i==0)
  
   return(
     <div className="dashboard-container">
+    <Barrasuperior />
+    <div className="dashboard-main">
       
         <div className='menu'>
      
@@ -120,6 +123,7 @@ if(i==0)
             </div>
         </form>
    
+        </div>
         </div>
         </div>
     </div>
