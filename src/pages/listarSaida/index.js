@@ -68,6 +68,7 @@ export default function Listasaida() {
         <div className='principal'>
           <Head title="Listar Saída" />
           <Link to="/cadastroSaida" className='btn-novo'>Nova Saída</Link>
+          <div className="table-container">
           <table>
             <thead>
               <tr>
@@ -99,6 +100,7 @@ export default function Listasaida() {
               ))}
             </tbody>
           </table>
+        </div>
         </div>
       </div>
     </div>

@@ -68,43 +68,45 @@ export default function Listaproduto() {
         <div className='principal'>
           <Head title="Lista de Produtos" />
           <Link to="/CadastroProduto" className='btn-novo'>Novo Cadastro</Link>
-          <table>
-            <thead>
-              <tr>
-                <th>Id</th>
-                <th>Status</th>
-                <th>Descrição</th>
-                <th>Estoque Mínimo (m)</th> {/* Atualização do cabeçalho da coluna */}
-                <th>Estoque Máximo (m)</th> {/* Atualização do cabeçalho da coluna */}
-                <th></th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              {produtos.map((produto) => (
-                <tr key={produto.id}>
-                  <td>{produto.id}</td>
-                  <td>{produto.status}</td>
-                  <td>{produto.descricao}</td>
-                  <td>{produto.estoque_minimo}</td>
-                  <td>{produto.estoque_maximo}</td>
-                  <td className='botoes'>
-                    <Link to={`/editarproduto/${produto.id}`}>
-                      <FiEdit size={18} color='yellow' />
-                    </Link>
-                  </td>
-                  <td className='botoes'>
-                    <FiTrash
-                      size={18}
-                      color='red'
-                      onClick={() => apagar(produto.id)}
-                      cursor="pointer"
-                    />
-                  </td>
+          <div className="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>Id</th>
+                  <th>Status</th>
+                  <th>Descrição</th>
+                  <th>Estoque Mínimo (m)</th>
+                  <th>Estoque Máximo (m)</th>
+                  <th></th>
+                  <th></th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {produtos.map((produto) => (
+                  <tr key={produto.id}>
+                    <td>{produto.id}</td>
+                    <td>{produto.status}</td>
+                    <td>{produto.descricao}</td>
+                    <td>{produto.estoque_minimo}</td>
+                    <td>{produto.estoque_maximo}</td>
+                    <td className='botoes'>
+                      <Link to={`/editarproduto/${produto.id}`}>
+                        <FiEdit size={18} color='yellow' />
+                      </Link>
+                    </td>
+                    <td className='botoes'>
+                      <FiTrash
+                        size={18}
+                        color='red'
+                        onClick={() => apagar(produto.id)}
+                        cursor="pointer"
+                      />
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>

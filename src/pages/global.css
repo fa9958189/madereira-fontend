@@ -213,4 +213,38 @@ form{
             display: block;
         }
     }
-    
+    .chart-container {
+        overflow-y: auto; /* Adiciona rolagem vertical quando necessário */
+        max-height: calc(100vh - 200px); /* Define a altura máxima */
+      }
+      .table-container {
+        max-height: calc(90vh - 200px); /* Define a altura máxima da tabela */
+        overflow-y: auto; /* Adiciona rolagem vertical quando necessário */
+      }
+      
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      
+      th, td {
+        padding: 8px;
+        border-bottom: 1px solid #ddd;
+      }
+      
+      th {
+        background-color: #f2f2f2;
+        color: #333;
+        font-weight: bold;
+        text-align: left;
+      }
+      
+      tr:hover {
+        background-color: #f5f5f5;
+      }
+      
+      .botoes {
+        text-align: center;
+      }
+      
+      

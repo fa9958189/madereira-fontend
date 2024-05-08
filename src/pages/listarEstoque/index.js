@@ -76,6 +76,7 @@ export default function ListaEstoque() {
         <Head title="Listar Estoque" />
 
         {error && <p>{error}</p>}
+        <div className="table-container">
         <table>
           <thead>
             <tr>
@@ -107,6 +108,7 @@ export default function ListaEstoque() {
             ))}
           </tbody>
         </table>
+      </div>
       </div>
       </div>
     </div>

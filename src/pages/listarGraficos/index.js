@@ -6,7 +6,6 @@ import Barrasuperior from '../../componente/Barrasuperior';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import api from '../../server/api';
 import { Chart } from "react-google-charts";
-import './style.css'; // Importando arquivo de estilos CSS para este componente
 
 export default function ListarGraficos() {
   const [estoque, setEstoque] = useState([]);
@@ -65,31 +64,31 @@ export default function ListarGraficos() {
 
   return (
     <div className="dashboard-container">
-                        <Barrasuperior />
+      <Barrasuperior />
       <div className='dashboard-main'>
-      <div className='menu'>
-        <Menu />
-      </div>
-      <div className='principal'>
-        <Head title="Gráficos de Estoque" />
-        <div className="chart-container">
-          <Chart
-            width={'800px'} // Aumentando o tamanho do gráfico
-            height={'500px'} // Aumentando o tamanho do gráfico
-            chartType="BarChart"
-            loader={<div>Carregando Gráfico</div>}
-            data={dadosDoGrafico}
-            options={{
-              chart: {
-                title: 'Quantidade em Estoque por Produto',
-                subtitle: 'Quantidade em Estoque de cada Produto',
-              },
-              backgroundColor: 'transparent', // Definindo o fundo como transparente
-              legend: { position: 'top' }, // Centralizando a legenda no topo
-            }}
-          />
+        <div className='menu'>
+          <Menu />
         </div>
-      </div>
+        <div className='principal'>
+          <Head title="Gráficos de Estoque" />
+          <div className="chart-container">
+            <Chart
+              width={'800px'} // Aumentando o tamanho do gráfico
+              height={'500px'} // Aumentando o tamanho do gráfico
+              chartType="BarChart"
+              loader={<div>Carregando Gráfico</div>}
+              data={dadosDoGrafico}
+              options={{
+                chart: {
+                  title: 'Quantidade em Estoque por Produto',
+                  subtitle: 'Quantidade em Estoque de cada Produto',
+                },
+                backgroundColor: 'transparent', // Definindo o fundo como transparente
+                legend: { position: 'top' }, // Centralizando a legenda no topo
+              }}
+            />
+          </div>
+        </div>
       </div>
     </div>
   );

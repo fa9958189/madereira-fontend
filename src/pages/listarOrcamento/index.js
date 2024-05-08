@@ -71,6 +71,7 @@ export default function ListarOrcamento() {
             </div>
           </div>
 
+          <div className="table-container">
           <table>
             <thead>
               <tr>
@@ -105,6 +106,7 @@ export default function ListarOrcamento() {
             </tbody>
           </table>
         </div>
+      </div>
       </div>
     </div>
   );

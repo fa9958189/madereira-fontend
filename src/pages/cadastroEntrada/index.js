@@ -87,7 +87,7 @@ export default function Entradaproduto() {
                 type='number'
                 value={valor_unitario}
                 onChange={e => setValor_unitario(e.target.value)}
-                placeholder='Digite o valor unitário'
+                placeholder='Digite o valor do (m)'
               />
               <input
                 type='date'

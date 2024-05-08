@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import '../../pages/global.css';
 import Menu from '../../componente/Menu';
@@ -90,39 +89,41 @@ export default function Listausuario() {
         <div className='principal'>
           <Head title="Lista de Usuários" to="/CadastroUsuario" />
           
-          <table>
-            <thead>
-              <tr>
-                <th>Id</th>
-                <th>Nome</th>
-                <th>Email</th>
-                <th></th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              {banco.map((usu) => (
-                <tr key={usu.id}>
-                  <td>{usu.id}</td>
-                  <td>{usu.nome}</td>
-                  <td>{usu.email}</td>
-                  <td className='botoes'>
-                    <Link to={`/editarusuario/${usu.id}`}>
-                      <FiEdit size={18} color='yellow' />
-                    </Link>
-                  </td>
-                  <td className='botoes'>
-                    <FiTrash
-                      size={18}
-                      color='red'
-                      onClick={() => apagar(usu.id)}
-                      cursor="pointer"
-                    />
-                  </td>
+          <div className="table-container">          
+            <table>
+              <thead>
+                <tr>
+                  <th>Id</th>
+                  <th>Nome</th>
+                  <th>Email</th>
+                  <th></th>
+                  <th></th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {banco.map((usu) => (
+                  <tr key={usu.id}>
+                    <td>{usu.id}</td>
+                    <td>{usu.nome}</td>
+                    <td>{usu.email}</td>
+                    <td className='botoes'>
+                      <Link to={`/editarusuario/${usu.id}`}>
+                        <FiEdit size={18} color='yellow' />
+                      </Link>
+                    </td>
+                    <td className='botoes'>
+                      <FiTrash
+                        size={18}
+                        color='red'
+                        onClick={() => apagar(usu.id)}
+                        cursor="pointer"
+                      />
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>

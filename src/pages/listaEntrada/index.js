@@ -62,6 +62,7 @@ export default function Listaentrada() {
       <div className='principal'>
         <Head title="Listar Entrada " />
         <Link to="/entradaproduto" className='btn-novo'>Nova Entrada</Link>
+        <div className="table-container">
         <table>
           <thead>
             <tr>
@@ -93,6 +94,7 @@ export default function Listaentrada() {
             ))}
           </tbody>
         </table>
+      </div>
       </div>
       </div>
     </div>
