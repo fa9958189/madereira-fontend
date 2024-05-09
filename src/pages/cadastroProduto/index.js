@@ -57,7 +57,7 @@ export default function Cadastroproduto() {
                 </div>
                 <div className='principal'>
                     <Head title="Cadastro de Produto" />
-                    <div className='form'>
+                    <div className='form-container'>
                         <form className='form-cadastro' onSubmit={salvardados}>
                             <input type='text'
                                 value={status}

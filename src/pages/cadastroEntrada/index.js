@@ -66,8 +66,10 @@ export default function Entradaproduto() {
         </div>
         <div className='principal'>
           <Head title="Cadastro de Entrada" />
-          <div className='form'>
+          <div className='form-container'>
             <form className='form-cadastro' onSubmit={salvardados}>
+
+            <div className="table-container">  
               <select className='select-produto' value={id_produto} onChange={e => setId_produto(e.target.value)}>
                 <option value="">Selecione um produto</option>
                 {produtos.map(produto => (
@@ -76,6 +78,8 @@ export default function Entradaproduto() {
                   </option>
                 ))}
               </select>
+              </div>
+              
               <input
                 type='number'
                 step='0.01' // Permitindo valores decimais

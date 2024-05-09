@@ -64,8 +64,11 @@ export default function EditarProduto() {
                 <div className='menu'>
                     <Menu />
                 </div>
+
+                
                 <div className='principal'>
                     <Head title="Editar Produto" />
+                    
                     <div className='form-container'>
                         <form className='form-cadastro' onSubmit={salvarDados}>
                             <input type='text'

@@ -50,7 +50,7 @@ export default function Cadastro() {
             </div>
             <div className='principal'>
                 <Head title="Cadastro Usuario" />
-                <section className="form">
+                <section className="form-container">
                     <form onSubmit={salvardados}>
                         <input
                             placeholder="Nome"

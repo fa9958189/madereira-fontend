@@ -7,7 +7,6 @@ import Barrasuperior from '../../componente/Barrasuperior';
 import Head from '../../componente/Head';
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
-import api from '../../server/api';
 
 export default function ListarOrcamento() {
   const [orcamentos, setOrcamentos] = useState([]);
@@ -17,17 +16,24 @@ export default function ListarOrcamento() {
   }, []);
 
   function mostrarOrcamentos() {
-    api.get('/orcamento')
-      .then(res => {
-        setOrcamentos(res.data.orcamentos);
+    fetch('http://localhost:5000/orcamento')
+      .then(response => response.json())
+      .then(data => {
+        setOrcamentos(data.orcamentos);
       })
       .catch(error => console.error('Erro ao buscar orçamentos:', error));
   }
 
   const removerOrcamento = (id) => {
-    api.delete(`/orcamento/${id}`)
-      .then(response => {
-        alert(response.data.mensagem);
+    const requestOptions = {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+    };
+
+    fetch(`http://localhost:5000/orcamento/${id}`, requestOptions)
+      .then(response => response.json())
+      .then(data => {
+        alert(data.mensagem);
         mostrarOrcamentos();
       })
       .catch(error => console.error('Erro ao excluir orçamento:', error));
@@ -58,55 +64,42 @@ export default function ListarOrcamento() {
           <Menu />
         </div>
         <div className='principal'>
-          <Head title="Listar Orçamentos" />
-        
-          <div class="container text-center">
-            <div class="row">
-              <div class="col">
-              <Link to="/cadastroOrcamento" className='btn-novo'>Novo Orçamento</Link>
-              </div>
-              <div class="col">
-              <Link to="/listarTabela" className='btn-novo'>Tabela Preço</Link>
-              </div>
-            </div>
-          </div>
-
+          <Head title="Listar Orçamento" />
+          <Link to="/cadastroOrcamento" className='btn-novo'>Novo Orçamento</Link>
           <div className="table-container">
-          <table>
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Nome do Produto</th>
-                <th>Quantidade</th>
-                <th>Valor Unitário</th>
-                <th>Total</th>
-                <th>Data de Saída</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              {orcamentos.map((orcamento) => (
-                <tr key={orcamento.id}>
-                  <td>{orcamento.id}</td>
-                  <td>{orcamento.nome_produto}</td>
-                  <td>{orcamento.quantidade}</td>
-                  <td>R$ {orcamento.valor_unitario}</td>
-                  <td>R$ {orcamento.total}</td>
-                  <td>{orcamento.data_saida}</td>
-                  <td className='botoes'>
-                    <FiTrash
-                      size={18}
-                      color='red'
-                      onClick={() => apagar(orcamento.id)}
-                      cursor="pointer"
-                    />
-                  </td>
+            <table>
+              <thead>
+                <tr>
+                  <th>Número</th>
+                  <th>Descrição do Item</th>
+                  <th>Quantidade</th>
+                  <th>Valor Unitário</th>
+                  <th>Total</th>
+                  <th></th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {orcamentos && orcamentos.map((orcamento, index) => (
+                  <tr key={index}>
+                    <td>{orcamento.numero}</td>
+                    <td>{orcamento.descricao_item}</td>
+                    <td>{orcamento.quantidade}</td>
+                    <td>{orcamento.valor_unitario}</td>
+                    <td>{orcamento.total}</td>
+                    <td className='botoes'>
+                      <FiTrash
+                        size={18}
+                        color='red'
+                        onClick={() => apagar(orcamento.id)}
+                        cursor="pointer"
+                      />
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
-      </div>
       </div>
     </div>
   );

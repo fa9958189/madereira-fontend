@@ -60,10 +60,14 @@ export default function CadastroSaida() {
         <div className='menu'>
           <Menu />
         </div>
+
         <div className='principal'>
           <Head title="Cadastro de Saída" />
+          
           <div className='form'>
             <form className='form-cadastro' onSubmit={salvardados}>
+
+            <div className="table-container"> 
               <select className='select-produto' value={id_produto} onChange={e => setId_produto(e.target.value)}>
                 <option value="">Selecione um produto</option>
                 {produtos.map(produto => (
@@ -72,6 +76,8 @@ export default function CadastroSaida() {
                   </option>
                 ))}
               </select>
+              </div>
+
               <input
                 type='number'
                 step='0.01' // Permitir a entrada de números decimais

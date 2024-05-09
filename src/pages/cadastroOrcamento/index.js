@@ -1,5 +1,3 @@
-// frontend/src/pages/CadastroOrcamento.js
-
 import React, { useState, useEffect } from 'react';
 import '../../pages/global.css';
 import Menu from '../../componente/Menu';
@@ -12,10 +10,10 @@ import api from '../../server/api';
 
 export default function CadastroOrcamento() {
   const navigate = useNavigate();
-  const [id_produto, setId_produto] = useState("");
   const [quantidade, setQuantidade] = useState("");
-  const [valor_unitario, setValor_unitario] = useState("");
-  const [data_saida, setData_saida] = useState("");
+  const [valorUnitario, setValorUnitario] = useState("");
+  const [total, setTotal] = useState("");
+  const [selectedProduct, setSelectedProduct] = useState("");
   const [produtos, setProdutos] = useState([]);
 
   useEffect(() => {
@@ -23,28 +21,37 @@ export default function CadastroOrcamento() {
   }, []);
 
   function mostrarProdutos() {
-    api.get('/entrada')
+    api.get('/orcamento')
       .then(res => {
-        setProdutos(res.data.entradas);
+        setProdutos(res.data.orcamentos);
       })
       .catch(error => {
         console.error('Erro ao buscar produtos:', error);
       });
   }
 
+  function calcularTotal() {
+    const quantidadeFloat = parseFloat(quantidade);
+    const valorUnitarioFloat = parseFloat(valorUnitario);
+    const totalCalc = quantidadeFloat * valorUnitarioFloat;
+    setTotal(totalCalc.toFixed(2));
+  }
+
   function salvarOrcamento(e) {
     e.preventDefault();
 
-    if (!id_produto || !quantidade || !valor_unitario || !data_saida) {
-      alert("Preencha todos os campos!");
+    if (!quantidade || !valorUnitario || !selectedProduct) {
+      alert("Preencha todos os campos obrigatórios!");
       return;
     }
 
+    calcularTotal();
+
     const orcamento = {
-      id_produto,
       quantidade: parseFloat(quantidade),
-      valor_unitario: parseFloat(valor_unitario),
-      data_saida
+      valor_unitario: parseFloat(valorUnitario),
+      total: parseFloat(total),
+      id_produto: selectedProduct
     };
 
     api.post('/orcamento', orcamento)
@@ -66,26 +73,36 @@ export default function CadastroOrcamento() {
           <Head title="Cadastro de Orçamento" />
           <div className='form'>
             <form className='form-cadastro' onSubmit={salvarOrcamento}>
-              <select className='select-produto' value={id_produto} onChange={e => setId_produto(e.target.value)}>
-                <option value="">Selecione um produto</option>
-                {produtos.map(produto => (
-                  <option key={produto.id} value={produto.id}>
-                    {produto.descricao} - R$ {produto.valor_unitario}
-                  </option>
-                ))}
-              </select>
+              <div className="table-container"> 
+                <select className='select-produto' value={selectedProduct} onChange={e => setSelectedProduct(e.target.value)}>
+                  <option value="">Selecione um produto</option>
+                  {produtos.map(produto => (
+                    <option key={produto.id} value={produto.id}>
+                      {produto.descricao}
+                    </option>
+                  ))}
+                </select>
+              </div>
               <input
                 type='number'
                 step='0.01'
                 value={quantidade}
                 onChange={e => setQuantidade(e.target.value)}
-                placeholder='Digite a quantidade'
+                placeholder='Quantidade'
               />
               <input
-                type='date'
-                value={data_saida}
-                onChange={e => setData_saida(e.target.value)}
-                placeholder='Data da Saída'
+                type='number'
+                step='0.01'
+                value={valorUnitario}
+                onChange={e => setValorUnitario(e.target.value)}
+                onBlur={calcularTotal}
+                placeholder='Valor Unitário'
+              />
+              <input
+                type='text'
+                value={total}
+                readOnly
+                placeholder='Total'
               />
               <div className='acao'>
                 <button className='btn-save' type="submit">
