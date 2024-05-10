@@ -19,6 +19,7 @@ export default function ListarOrcamento() {
     fetch('http://localhost:5000/orcamento')
       .then(response => response.json())
       .then(data => {
+        console.log(data.orcamentos)
         setOrcamentos(data.orcamentos);
       })
       .catch(error => console.error('Erro ao buscar orçamentos:', error));
@@ -71,7 +72,7 @@ export default function ListarOrcamento() {
               <thead>
                 <tr>
                   <th>Número</th>
-                  <th>Descrição do Item</th>
+                  <th>Produto</th>
                   <th>Quantidade</th>
                   <th>Valor Unitário</th>
                   <th>Total</th>
@@ -81,8 +82,8 @@ export default function ListarOrcamento() {
               <tbody>
                 {orcamentos && orcamentos.map((orcamento, index) => (
                   <tr key={index}>
-                    <td>{orcamento.numero}</td>
-                    <td>{orcamento.descricao_item}</td>
+                    <td>{index}</td>
+                    <td>{orcamento.descricao}</td>
                     <td>{orcamento.quantidade}</td>
                     <td>{orcamento.valor_unitario}</td>
                     <td>{orcamento.total}</td>

@@ -16,14 +16,15 @@ export default function CadastroOrcamento() {
   const [selectedProduct, setSelectedProduct] = useState("");
   const [produtos, setProdutos] = useState([]);
 
+
   useEffect(() => {
     mostrarProdutos();
   }, []);
 
   function mostrarProdutos() {
-    api.get('/orcamento')
+    api.get('/produto')
       .then(res => {
-        setProdutos(res.data.orcamentos);
+        setProdutos(res.data.produtos);
       })
       .catch(error => {
         console.error('Erro ao buscar produtos:', error);
@@ -71,8 +72,9 @@ export default function CadastroOrcamento() {
         </div>
         <div className='principal'>
           <Head title="Cadastro de Orçamento" />
-          <div className='form'>
+          <div className='form-container'>
             <form className='form-cadastro' onSubmit={salvarOrcamento}>
+
               <div className="table-container"> 
                 <select className='select-produto' value={selectedProduct} onChange={e => setSelectedProduct(e.target.value)}>
                   <option value="">Selecione um produto</option>
@@ -83,12 +85,13 @@ export default function CadastroOrcamento() {
                   ))}
                 </select>
               </div>
+              
               <input
                 type='number'
                 step='0.01'
                 value={quantidade}
                 onChange={e => setQuantidade(e.target.value)}
-                placeholder='Quantidade'
+                placeholder='Quantidade (m)'
               />
               <input
                 type='number'
@@ -96,7 +99,7 @@ export default function CadastroOrcamento() {
                 value={valorUnitario}
                 onChange={e => setValorUnitario(e.target.value)}
                 onBlur={calcularTotal}
-                placeholder='Valor Unitário'
+                placeholder='Valor (m)'
               />
               <input
                 type='text'

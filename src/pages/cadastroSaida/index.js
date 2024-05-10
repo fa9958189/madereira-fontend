@@ -8,20 +8,20 @@ import Barrasuperior from '../../componente/Barrasuperior';
 import { useNavigate } from 'react-router-dom';
 import api from '../../server/api';
 
-export default function CadastroSaida() {
+export default function CadastroOrcamento() {
   const navigate = useNavigate();
-  const [id_produto, setId_produto] = useState("");
-  const [qtde, setQtde] = useState("");
-  const [valor_unitario, setValor_unitario] = useState("");
-  const [data_saida, setData_saida] = useState("");
+  const [quantidade, setQuantidade] = useState("");
+  const [valorUnitario, setValorUnitario] = useState("");
+  const [total, setTotal] = useState("");
+  const [selectedProduct, setSelectedProduct] = useState("");
   const [produtos, setProdutos] = useState([]);
 
   useEffect(() => {
-    mostrardados();
+    mostrarProdutos();
   }, []);
 
-  function mostrardados() {
-    api.get('/produto')
+  function mostrarProdutos() {
+    api.get('/produto') // Alteração aqui para buscar os produtos na rota correta
       .then(res => {
         setProdutos(res.data.produtos);
       })
@@ -30,27 +30,36 @@ export default function CadastroSaida() {
       });
   }
 
-  async function salvardados(e) {
+  function calcularTotal() {
+    const quantidadeFloat = parseFloat(quantidade);
+    const valorUnitarioFloat = parseFloat(valorUnitario);
+    const totalCalc = quantidadeFloat * valorUnitarioFloat;
+    setTotal(totalCalc.toFixed(2));
+  }
+
+  function salvarOrcamento(e) {
     e.preventDefault();
 
-    if (!id_produto || !qtde || !valor_unitario || !data_saida) {
-      alert("Preencha todos os campos!");
+    if (!quantidade || !valorUnitario || !selectedProduct) {
+      alert("Preencha todos os campos obrigatórios!");
       return;
     }
 
-    const saida = {
-      id_produto,
-      qtde: parseFloat(qtde), // Alteração aqui para considerar a quantidade como decimal
-      valor_unitario: parseFloat(valor_unitario),
-      data_saida
+    calcularTotal();
+
+    const orcamento = {
+      quantidade: parseFloat(quantidade),
+      valor_unitario: parseFloat(valorUnitario),
+      total: parseFloat(total),
+      id_produto: selectedProduct
     };
 
-    api.post('/saida', saida)
+    api.post('/orcamento', orcamento)
       .then(response => {
         alert(response.data.mensagem);
-        navigate('/listarsaida');
+        navigate('/listarOrcamento');
       })
-      .catch(error => console.error('Erro ao cadastrar saída de produto:', error));
+      .catch(error => console.error('Erro ao cadastrar orçamento:', error));
   }
 
   return (
@@ -60,42 +69,42 @@ export default function CadastroSaida() {
         <div className='menu'>
           <Menu />
         </div>
-
         <div className='principal'>
-          <Head title="Cadastro de Saída" />
-          
-          <div className='form'>
-            <form className='form-cadastro' onSubmit={salvardados}>
+          <Head title="Cadastro de Orçamento" />
+          <div className='form-container'>
+            <form className='form-cadastro' onSubmit={salvarOrcamento}>
 
-            <div className="table-container"> 
-              <select className='select-produto' value={id_produto} onChange={e => setId_produto(e.target.value)}>
-                <option value="">Selecione um produto</option>
-                {produtos.map(produto => (
-                  <option key={produto.id} value={produto.id}>
-                    {produto.descricao}
-                  </option>
-                ))}
-              </select>
+              <div className="table-container"> 
+                <select className='select-produto' value={selectedProduct} onChange={e => setSelectedProduct(e.target.value)}>
+                  <option value="">Selecione um produto</option>
+                  {produtos.map(produto => (
+                    <option key={produto.id} value={produto.id}>
+                      {produto.descricao}
+                    </option>
+                  ))}
+                </select>
               </div>
-
+              
               <input
                 type='number'
-                step='0.01' // Permitir a entrada de números decimais
-                value={qtde}
-                onChange={e => setQtde(e.target.value)}
-                placeholder='Digite a quantidade (metros)'
+                step='0.01'
+                value={quantidade}
+                onChange={e => setQuantidade(e.target.value)}
+                placeholder='Quantidade'
               />
               <input
                 type='number'
-                value={valor_unitario}
-                onChange={e => setValor_unitario(e.target.value)}
-                placeholder='Digite o valor unitário'
+                step='0.01'
+                value={valorUnitario}
+                onChange={e => setValorUnitario(e.target.value)}
+                onBlur={calcularTotal}
+                placeholder='Valor Unitário'
               />
               <input
-                type='date'
-                value={data_saida}
-                onChange={e => setData_saida(e.target.value)}
-                placeholder='Data da Saída'
+                type='text'
+                value={total}
+                readOnly
+                placeholder='Total'
               />
               <div className='acao'>
                 <button className='btn-save' type="submit">
