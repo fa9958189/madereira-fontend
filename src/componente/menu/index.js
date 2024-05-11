@@ -12,7 +12,7 @@ export default function Menu() {
                 <Link to="/listaprodutos" className='link'><FiPackage className='icos' />Produto</Link> {/* Product icon */}
                 <Link to="/listaentradaProduto" className='link'><FiArrowUpCircle className='icos' />Entrada produto</Link> {/* Product entry icon */}
                 <Link to="/listaestoque" className='link'><FiArchive className='icos' />Estoque</Link> {/* Stock icon */}
-                <Link to="/listarSaida" className='link'><FiArrowDownCircle className='icos' />Saída</Link> {/* Exit icon */}
+                <Link to="/listarSaida" className='link'><FiArrowDownCircle className='icos' />Vendas</Link> {/* Exit icon */}
                 <Link to="/listarOrcamento" className='link'><FiDollarSign className='icos' />Orçamento</Link> {/* Budget icon */}
             </nav>
         </div>
