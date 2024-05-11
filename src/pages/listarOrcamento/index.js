@@ -47,7 +47,15 @@ export default function ListarOrcamento() {
       buttons: [
         {
           label: 'Sim',
-          onClick: () => removerOrcamento(id)
+          onClick: () => {
+            fetch(`http://localhost:5000/orcamento/${id}`, { method: 'DELETE' })
+              .then(response => response.json())
+              .then(data => {
+                alert(data.mensagem);
+                mostrarOrcamentos();
+              })
+              .catch(error => console.error('Erro ao excluir orçamento:', error));
+          }
         },
         {
           label: 'Não',
@@ -73,16 +81,16 @@ export default function ListarOrcamento() {
                 <tr>
                   <th>Número</th>
                   <th>Produto</th>
-                  <th>Quantidade</th>
+                  <th>Quantidade (m)</th>
                   <th>Valor Unitário</th>
                   <th>Total</th>
                   <th></th>
                 </tr>
               </thead>
               <tbody>
-                {orcamentos && orcamentos.map((orcamento, index) => (
-                  <tr key={index}>
-                    <td>{index}</td>
+                {orcamentos.map((orcamento, index) => (
+                  <tr key={orcamento.id}>
+                    <td>{index + 1}</td>
                     <td>{orcamento.descricao}</td>
                     <td>{orcamento.quantidade}</td>
                     <td>{orcamento.valor_unitario}</td>
@@ -99,6 +107,11 @@ export default function ListarOrcamento() {
                 ))}
               </tbody>
             </table>
+          </div>
+          <div className="fechar-container">
+            <Link to="/listarTabela" className='btn-fechar'>Finalizar Orçamento</Link>
+            <button className='btn-fechar'>Confirmar Venda</button>
+            <button className='btn-fechar' onClick={() => apagar()}>Deletar Orçamento</button>
           </div>
         </div>
       </div>

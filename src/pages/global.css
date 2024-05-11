@@ -246,5 +246,26 @@ form{
       .botoes {
         text-align: center;
       }
-      
-      
+      /* ListarOrcamento.css */
+        .btn-fechar {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #062022;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+        
+        .btn-fechar:hover {
+            background-color:  #b8ccde;
+            border-color: #0056b3;
+        }
+        .fechar-container {
+            text-align: center;
+            margin-top: 20px;
+          }
+
+
+                        

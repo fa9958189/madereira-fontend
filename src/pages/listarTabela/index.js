@@ -10,56 +10,71 @@ import 'react-confirm-alert/src/react-confirm-alert.css';
 import api from '../../server/api';
 
 export default function ListarTabela() {
-  const [entradas, setEntradas] = useState([]);
+  const [orcamentos, setOrcamentos] = useState([]);
+  const [count, setCount] = useState(0)
 
   useEffect(() => {
-    mostrarEntradas();
+    mostrarOrcamentos();
   }, []);
-
-  function mostrarEntradas() {
-    api.get('/entrada')
+  const contar = () => {
+    const newCount = count + 1;
+    setCount(newCount);
+    return newCount;
+  };
+  function mostrarOrcamentos() {
+    api.get('/orcamento')
       .then(res => {
-        setEntradas(res.data.entradas);
+        setOrcamentos(res.data.orcamentos);
       })
-      .catch(error => console.error('Erro ao buscar entradas de produto:', error));
+      .catch(error => console.error('Erro ao buscar orçamentos:', error));
   }
 
   const imprimirTabela = () => {
     window.print();
   };
 
-return (
-  <div className="dashboard-container">
-    <Barrasuperior />
-    <div className='dashboard-main'>
- 
-      <div className='principal'>
-        <Head title="Tabela de Preço" />
+  return (
+    <div className="dashboard-container">
+      <Barrasuperior />
+      <div className='dashboard-main'>
 
-        <div className='btn-novo'>  
-        <button onClick={imprimirTabela}>Imprimir Tabela</button>
+        <div className='principal'>
+          <Head title="Tabela de Orçamentos" />
+
+
+          <div className="fechar-container"> {/* Nova div para o botão */}
+            <div className='btn-fechar'>
+            <button onClick={imprimirTabela}>Imprimir Tabela</button>
+            </div>
+          </div>
+          
+          
+
+          <table>
+            <thead>
+              <tr>
+                <th>Número</th>
+                <th>Produto</th>
+                <th>Quantidade (m)</th>
+                <th>Valor Unitário</th>
+                <th>Total</th>
+              </tr>
+            </thead>
+            <tbody>
+             {orcamentos.map((orcamento, index) => (
+                  <tr key={orcamento.id}>
+                    <td>{index + 1}</td>
+                    <td>{orcamento.descricao}</td>
+                    <td>{orcamento.quantidade}</td>
+                    <td>{orcamento.valor_unitario}</td>
+                    <td>{orcamento.total}</td>
+                  </tr>
+                ))}
+
+            </tbody>
+          </table>
         </div>
-      
-      <table>
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Nome do Produto</th>
-            <th>Valor (m)</th>
-          </tr>
-        </thead>
-        <tbody>
-          {entradas.map((enpr) => (
-            <tr key={enpr.id}>
-              <td>{enpr.id}</td>
-              <td>{enpr.descricao}</td>
-              <td>{enpr.valor_unitario}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
       </div>
     </div>
-  </div>
-);
+  );
 }
