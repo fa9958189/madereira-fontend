@@ -86,6 +86,7 @@ export default function Listausuario() {
         <div className='menu'> {/* Adicione a classe 'menu' aqui */}
           <Menu />
         </div>
+        
         <div className='principal'>
           <Head title="Lista de Usuários" to="/CadastroUsuario" />
           
