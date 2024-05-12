@@ -26,13 +26,13 @@ export default function ListarCliente() {
     listarClientes();
   }, []);
 
-  const removerCliente = (id) => {
-    const novosClientes = clientes.filter(cliente => cliente.id !== id);
+  const removerCliente = (id_cliente) => {
+    const novosClientes = clientes.filter(cliente => cliente.id_cliente !== id_cliente);
     setClientes(novosClientes);
-    api.delete(`/cliente/${id}`)
+    api.delete(`/cliente/${id_cliente}`)
       .then(res => {
         if (res.status === 200) {
-          console.log(`Cliente com ID ${id} excluído com sucesso!`);
+          console.log(`Cliente com ID ${id_cliente} excluído com sucesso!`);
         } else {
           console.error("Erro ao excluir cliente:", res.data);
         }
@@ -42,14 +42,14 @@ export default function ListarCliente() {
       });
   };
 
-  const confirmarExclusao = (id) => {
+  const confirmarExclusao = (id_cliente) => {
     confirmAlert({
       title: 'Excluir Cliente',
       message: 'Deseja realmente excluir este cliente?',
       buttons: [
         {
           label: 'Sim',
-          onClick: () => removerCliente(id)
+          onClick: () => removerCliente(id_cliente)
         },
         {
           label: 'Não',
@@ -74,27 +74,27 @@ export default function ListarCliente() {
             <table>
               <thead>
                 <tr>
-                  <th>Id</th>
+                  <th>Id Cliente</th>
                   <th>Nome</th>
                   <th>CPF</th>
-                  <th>Data de Cadastro</th>
                   <th>Bairro</th>
                   <th>Telefone</th>
+                  <th>Data de Cadastro</th>
                   <th></th>
                   <th></th>
                 </tr>
               </thead>
               <tbody>
                 {clientes.map(cliente => (
-                  <tr key={cliente.id}>
-                    <td>{cliente.id}</td>
+                  <tr key={cliente.id_cliente}>
+                    <td>{cliente.id_cliente}</td>
                     <td>{cliente.nome}</td>
                     <td>{cliente.cpf}</td>
-                    <td>{cliente.data}</td>
                     <td>{cliente.bairro}</td>
                     <td>{cliente.telefone}</td>
+                    <td>{cliente.data}</td>
                     <td className='botoes'>
-                      <Link to={`/editarcliente/${cliente.id}`}>
+                      <Link to={`/editarcliente/${cliente.id_cliente}`}>
                         <FiEdit size={18} color='yellow' />
                       </Link>
                     </td>
@@ -102,7 +102,7 @@ export default function ListarCliente() {
                       <FiTrash
                         size={18}
                         color='red'
-                        onClick={() => confirmarExclusao(cliente.id)}
+                        onClick={() => confirmarExclusao(cliente.id_cliente)}
                         cursor="pointer"
                       />
                     </td>

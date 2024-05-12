@@ -60,12 +60,6 @@ export default function CadastroCliente() {
                                 onChange={(e) => setCpf(e.target.value)}
                             />
                             <input
-                                placeholder="Data de Cadastro"
-                                type="date"
-                                value={data}
-                                onChange={(e) => setData(e.target.value)}
-                            />
-                            <input
                                 placeholder="Bairro"
                                 type="text"
                                 value={bairro}
@@ -76,6 +70,12 @@ export default function CadastroCliente() {
                                 type="text"
                                 value={telefone}
                                 onChange={(e) => setTelefone(e.target.value)}
+                            />
+                            <input
+                                placeholder="Data de Cadastro"
+                                type="date"
+                                value={data}
+                                onChange={(e) => setData(e.target.value)}
                             />
                             <button type="submit">Cadastrar</button>
                         </form>
