@@ -78,8 +78,12 @@ export default function ListarCliente() {
                   <th>Id Cliente</th>
                   <th>Nome</th>
                   <th>CPF</th>
+                  <th>CEP</th>
                   <th>Bairro</th>
-                  <th>Telefone</th>
+                  <th>Logradouro</th>
+                  <th>Cidade</th>
+                  <th>UF</th>
+                  <th>Contato</th>
                   <th>Data de Cadastro</th>
                   <th></th>
                   <th></th>
@@ -91,7 +95,11 @@ export default function ListarCliente() {
                     <td>{cliente.id_cliente}</td>
                     <td>{cliente.nome}</td>
                     <td>{cliente.cpf}</td>
+                    <td>{cliente.cep}</td>
                     <td>{cliente.bairro}</td>
+                    <td>{cliente.logradouro}</td>
+                    <td>{cliente.cidade}</td>
+                    <td>{cliente.uf}</td>
                     <td>{cliente.contato}</td>
                     <td>{cliente.data}</td>
                     <td className='botoes'>

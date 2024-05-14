@@ -11,13 +11,13 @@ export default function CadastroCliente() {
     const [cliente, setCliente] = useState({
         nome: '',
         cpf: '',
-        data: '',
+        cep: '',
         bairro: '',
         logradouro: '',
         cidade: '',
         uf: '',
-        cep: '',
-        contato: ''
+        contato: '',
+        data: ''
     });
 
     const handleChange = (event) => {
@@ -75,51 +75,70 @@ export default function CadastroCliente() {
                     <section className="form-container">
                         <form onSubmit={salvarCliente}>
                             <div className='corex'> {/* Aplicando a classe corex aqui */}
-                                <label>
-                                    Nome
-                                </label>
-                                <input type="text" name="nome" value={cliente.nome} onChange={handleChange} />
-
-                                <label>
-                                    CPF
-                                </label>
-                                <input type="text" name="cpf" value={cliente.cpf} onChange={handleChange} />
-
-                                <label>
-                                    CEP
-                                </label>
-                                <input type="text" name="cep" value={cliente.cep} onBlur={handleCepBlur} onChange={handleChange} />
-
-                                <label>
-                                    Bairro
-                                </label>
-                                <input type="text" name="bairro" value={cliente.bairro} onChange={handleChange} />
-
-                                <label>
-                                    Logradouro
-                                </label>
-                                <input type="text" name="logradouro" value={cliente.logradouro} onChange={handleChange} />
-
-                                <label>
-                                    Cidade
-                                </label>
-                                <input type="text" name="cidade" value={cliente.cidade} onChange={handleChange} />
-
-                                <label>
-                                    UF
-                                </label>
-                                <input type="text" name="uf" value={cliente.uf} onChange={handleChange} />
-
-                                <label>
-                                    Contato
-                                </label>
-                                <input type="text" name="contato" value={cliente.contato} onChange={handleChange} />
-
-                                <label>
-                                    Data
-                                </label>
-                                <input type="date" name="data" value={cliente.data} onChange={handleChange} />
-
+                                <input
+                                    type="text"
+                                    name="nome"
+                                    value={cliente.nome}
+                                    onChange={handleChange}
+                                    placeholder="Nome"
+                                />
+                                <input
+                                    type="text"
+                                    name="cpf"
+                                    value={cliente.cpf}
+                                    onChange={handleChange}
+                                    placeholder="CPF"
+                                />
+                                <input
+                                    type="text"
+                                    name="cep"
+                                    value={cliente.cep}
+                                    onBlur={handleCepBlur}
+                                    onChange={handleChange}
+                                    placeholder="CEP"
+                                />
+                                <input
+                                    type="text"
+                                    name="bairro"
+                                    value={cliente.bairro}
+                                    onChange={handleChange}
+                                    placeholder="Bairro"
+                                />
+                                <input
+                                    type="text"
+                                    name="logradouro"
+                                    value={cliente.logradouro}
+                                    onChange={handleChange}
+                                    placeholder="Logradouro"
+                                />
+                                <input
+                                    type="text"
+                                    name="cidade"
+                                    value={cliente.cidade}
+                                    onChange={handleChange}
+                                    placeholder="Cidade"
+                                />
+                                <input
+                                    type="text"
+                                    name="uf"
+                                    value={cliente.uf}
+                                    onChange={handleChange}
+                                    placeholder="UF"
+                                />
+                                <input
+                                    type="text"
+                                    name="contato"
+                                    value={cliente.contato}
+                                    onChange={handleChange}
+                                    placeholder="Contato"
+                                />
+                                <input
+                                    type="date"
+                                    name="data"
+                                    value={cliente.data}
+                                    onChange={handleChange}
+                                    placeholder="Data"
+                                />
                                 <button className='btn-salvar' type="submit">Cadastrar</button>
                             </div>
                         </form>
