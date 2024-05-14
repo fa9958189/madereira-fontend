@@ -105,7 +105,7 @@ export default function ListarOrcamento() {
                     </td>
                   </tr>
                 ))}
-              </tbody>
+              </tbody> 
             </table>
           </div>
           <div className="fechar-container">

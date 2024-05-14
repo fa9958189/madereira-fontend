@@ -15,6 +15,7 @@ export default function ListarCliente() {
   function listarClientes() {
     api.get('/cliente')
       .then(res => {
+        console.log(res.data); // Adicione este console.log para debug
         setClientes(res.data.clientes);
       })
       .catch(error => {
@@ -63,7 +64,7 @@ export default function ListarCliente() {
     <div className="dashboard-container">
       <Barrasuperior />
       <div className='dashboard-main'>
-        <div className='menu'> {/* Adicione a classe 'menu' aqui */}
+        <div className='menu'>
           <Menu />
         </div>
         
@@ -91,7 +92,7 @@ export default function ListarCliente() {
                     <td>{cliente.nome}</td>
                     <td>{cliente.cpf}</td>
                     <td>{cliente.bairro}</td>
-                    <td>{cliente.telefone}</td>
+                    <td>{cliente.contato}</td>
                     <td>{cliente.data}</td>
                     <td className='botoes'>
                       <Link to={`/editarcliente/${cliente.id_cliente}`}>

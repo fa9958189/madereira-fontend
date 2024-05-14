@@ -9,6 +9,22 @@
     --colortd:   aliceblue;
     --backgroundcolorbutton: 5px 42px;
   }
+
+  input{
+    padding: 5px;
+  
+  }
+  .btn-salvar{
+     background-color: green;
+     color: #ccc;
+     border-radius: 5px;
+     padding: 5px;
+     transition: filter 0.2s;
+  }
+  .btn-salvar:hover{
+    filter:brightness(90%);
+    cursor:pointer
+  }
 /* .dashboard-container{
     background-color: rgba(36, 36, 255, 0.816);
     height: 100vh;
@@ -267,5 +283,12 @@ form{
             margin-top: 20px;
           }
 
+        
 
-                        
+
+
+
+
+
+
+          
