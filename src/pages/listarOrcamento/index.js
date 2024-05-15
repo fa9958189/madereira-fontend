@@ -109,9 +109,10 @@ export default function ListarOrcamento() {
             </table>
           </div>
           <div className="fechar-container">
-            <Link to="/listarTabela" className='btn-fechar'>Finalizar Orçamento</Link>
-            <button className='btn-fechar'>Confirmar Venda</button>
-            <button className='btn-fechar' onClick={() => apagar()}>Deletar Orçamento</button>
+            <Link to="/listarTabela" className='btn-fechar' style={{ marginRight: '10px' }} >Clientes</Link> 
+            <Link to="/listarTabela" className='btn-fechar' style={{ marginRight: '10px' }}>Despacho</Link>
+            <Link to="/listarTabela" className='btn-fechar' style={{ marginRight: '10px' }}>Status</Link>     
+            <Link to="/listarTabela" className='btn-fechar' style={{ marginRight: '10px' }}>Confirma venda</Link>     
           </div>
         </div>
       </div>

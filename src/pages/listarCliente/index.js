@@ -120,6 +120,9 @@ export default function ListarCliente() {
               </tbody>
             </table>
           </div>
+          <div className="fechar-container">
+            <Link to="/listarTabela" className='btn-fechar' style={{ marginRight: '10px' }} >Vendas por Clientes</Link>    
+          </div>
         </div>
       </div>
     </div>
