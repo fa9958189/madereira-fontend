@@ -82,7 +82,7 @@ export default function EditarCliente() {
 
     const clienteAtualizado = { ...cliente, id };
 
-    api.put(`/cliente/${id}`, clienteAtualizado)
+    api.patch(`/cliente`, clienteAtualizado)
       .then(response => {
         console.log(response.data);
         alert(response.data.mensagem);
