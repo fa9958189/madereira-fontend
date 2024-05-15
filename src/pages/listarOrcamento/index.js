@@ -82,7 +82,7 @@ export default function ListarOrcamento() {
                   <th>Número</th>
                   <th>Produto</th>
                   <th>Quantidade (m)</th>
-                  <th>Valor Unitário</th>
+                  <th>Valor (m)</th>
                   <th>Total</th>
                   <th></th>
                 </tr>
