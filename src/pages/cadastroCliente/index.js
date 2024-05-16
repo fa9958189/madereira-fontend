@@ -81,6 +81,7 @@ export default function CadastroCliente() {
                                     value={cliente.nome}
                                     onChange={handleChange}
                                     placeholder="Nome"
+                                    required // Adicionando required para campos obrigatórios
                                 />
                                 <input
                                     type="text"
@@ -88,6 +89,7 @@ export default function CadastroCliente() {
                                     value={cliente.cpf}
                                     onChange={handleChange}
                                     placeholder="CPF"
+                                    required
                                 />
                                 <input
                                     type="text"
@@ -96,6 +98,7 @@ export default function CadastroCliente() {
                                     onBlur={handleCepBlur}
                                     onChange={handleChange}
                                     placeholder="CEP"
+                                    required
                                 />
                                 <input
                                     type="text"
@@ -103,6 +106,7 @@ export default function CadastroCliente() {
                                     value={cliente.bairro}
                                     onChange={handleChange}
                                     placeholder="Bairro"
+                                    required
                                 />
                                 <input
                                     type="text"
@@ -110,6 +114,7 @@ export default function CadastroCliente() {
                                     value={cliente.logradouro}
                                     onChange={handleChange}
                                     placeholder="Logradouro"
+                                    required
                                 />
                                 <input
                                     type="text"
@@ -117,6 +122,7 @@ export default function CadastroCliente() {
                                     value={cliente.cidade}
                                     onChange={handleChange}
                                     placeholder="Cidade"
+                                    required
                                 />
                                 <input
                                     type="text"
@@ -124,6 +130,7 @@ export default function CadastroCliente() {
                                     value={cliente.uf}
                                     onChange={handleChange}
                                     placeholder="UF"
+                                    required
                                 />
                                 <input
                                     type="text"
@@ -131,6 +138,7 @@ export default function CadastroCliente() {
                                     value={cliente.contato}
                                     onChange={handleChange}
                                     placeholder="Contato"
+                                    required
                                 />
                                 <input
                                     type="date"
@@ -138,6 +146,7 @@ export default function CadastroCliente() {
                                     value={cliente.data}
                                     onChange={handleChange}
                                     placeholder="Data"
+                                    required
                                 />
                                 <button className='btn-salvar' type="submit">Cadastrar</button>
                             </div>

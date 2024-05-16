@@ -7,9 +7,12 @@ import Barrasuperior from '../../componente/Barrasuperior';
 import Head from '../../componente/Head';
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
+import api from '../../server/api';
 
 export default function ListarOrcamento() {
   const [orcamentos, setOrcamentos] = useState([]);
+  const [selectedClientId, setSelectedClientId] = useState('');
+  const [selectedClientInfo, setSelectedClientInfo] = useState(null);
 
   useEffect(() => {
     mostrarOrcamentos();
@@ -19,7 +22,6 @@ export default function ListarOrcamento() {
     fetch('http://localhost:5000/orcamento')
       .then(response => response.json())
       .then(data => {
-        console.log(data.orcamentos)
         setOrcamentos(data.orcamentos);
       })
       .catch(error => console.error('Erro ao buscar orçamentos:', error));
@@ -65,6 +67,20 @@ export default function ListarOrcamento() {
     });
   };
 
+  const handleSelectClient = (clientId) => {
+    setSelectedClientId(clientId);
+    if (clientId) {
+      fetch(`http://localhost:5000/cliente/${clientId}`)
+        .then(response => response.json())
+        .then(data => {
+          setSelectedClientInfo(data.cliente);
+        })
+        .catch(error => console.error('Erro ao buscar informações do cliente:', error));
+    } else {
+      setSelectedClientInfo(null);
+    }
+  };
+
   return (
     <div className="dashboard-container">
       <Barrasuperior />
@@ -75,6 +91,22 @@ export default function ListarOrcamento() {
         <div className='principal'>
           <Head title="Listar Orçamento" />
           <Link to="/cadastroOrcamento" className='btn-novo'>Novo Orçamento</Link>
+
+          <div>
+            <select value={selectedClientId} onChange={(e) => handleSelectClient(e.target.value)}>
+              <option value="">Selecionar Cliente</option>
+              {/* Aqui você pode mapear os clientes disponíveis para seleção */}
+              {/* Exemplo: {clientes.map(cliente => <option key={cliente.id} value={cliente.id}>{cliente.nome}</option>)} */}
+            </select>
+          </div>
+
+          {selectedClientInfo && (
+            <div>
+              <h3>Informações do Cliente</h3>
+              <p>Nome: {selectedClientInfo.nome}</p>
+              {/* Adicione outras informações que desejar */}
+            </div>
+          )}
           <div className="table-container">
             <table>
               <thead>
@@ -105,8 +137,18 @@ export default function ListarOrcamento() {
                     </td>
                   </tr>
                 ))}
-              </tbody> 
+              </tbody>
             </table>
+          </div>
+          <div>
+            {/* Aqui você pode renderizar as informações do cliente selecionado */}
+            {selectedClientInfo && (
+              <div>
+                <h3>Informações do Cliente</h3>
+                <p>Nome: {selectedClientInfo.nome}</p>
+                {/* Adicione outras informações que desejar */}
+              </div>
+            )}
           </div>
           <div className="fechar-container">
             <Link to="/listarTabela" className='btn-fechar' style={{ marginRight: '10px' }} >Clientes</Link> 
