@@ -11,32 +11,35 @@ import api from '../../server/api';
 
 export default function ListarOrcamento() {
   const [orcamentos, setOrcamentos] = useState([]);
+  const [clientes, setClientes] = useState([]);
   const [selectedClientId, setSelectedClientId] = useState('');
   const [selectedClientInfo, setSelectedClientInfo] = useState(null);
 
   useEffect(() => {
     mostrarOrcamentos();
+    mostrarClientes();
   }, []);
 
   function mostrarOrcamentos() {
-    fetch('http://localhost:5000/orcamento')
-      .then(response => response.json())
-      .then(data => {
-        setOrcamentos(data.orcamentos);
+    api.get('/orcamento')
+      .then(response => {
+        setOrcamentos(response.data.orcamentos);
       })
       .catch(error => console.error('Erro ao buscar orçamentos:', error));
   }
 
-  const removerOrcamento = (id) => {
-    const requestOptions = {
-      method: 'DELETE',
-      headers: { 'Content-Type': 'application/json' },
-    };
+  function mostrarClientes() {
+    api.get('/cliente')
+      .then(response => {
+        setClientes(response.data.clientes);
+      })
+      .catch(error => console.error('Erro ao buscar clientes:', error));
+  }
 
-    fetch(`http://localhost:5000/orcamento/${id}`, requestOptions)
-      .then(response => response.json())
-      .then(data => {
-        alert(data.mensagem);
+  const removerOrcamento = (id) => {
+    api.delete(`/orcamento/${id}`)
+      .then(response => {
+        alert(response.data.mensagem);
         mostrarOrcamentos();
       })
       .catch(error => console.error('Erro ao excluir orçamento:', error));
@@ -50,10 +53,9 @@ export default function ListarOrcamento() {
         {
           label: 'Sim',
           onClick: () => {
-            fetch(`http://localhost:5000/orcamento/${id}`, { method: 'DELETE' })
-              .then(response => response.json())
-              .then(data => {
-                alert(data.mensagem);
+            api.delete(`/orcamento/${id}`)
+              .then(response => {
+                alert(response.data.mensagem);
                 mostrarOrcamentos();
               })
               .catch(error => console.error('Erro ao excluir orçamento:', error));
@@ -70,10 +72,10 @@ export default function ListarOrcamento() {
   const handleSelectClient = (clientId) => {
     setSelectedClientId(clientId);
     if (clientId) {
-      fetch(`http://localhost:5000/cliente/${clientId}`)
-        .then(response => response.json())
-        .then(data => {
-          setSelectedClientInfo(data.cliente);
+      api.get(`/cliente/${clientId}`)
+        .then(response => {
+          console.log('Cliente data:', response.data);  // Adicione este log
+          setSelectedClientInfo(response.data.cliente);
         })
         .catch(error => console.error('Erro ao buscar informações do cliente:', error));
     } else {
@@ -95,18 +97,12 @@ export default function ListarOrcamento() {
           <div>
             <select value={selectedClientId} onChange={(e) => handleSelectClient(e.target.value)}>
               <option value="">Selecionar Cliente</option>
-              {/* Aqui você pode mapear os clientes disponíveis para seleção */}
-              {/* Exemplo: {clientes.map(cliente => <option key={cliente.id} value={cliente.id}>{cliente.nome}</option>)} */}
+              {clientes.map(cliente => (
+                <option key={cliente.id} value={cliente.id}>{cliente.nome}</option>
+              ))}
             </select>
           </div>
 
-          {selectedClientInfo && (
-            <div>
-              <h3>Informações do Cliente</h3>
-              <p>Nome: {selectedClientInfo.nome}</p>
-              {/* Adicione outras informações que desejar */}
-            </div>
-          )}
           <div className="table-container">
             <table>
               <thead>
@@ -140,21 +136,25 @@ export default function ListarOrcamento() {
               </tbody>
             </table>
           </div>
-          <div>
-            {/* Aqui você pode renderizar as informações do cliente selecionado */}
-            {selectedClientInfo && (
-              <div>
-                <h3>Informações do Cliente</h3>
-                <p>Nome: {selectedClientInfo.nome}</p>
-                {/* Adicione outras informações que desejar */}
-              </div>
-            )}
-          </div>
+
+          {selectedClientInfo && (
+            <div>
+              <h3>Informações do Cliente</h3>
+              <p>ID: {selectedClientInfo.id}</p>
+              <p>Nome: {selectedClientInfo.nome}</p>
+              <p>CPF: {selectedClientInfo.cpf}</p>
+              <p>CEP: {selectedClientInfo.cep}</p>
+              <p>Endereço: {selectedClientInfo.endereco}</p>
+              <p>Telefone: {selectedClientInfo.telefone}</p>
+              <p>E-mail: {selectedClientInfo.email}</p>
+            </div>
+          )}
+
           <div className="fechar-container">
-            <Link to="/listarTabela" className='btn-fechar' style={{ marginRight: '10px' }} >Clientes</Link> 
+            <Link to="/listarTabela" className='btn-fechar' style={{ marginRight: '10px' }} >Clientes</Link>
             <Link to="/listarTabela" className='btn-fechar' style={{ marginRight: '10px' }}>Despacho</Link>
-            <Link to="/listarTabela" className='btn-fechar' style={{ marginRight: '10px' }}>Status</Link>     
-            <Link to="/listarTabela" className='btn-fechar' style={{ marginRight: '10px' }}>Confirma venda</Link>     
+            <Link to="/listarTabela" className='btn-fechar' style={{ marginRight: '10px' }}>Status</Link>
+            <Link to="/listarTabela" className='btn-fechar' style={{ marginRight: '10px' }}>Confirma venda</Link>
           </div>
         </div>
       </div>

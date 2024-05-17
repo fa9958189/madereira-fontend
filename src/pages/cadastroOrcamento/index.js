@@ -16,7 +16,6 @@ export default function CadastroOrcamento() {
   const [selectedProduct, setSelectedProduct] = useState("");
   const [produtos, setProdutos] = useState([]);
 
-
   useEffect(() => {
     mostrarProdutos();
   }, []);
@@ -74,7 +73,6 @@ export default function CadastroOrcamento() {
           <Head title="Cadastro de Orçamento" />
           <div className='form-container'>
             <form className='form-cadastro' onSubmit={salvarOrcamento}>
-
               <div className="table-container"> 
                 <select className='select-produto' value={selectedProduct} onChange={e => setSelectedProduct(e.target.value)}>
                   <option value="">Selecione um produto</option>
@@ -85,7 +83,7 @@ export default function CadastroOrcamento() {
                   ))}
                 </select>
               </div>
-              
+
               <input
                 type='number'
                 step='0.01'
@@ -112,7 +110,7 @@ export default function CadastroOrcamento() {
                   <FaSave />
                   Salvar
                 </button>
-                <button className='btn-cancel' type="button">
+                <button className='btn-cancel' type="button" onClick={() => navigate('/listarOrcamento')}>
                   <MdCancel />
                   Cancelar
                 </button>
