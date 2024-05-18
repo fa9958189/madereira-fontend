@@ -16,6 +16,7 @@ import ListarGraficos from './pages/listarGraficos';
 import Editarproduto from './pages/editarProduto';
 import CadastroOrcamento from './pages/cadastroOrcamento';
 import ListarOrcamento from './pages/listarOrcamento';
+import ListarItensOrcamento from './pages/listaItensOrcamento';
 import ListarTabela from './pages/listarTabela'; 
 import CadastroCliente from './pages/cadastroCliente';
 import ListarCliente from './pages/listarCliente';
@@ -42,6 +43,7 @@ export default function Rotas() {
              <Route path="/cadastroOrcamento" element={<CadastroOrcamento />} />
              <Route path="/listarOrcamento" element={<ListarOrcamento />} />
              <Route path="/listarTabela" element={<ListarTabela />} /> 
+             <Route path="/listaritensorcamento/:id" element={<ListarItensOrcamento />} /> 
              <Route path="/cadastroCliente" element={<CadastroCliente />} />
              <Route path="/listarCliente" element={<ListarCliente />} />
              <Route path="/editarCliente/:id" element={<EditarCliente />} /> {/* Adicione esta linha */}

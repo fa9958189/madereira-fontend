@@ -14,19 +14,19 @@ export default function CadastroOrcamento() {
   const [valorUnitario, setValorUnitario] = useState("");
   const [total, setTotal] = useState("");
   const [selectedProduct, setSelectedProduct] = useState("");
-  const [produtos, setProdutos] = useState([]);
+  const [clientes, setClientes] = useState([]);
 
   useEffect(() => {
-    mostrarProdutos();
+    mostrarClientes();
   }, []);
 
-  function mostrarProdutos() {
-    api.get('/produto')
+  function mostrarClientes() {
+    api.get('/cliente')
       .then(res => {
-        setProdutos(res.data.produtos);
+        setClientes(res.data.clientes);
       })
       .catch(error => {
-        console.error('Erro ao buscar produtos:', error);
+        console.error('Erro ao buscar clientes:', error);
       });
   }
 
@@ -74,11 +74,11 @@ export default function CadastroOrcamento() {
           <div className='form-container'>
             <form className='form-cadastro' onSubmit={salvarOrcamento}>
               <div className="table-container"> 
-                <select className='select-produto' value={selectedProduct} onChange={e => setSelectedProduct(e.target.value)}>
-                  <option value="">Selecione um produto</option>
-                  {produtos.map(produto => (
-                    <option key={produto.id} value={produto.id}>
-                      {produto.descricao}
+                <select className='select-cliente' value={selectedProduct} onChange={e => setSelectedProduct(e.target.value)}>
+                  <option value="">Selecione um Cliente</option>
+                  {clientes.map(cliente => (
+                    <option key={cliente.id_cliente} value={cliente.id_cliente}>
+                      {cliente.nome}
                     </option>
                   ))}
                 </select>

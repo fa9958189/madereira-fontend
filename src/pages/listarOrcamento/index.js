@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import '../../pages/global.css';
 import Menu from '../../componente/Menu';
-import { FiTrash } from "react-icons/fi";
-import { Link } from 'react-router-dom';
+import { FiBookOpen, FiPlus, FiTrash } from "react-icons/fi";
+import { CiCirclePlus } from "react-icons/ci";
 import Barrasuperior from '../../componente/Barrasuperior';
 import Head from '../../componente/Head';
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import api from '../../server/api';
+import {Link,useNavigate} from "react-router-dom"
 
 export default function ListarOrcamento() {
+  const navigate = useNavigate();
   const [orcamentos, setOrcamentos] = useState([]);
   const [clientes, setClientes] = useState([]);
   const [selectedClientId, setSelectedClientId] = useState('');
@@ -45,43 +47,45 @@ export default function ListarOrcamento() {
       .catch(error => console.error('Erro ao excluir orçamento:', error));
   };
 
-  const apagar = (id) => {
-    confirmAlert({
-      title: 'Excluir Orçamento',
-      message: 'Deseja realmente excluir esse orçamento?',
-      buttons: [
-        {
-          label: 'Sim',
-          onClick: () => {
-            api.delete(`/orcamento/${id}`)
-              .then(response => {
-                alert(response.data.mensagem);
-                mostrarOrcamentos();
-              })
-              .catch(error => console.error('Erro ao excluir orçamento:', error));
-          }
-        },
-        {
-          label: 'Não',
-          onClick: () => alert('Clique em Não')
-        }
-      ]
-    });
-  };
+  // const abrir = (id) => {
 
-  const handleSelectClient = (clientId) => {
-    setSelectedClientId(clientId);
-    if (clientId) {
-      api.get(`/cliente/${clientId}`)
-        .then(response => {
-          console.log('Cliente data:', response.data);  // Adicione este log
-          setSelectedClientInfo(response.data.cliente);
-        })
-        .catch(error => console.error('Erro ao buscar informações do cliente:', error));
-    } else {
-      setSelectedClientInfo(null);
-    }
-  };
+  //           api.get(`/itensorcamento/${id}`)
+  //             .then(response => {
+  //               mostrarOrcamentos();
+  //             })
+  //             .catch(error => console.error('Erro ao excluir orçamento:', error));
+
+  // };
+
+  function salvarOrcamento(e) {
+    e.preventDefault();
+    confirmAlert({
+        title: 'Confirmação',
+        message: 'Deseja abrir um novo orçamento?',
+        buttons: [
+            {
+                label: 'Sim',
+                onClick: () => {
+                    api.post('/orcamento', { id: selectedClientId })
+                        .then(response => {
+                            alert(response.data.mensagem);
+                            mostrarOrcamentos();
+                        })
+                        .catch(error => {
+                            console.error('Erro ao cadastrar orçamento:', error);
+                            alert('Erro ao cadastrar orçamento: ' + error.message);
+                        });
+                }
+            },
+            {
+                label: 'Não',
+                onClick: () => {}
+            }
+        ]
+    });
+}
+
+  
 
   return (
     <div className="dashboard-container">
@@ -92,15 +96,22 @@ export default function ListarOrcamento() {
         </div>
         <div className='principal'>
           <Head title="Listar Orçamento" />
-          <Link to="/cadastroOrcamento" className='btn-novo'>Novo Orçamento</Link>
+          {/* <Link to="/cadastroOrcamento" className='btn-novo'>Novo Orçamento</Link> */}
 
           <div>
-            <select value={selectedClientId} onChange={(e) => handleSelectClient(e.target.value)}>
-              <option value="">Selecionar Cliente</option>
-              {clientes.map(cliente => (
-                <option key={cliente.id} value={cliente.id}>{cliente.nome}</option>
-              ))}
-            </select>
+          <select 
+                    id="client" 
+                    value={selectedClientId} 
+                    onChange={e => setSelectedClientId(e.target.value)}
+                >
+                    <option value="">Selecionar Cliente</option>
+                    {clientes.map(cliente => (
+                        <option key={cliente.id_cliente} value={cliente.id_cliente}>
+                            {cliente.nome}
+                        </option>
+                    ))}
+                </select>
+            <CiCirclePlus onClick={salvarOrcamento} size={30} color="green"/>
           </div>
 
           <div className="table-container">
@@ -108,28 +119,31 @@ export default function ListarOrcamento() {
               <thead>
                 <tr>
                   <th>Número</th>
-                  <th>Produto</th>
-                  <th>Quantidade (m)</th>
-                  <th>Valor (m)</th>
-                  <th>Total</th>
+                  <th>Cliente</th>
+                  <th>Total Orçamento</th>
+                  <th>Data</th>
                   <th></th>
                 </tr>
               </thead>
               <tbody>
                 {orcamentos.map((orcamento, index) => (
                   <tr key={orcamento.id}>
+                  
                     <td>{index + 1}</td>
-                    <td>{orcamento.descricao}</td>
-                    <td>{orcamento.quantidade}</td>
-                    <td>{orcamento.valor_unitario}</td>
-                    <td>{orcamento.total}</td>
+                    <td>{orcamento.nome}</td>
+                    <td>{orcamento.totalgeral}</td>
+                    <td>{orcamento.data}</td>
                     <td className='botoes'>
-                      <FiTrash
-                        size={18}
-                        color='red'
-                        onClick={() => apagar(orcamento.id)}
-                        cursor="pointer"
-                      />
+
+
+                                          <Link to={`/listaritensorcamento/${orcamento.id}`}>
+                                          <FiBookOpen
+                                          size={18}
+                                          color='red'
+                                          cursor="pointer"
+                                        />
+
+                                          </Link>
                     </td>
                   </tr>
                 ))}

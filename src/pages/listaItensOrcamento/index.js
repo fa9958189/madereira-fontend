@@ -9,19 +9,34 @@ import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import api from '../../server/api';
 
-export default function ListarTabela() {
-  const {id} =useParams()
+
+export default function ListarItensOrcamento() {
+ const {id} = useParams();
   const [orcamentos, setOrcamentos] = useState([]);
+  const [orcamento,setOrcamento] = useState([]);
+  const [nome,setNome] = useState();
+  const [numeroorcamento,setNumeroorcamento] = useState();
   const [count, setCount] = useState(0)
 
   useEffect(() => {
     mostrarOrcamentos();
+    mostrarOrcamento();
   }, []);
   const contar = () => {
     const newCount = count + 1;
     setCount(newCount);
     return newCount;
   };
+  function mostrarOrcamento() {
+    api.get(`/orcamento/${id}`)
+      .then(response => {
+        setOrcamento(response.data.orcamento);
+        setNome(response.data.orcamento[0].nome);
+        setNumeroorcamento(response.data.orcamento[0].id)
+
+      })
+      .catch(error => console.error('Erro ao buscar orçamento:', error));
+  }
   function mostrarOrcamentos() {
     api.get(`/itensorcamento/${id}`)
       .then(res => {
@@ -49,7 +64,7 @@ export default function ListarTabela() {
             </div>
           </div>
           
-          
+          <p>Cliente:{nome}</p>
 
           <table>
             <thead>
