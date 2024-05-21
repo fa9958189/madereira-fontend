@@ -13,7 +13,13 @@ import api from '../../server/api';
 
 export default function Listaentrada() {
   const [entradas, setEntradas] = useState([]);
-
+// Função de formatação de moeda
+function formatarMoeda(valor) {
+  return new Intl.NumberFormat('pt-BR', {
+    style: 'currency',
+    currency: 'BRL'
+  }).format(valor);
+}
   useEffect(() => {
     mostrarEntradas();
   }, []);
@@ -80,7 +86,7 @@ export default function Listaentrada() {
                 <td>{enpr.id}</td>
                 <td>{enpr.descricao}</td>
                 <td>{enpr.qtde}</td>
-                <td>{enpr.valor_unitario}</td>
+                <td>{formatarMoeda(enpr.valor_unitario)}</td>
                 <td>{enpr.data_entrada}</td>
                 <td className='botoes'>
                   <FiTrash

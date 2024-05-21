@@ -287,10 +287,28 @@ form{
           select{
             padding:8px
           }
+          .fechar-container{
+            display: flex;
+            width: 50%;
+            margin: auto;
+            justify-content: space-around;
+          }
 
-
-
-
+.head_orcamento{
+    display: flex;
+   justify-content: space-around; 
+    padding: 10px;
+    background-color: white;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+.btn_salvar{
+    cursor:pointer
+}
+.btn_imprimir{
+    cursor:pointer
+}
 
 
           
