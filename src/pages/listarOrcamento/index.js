@@ -38,6 +38,14 @@ export default function ListarOrcamento() {
       .catch(error => console.error('Erro ao buscar clientes:', error));
   }
 
+    // Função de formatação de moeda
+    function formatarMoeda(valor) {
+      return new Intl.NumberFormat('pt-BR', {
+        style: 'currency',
+        currency: 'BRL'
+      }).format(valor);
+    }
+
   const removerOrcamento = (id) => {
     api.delete(`/orcamento/${id}`)
       .then(response => {
@@ -131,7 +139,7 @@ export default function ListarOrcamento() {
                   
                     <td>{index + 1}</td>
                     <td>{orcamento.nome}</td>
-                    <td>{orcamento.totalgeral}</td>
+                    <td>{formatarMoeda(orcamento.totalgeral)}</td>
                     <td>{orcamento.data}</td>
                     <td className='botoes'>
 

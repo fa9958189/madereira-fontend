@@ -309,6 +309,18 @@ form{
 .btn_imprimir{
     cursor:pointer
 }
+.head-adicionar-itens{
+    display: flex;
+    width: 100%;
+    border: solid 1px ;
+    padding: 5px;
+    align-items: center;
+    
+}
+.div_campos{
+    display: flex;
+    margin-right: 10px;
+    flex-direction: column;
 
-
+}
           

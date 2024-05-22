@@ -1,24 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import '../../pages/global.css';
-import Menu from '../../componente/Menu';
-import { FiPrinter, FiTrash } from "react-icons/fi";
-import { Link, useParams } from 'react-router-dom';
+import { FiPlusCircle, FiPrinter, FiTrash } from "react-icons/fi";
+import { useParams,useNavigate } from 'react-router-dom';
 import Barrasuperior from '../../componente/Barrasuperior';
 import Head from '../../componente/Head';
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import api from '../../server/api';
-import { FaCircle, FaPlus, FaPlusCircle } from 'react-icons/fa';
-
+import { FaPlusCircle } from 'react-icons/fa';
 
 export default function ListarItensOrcamento() {
   const { id } = useParams();
+  const navigete = useNavigate();
   const [orcamentos, setOrcamentos] = useState([]);
   const [orcamento, setOrcamento] = useState([]);
   const [nome, setNome] = useState();
   const [numeroorcamento, setNumeroorcamento] = useState();
-  const [total, setTotal] = useState();
-  const [count, setCount] = useState(0);
+  const [total, setTotal] = useState(0);
   const [produtos, setProdutos] = useState([]);
   const [id_produto, setId_produto] = useState();
   const [qtde, setQtde] = useState();
@@ -30,24 +28,20 @@ export default function ListarItensOrcamento() {
     valor_unitario,
     id_produto
   };
-// Função de formatação de moeda
-function formatarMoeda(valor) {
-  return new Intl.NumberFormat('pt-BR', {
-    style: 'currency',
-    currency: 'BRL'
-  }).format(valor);
-}
+
+  // Função de formatação de moeda
+  function formatarMoeda(valor) {
+    return new Intl.NumberFormat('pt-BR', {
+      style: 'currency',
+      currency: 'BRL'
+    }).format(valor);
+  }
+
   useEffect(() => {
     mostrarOrcamentos();
     mostrarOrcamento();
     mostrardados();
   }, [id]);
-
-  const contar = () => {
-    const newCount = count + 1;
-    setCount(newCount);
-    return newCount;
-  };
 
   function mostrardados() {
     api.get('/produto')
@@ -70,14 +64,15 @@ function formatarMoeda(valor) {
       .catch(error => console.error('Erro ao buscar orçamento:', error));
   }
 
-  function mostrarOrcamentos() {
-    api.get(`/itensorcamento/${id}`)
-      .then(res => {
-        setOrcamentos(res.data.orcamentos);
-      })
-      .catch(error => console.error('Erro ao buscar orçamentos:', error));
+  async function mostrarOrcamentos() {
+    try {
+      const res = await api.get(`/itensorcamento/${id}`);
+      setOrcamentos(res.data.orcamentos);
+    } catch (error) {
+      console.error('Erro ao buscar orçamentos:', error);
+    }
   }
-
+  
   const imprimirTabela = () => {
     window.print();
   };
@@ -114,49 +109,63 @@ function formatarMoeda(valor) {
     });
   };
 
+  const salvarDados = () => {
+    if (id_produto === "" || qtde === "" || valor_unitario === "") {
+      alert("Há campos vazios");
+    } else {
+      api.post('/itensorcamento', dados)
+        .then(res => {
+          if (res.status === 201) {
+            console.log(`Item adicionado com sucesso!`);
+            mostrarOrcamentos(); // Atualiza a lista após a inserção
+            setId_produto(null);
+            setQtde(null);
+            setValor_unitario(null);
+          } else {
+            console.error("Erro ao adicionar item", res.data);
+          }
+        })
+        .catch(error => {
+          console.error("Erro ao adicionar item", error);
+        });
+    }
+  }
+  
   const inserirItem = () => {
     confirmAlert({
       title: 'Inserir Produto no Orçamento',
-      message: <div>
+      message: (
         <div>
-          <select className='select-produto' value={id_produto} onChange={e => setId_produto(e.target.value)}>
-            <option value="">Selecione um produto</option>
-            {produtos.map(produto => (
-              <option key={produto.id} value={produto.id}>
-                {produto.descricao}
-              </option>
-            ))}
-          </select>
+          <div>
+           
+            <select className='select-produto' value={id_produto} onChange={e => setId_produto(e.target.value)}>
+              <option value="">Selecione um produto</option>
+              {produtos.map(produto => (
+                <option key={produto.id} value={produto.id}>
+                  {produto.descricao}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div>
+            <input 
+              placeholder='Qtd em metros' 
+              value={qtde}
+              onChange={e => setQtde(e.target.value)}
+            />
+            <input 
+              placeholder='Valor unitário' 
+              value={valor_unitario}
+              onChange={e => setValor_unitario(e.target.value)}
+            />
+          </div>
         </div>
-        <div>
-          <input 
-            placeholder='Qtd em metros' 
-            value={qtde}
-            onChange={e => setQtde(e.target.value)}
-          />
-          <input 
-            placeholder='valor em metros' 
-            value={valor_unitario}
-            onChange={e => setValor_unitario(e.target.value)}
-          />
-        </div>
-      </div>,
+      ),
       buttons: [
         {
           label: 'Adicionar',
           onClick: () => {
-            api.post('/itensorcamento', dados)
-              .then(res => {
-                if (res.status === 200) {
-                  console.log(`Item adicionado com sucesso!`);
-                  mostrarOrcamentos(); // Atualiza a lista após a inserção
-                } else {
-                  console.error("Erro ao adicionar item", res.data);
-                }
-              })
-              .catch(error => {
-                console.error("Erro ao adicionar item", error);
-              });
+            salvarDados();
           }
         },
         {
@@ -174,25 +183,51 @@ function formatarMoeda(valor) {
         <div className='principal'>
           <Head title="Tabela de Orçamentos" />
           <div className="fechar-container">
-            <abbr title='Novo Item no Orçamento'>
-
-            <FaPlusCircle size={34} className="btn_salvar" color="green" onClick={inserirItem} />
-
-            </abbr>
-            <div >
+            <div>
               <abbr title='Imprimir Orçamento'>
-
-              <FiPrinter className="btn_imprimir" onClick={imprimirTabela}  size={34} />
-
+                <FiPrinter className="btn_imprimir" onClick={imprimirTabela} size={34} />
               </abbr>
-              
             </div>
           </div>
           <div className='head_orcamento'>
-
-          <p>Cliente: {nome}</p>
-          <p>Numero: {numeroorcamento}</p>
-          <p>Total: {formatarMoeda(total)}</p>
+            <p>Cliente: {nome}</p>
+            <p>Numero: {numeroorcamento}</p>
+            <p>Total: {formatarMoeda(total)}</p>
+          </div>
+          <div className='head-adicionar-itens'>
+            <div className='div_campos'>
+              {id_produto}
+              <label>Selecionar um Produto</label>
+                  <select className='select-produto' value={id_produto} onChange={e => setId_produto(e.target.value)}>
+                        <option value="">Selecione um produto</option>
+                        {produtos.map(produto => (
+                          <option key={produto.id} value={produto.id}>
+                            {produto.descricao}
+                          </option>
+                        ))}
+                      </select>
+            </div>
+            <div className='div_campos'>
+              <label>Quantidade</label>
+            <input 
+                  placeholder='Qtd em metros' 
+                  value={qtde}
+                  type="text"
+                  onChange={e => setQtde(e.target.value)}
+                />
+            </div>
+            <div className='div_campos'>
+              <label>Valor Unitário</label>
+            <input 
+              placeholder='Valor unitário' 
+              type="text"
+              value={valor_unitario}
+              onChange={e => setValor_unitario(e.target.value) }
+            />
+            </div>
+            <div className='div_campos'>
+            <FiPlusCircle size={24}  onClick={salvarDados} color="green" />
+            </div>
           </div>
           <table>
             <thead>
