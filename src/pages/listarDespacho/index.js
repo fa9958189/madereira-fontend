@@ -9,13 +9,18 @@ import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import api from '../../server/api';
 
-export default function ListarTabela() {
-  const {id} =useParams()
+export default function ListarDespacho() {
+  const { id } = useParams();
   const [orcamentos, setOrcamentos] = useState([]);
   const [count, setCount] = useState(0)
+  const [orcamento, setOrcamento] = useState([]);
+  const [nome, setNome] = useState();
+  const [numeroorcamento, setNumeroorcamento] = useState();
+  const [total, setTotal] = useState(0);
 
   useEffect(() => {
     mostrarOrcamentos();
+    mostrarOrcamento();
   }, []);
   const contar = () => {
     const newCount = count + 1;
@@ -29,11 +34,27 @@ export default function ListarTabela() {
       })
       .catch(error => console.error('Erro ao buscar orçamentos:', error));
   }
+  function mostrarOrcamento() {
+    api.get(`/orcamento/${id}`)
+      .then(response => {
+        setOrcamento(response.data.orcamento);
+        setNome(response.data.orcamento[0].nome);
+        setNumeroorcamento(response.data.orcamento[0].id);
+        setTotal(response.data.orcamento[0].totalgeral);
+      })
+      .catch(error => console.error('Erro ao buscar orçamento:', error));
+  }
 
   const imprimirTabela = () => {
     window.print();
   };
-
+  // Função de formatação de moeda
+  function formatarMoeda(valor) {
+    return new Intl.NumberFormat('pt-BR', {
+      style: 'currency',
+      currency: 'BRL'
+    }).format(valor);
+  }
   return (
     <div className="dashboard-container">
       <Barrasuperior />
@@ -41,7 +62,11 @@ export default function ListarTabela() {
 
         <div className='principal'>
           <Head title="Tabela de Orçamentos" />
-
+          <div className='head_orcamento'>
+            <p>Cliente: {nome}</p>
+            <p>Orçamento: {numeroorcamento}</p>
+           
+          </div>
 
           <div className="fechar-container"> {/* Nova div para o botão */}
             <div className='btn-fechar'>
@@ -57,8 +82,7 @@ export default function ListarTabela() {
                 <th>Número</th>
                 <th>Produto</th>
                 <th>Quantidade (m)</th>
-                <th>Valor Unitário</th>
-                <th>Total</th>
+
               </tr>
             </thead>
             <tbody>
@@ -67,8 +91,7 @@ export default function ListarTabela() {
                     <td>{index + 1}</td>
                     <td>{orcamento.descricao}</td>
                     <td>{orcamento.quantidade}</td>
-                    <td>{orcamento.valor_unitario}</td>
-                    <td>{orcamento.total}</td>
+
                   </tr>
                 ))}
 

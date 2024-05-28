@@ -64,6 +64,20 @@ export default function ListarOrcamento() {
   //             .catch(error => console.error('Erro ao excluir orçamento:', error));
 
   // };
+  function formatarData(dataISO) {
+    // Crie um objeto Date a partir da string ISO 8601
+    const data = new Date(dataISO);
+    
+    // Extraia o dia, mês e ano da data
+    const dia = data.getDate();
+    const mes = data.getMonth() + 1; // Mês começa do zero, então somamos 1
+    const ano = data.getFullYear();
+    
+    // Formate a data para o formato brasileiro
+    const dataFormatada = `${dia}/${mes < 10 ? '0' + mes : mes}/${ano}`;
+    
+    return dataFormatada;
+}
 
   function salvarOrcamento(e) {
     e.preventDefault();
@@ -140,7 +154,7 @@ export default function ListarOrcamento() {
                     <td>{index + 1}</td>
                     <td>{orcamento.nome}</td>
                     <td>{formatarMoeda(orcamento.totalgeral)}</td>
-                    <td>{orcamento.data}</td>
+                    <td>{formatarData(orcamento.data)}</td>
                     <td className='botoes'>
 
 
@@ -172,12 +186,7 @@ export default function ListarOrcamento() {
             </div>
           )}
 
-          <div className="fechar-container">
-            <Link to="/listarTabela" className='btn-fechar' style={{ marginRight: '10px' }} >Clientes</Link>
-            <Link to="/listarTabela" className='btn-fechar' style={{ marginRight: '10px' }}>Despacho</Link>
-            <Link to="/listarTabela" className='btn-fechar' style={{ marginRight: '10px' }}>Status</Link>
-            <Link to="/listarTabela" className='btn-fechar' style={{ marginRight: '10px' }}>Confirma venda</Link>
-          </div>
+
         </div>
       </div>
     </div>

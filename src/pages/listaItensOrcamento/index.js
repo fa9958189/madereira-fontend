@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import '../../pages/global.css';
 import { FiPlusCircle, FiPrinter, FiTrash } from "react-icons/fi";
-import { useParams,useNavigate } from 'react-router-dom';
+import { useParams,useNavigate, Link } from 'react-router-dom';
 import Barrasuperior from '../../componente/Barrasuperior';
 import Head from '../../componente/Head';
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import api from '../../server/api';
 import { FaPlusCircle } from 'react-icons/fa';
+
 
 export default function ListarItensOrcamento() {
   const { id } = useParams();
@@ -175,6 +176,9 @@ export default function ListarItensOrcamento() {
       ]
     });
   };
+  const enviardespacho=()=>{
+    navigete(`/listarDespacho/${id}`)
+  }
 
   return (
     <div className="dashboard-container">
@@ -191,7 +195,7 @@ export default function ListarItensOrcamento() {
           </div>
           <div className='head_orcamento'>
             <p>Cliente: {nome}</p>
-            <p>Numero: {numeroorcamento}</p>
+            <p>Orçamento: {numeroorcamento}</p>
             <p>Total: {formatarMoeda(total)}</p>
           </div>
           <div className='head-adicionar-itens'>
@@ -228,6 +232,20 @@ export default function ListarItensOrcamento() {
             <div className='div_campos'>
             <FiPlusCircle size={24}  onClick={salvarDados} color="green" />
             </div>
+            <div className="fechar-container">
+
+              <div className='btn-fechar'>
+                <li>
+                  <ul>
+                  Imprimir para Despacho
+                  </ul>     
+                </li>         
+            <FiPlusCircle size={24}  onClick={enviardespacho} color="green" />
+            </div>
+
+                          <Link to="/listarTabela" className='btn-fechar' style={{ marginRight: '10px' }}>Status</Link>
+                          <Link to="/listarTabela" className='btn-fechar' style={{ marginRight: '10px' }}>Confirma venda</Link>
+       </div>
           </div>
           <table>
             <thead>
