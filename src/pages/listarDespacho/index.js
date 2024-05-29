@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import '../../pages/global.css';
 import Menu from '../../componente/Menu';
-import { FiTrash } from "react-icons/fi";
+import { FiPlusCircle, FiPrinter, FiTrash } from "react-icons/fi";
 import { Link, useParams } from 'react-router-dom';
 import Barrasuperior from '../../componente/Barrasuperior';
 import Head from '../../componente/Head';
@@ -68,14 +68,15 @@ export default function ListarDespacho() {
            
           </div>
 
-          <div className="fechar-container"> {/* Nova div para o botão */}
-            <div className='btn-fechar'>
-            <button onClick={imprimirTabela}>Imprimir Tabela</button>
+          <div className="fechar-container">
+            <div>
+              <abbr title='Imprimir Orçamento'>
+                <FiPrinter className="btn_imprimir" onClick={imprimirTabela} size={34} />
+              </abbr>
             </div>
           </div>
           
-          
-
+        
           <table>
             <thead>
               <tr>

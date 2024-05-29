@@ -53,8 +53,8 @@ function Login() {
                     value={senha}
                     onChange={(e) => setSenha(e.target.value)}
                 />
-                <button type="submit" disabled={isLoading}>Entrar</button>
-            </form>
+                <button type="submit" className='btn-entrar' disabled={isLoading}>Entrar</button>
+            </form> 
         </div>
     );
 }

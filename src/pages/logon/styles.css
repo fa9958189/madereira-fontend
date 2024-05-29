@@ -12,10 +12,12 @@ body {
 
 .logo-container {
   margin-bottom: 20px; /* Adiciona um espaçamento inferior para separar a imagem do formulário */
+
 }
 
 .logo-image {
   width: 350px; /* Defina a largura desejada para a imagem */
+ 
 }
 
 .login-form {
@@ -24,8 +26,6 @@ body {
   padding: 20px;
   width: 300px;
   text-align: center;
-  display: flex;
-  flex-direction: column;
   color: #062022;
 }
 
@@ -36,8 +36,18 @@ body {
 .login-form input,
 .login-form button {
   margin-bottom: 10px;
+  border:solid 0.5px silver;
+  border-radius: 5px;
+  padding: 5px;
+
 }
 
 .error-message {
   color: red;
+}
+.btn-entrar{
+  padding: 7px;
+  border-radius: 5px;
+  border:solid 0.5px silver;
+  font-weight: bold;
 }

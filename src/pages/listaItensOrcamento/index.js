@@ -22,7 +22,7 @@ export default function ListarItensOrcamento() {
   const [id_produto, setId_produto] = useState();
   const [qtde, setQtde] = useState();
   const [valor_unitario, setValor_unitario] = useState();
-
+  const [situacao, setSituacao] = useState();
   const dados = {
     id_orcamento: id,
     quantidade: qtde,
@@ -37,13 +37,21 @@ export default function ListarItensOrcamento() {
       currency: 'BRL'
     }).format(valor);
   }
-
+ useEffect(()=>{
+aportavalor()
+ },[id_produto])
   useEffect(() => {
     mostrarOrcamentos();
     mostrarOrcamento();
     mostrardados();
+    
   }, [id]);
-
+   function aportavalor(){
+    api.get(`/entrada/valorunitario/${id_produto}`)
+    .then(resposta=>{
+      setValor_unitario(resposta.data.valorunitario)
+    })
+   }
   function mostrardados() {
     api.get('/produto')
       .then(res => {
@@ -60,6 +68,7 @@ export default function ListarItensOrcamento() {
         setOrcamento(response.data.orcamento);
         setNome(response.data.orcamento[0].nome);
         setNumeroorcamento(response.data.orcamento[0].id);
+        setSituacao(response.data.orcamento[0].situacao)
         setTotal(response.data.orcamento[0].totalgeral);
       })
       .catch(error => console.error('Erro ao buscar orçamento:', error));
@@ -186,17 +195,11 @@ export default function ListarItensOrcamento() {
       <div className='dashboard-main'>
         <div className='principal'>
           <Head title="Tabela de Orçamentos" />
-          <div className="fechar-container">
-            <div>
-              <abbr title='Imprimir Orçamento'>
-                <FiPrinter className="btn_imprimir" onClick={imprimirTabela} size={34} />
-              </abbr>
-            </div>
-          </div>
           <div className='head_orcamento'>
             <p>Cliente: {nome}</p>
             <p>Orçamento: {numeroorcamento}</p>
             <p>Total: {formatarMoeda(total)}</p>
+            <p>Situação: {situacao}</p>
           </div>
           <div className='head-adicionar-itens'>
             <div className='div_campos'>
@@ -234,17 +237,18 @@ export default function ListarItensOrcamento() {
             </div>
             <div className="fechar-container">
 
-              <div className='btn-fechar'>
-                <li>
-                  <ul>
-                  Imprimir para Despacho
-                  </ul>     
-                </li>         
-            <FiPlusCircle size={24}  onClick={enviardespacho} color="green" />
-            </div>
+              <div onClick={enviardespacho} className='btn-fechar'>
+       
+                 <span>Imprimir para Despacho</span> 
+              
+             </div>
 
-                          <Link to="/listarTabela" className='btn-fechar' style={{ marginRight: '10px' }}>Status</Link>
-                          <Link to="/listarTabela" className='btn-fechar' style={{ marginRight: '10px' }}>Confirma venda</Link>
+  
+                    {
+                    situacao==="ABERTO"?
+                    <Link to="/listarTabela" className='btn-fechar' style={{ marginRight: '10px' }}>Pagar</Link>:""
+                  }
+                    
        </div>
           </div>
           <table>
