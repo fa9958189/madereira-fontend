@@ -8,6 +8,7 @@ import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import api from '../../server/api';
 import { FaPlusCircle } from 'react-icons/fa';
+import { wait } from '@testing-library/user-event/dist/utils';
 
 
 export default function ListarItensOrcamento() {
@@ -41,19 +42,34 @@ export default function ListarItensOrcamento() {
 aportavalor()
  },[id_produto])
   useEffect(() => {
-    mostrarOrcamentos();
-    mostrarOrcamento();
     mostrardados();
+    mostrarOrcamento();
+    mostrarOrcamentos();
+
+    
     
   }, [id]);
-   function aportavalor(){
-    api.get(`/entrada/valorunitario/${id_produto}`)
-    .then(resposta=>{
-      setValor_unitario(resposta.data.valorunitario)
-    })
+  async function aportavalor(){
+  if (id_produto == "undefined" || id_produto == null || id_produto == "") 
+  {
+    console.log ("id do produto nao foi definido")
+  }
+else {
+ await api.get(`/entrada/valorunitario/${id_produto}`)
+  .then(resposta=>{
+    setValor_unitario(resposta.data.valorunitario)
+  })
+  .catch(error=>{
+        alert("Houve um erro ao consulta o valor unitário")
+  })
+  .finally(()=>{
+    alert("Processo finalizado!")
+  })
+
+}
    }
-  function mostrardados() {
-    api.get('/produto')
+ async function mostrardados() {
+  await  api.get('/produto')
       .then(res => {
         setProdutos(res.data.produtos);
       })
@@ -62,8 +78,8 @@ aportavalor()
       });
   }
 
-  function mostrarOrcamento() {
-    api.get(`/orcamento/${id}`)
+async  function mostrarOrcamento() {
+   await api.get(`/orcamento/${id}`)
       .then(response => {
         setOrcamento(response.data.orcamento);
         setNome(response.data.orcamento[0].nome);
@@ -87,8 +103,8 @@ aportavalor()
     window.print();
   };
 
-  const removerItem = (id) => {
-    api.delete(`/itensorcamento/${id}`)
+   const removerItem = async (id) => {
+   await api.delete(`/itensorcamento/${id}`)
       .then(res => {
         if (res.status === 200) {
           console.log(`Item com ID ${id} excluído com sucesso!`);
@@ -109,7 +125,7 @@ aportavalor()
       buttons: [
         {
           label: 'Sim',
-          onClick: () => removerItem(id)
+          onClick: () =>  removerItem(id)
         },
         {
           label: 'Não',
@@ -119,15 +135,16 @@ aportavalor()
     });
   };
 
-  const salvarDados = () => {
+  const salvarDados = async () => {
     if (id_produto === "" || qtde === "" || valor_unitario === "") {
       alert("Há campos vazios");
     } else {
-      api.post('/itensorcamento', dados)
+    await  api.post('/itensorcamento', dados)
         .then(res => {
           if (res.status === 201) {
             console.log(`Item adicionado com sucesso!`);
             mostrarOrcamentos(); // Atualiza a lista após a inserção
+            mostrarOrcamento();
             setId_produto(null);
             setQtde(null);
             setValor_unitario(null);
