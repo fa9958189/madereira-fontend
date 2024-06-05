@@ -4,11 +4,12 @@ import { FiPlusCircle, FiPrinter, FiTrash } from "react-icons/fi";
 import { useParams,useNavigate, Link } from 'react-router-dom';
 import Barrasuperior from '../../componente/Barrasuperior';
 import Head from '../../componente/Head';
+import carregar from '../../assets/img/loading.gif';
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import api from '../../server/api';
-import { FaPlusCircle } from 'react-icons/fa';
-import { wait } from '@testing-library/user-event/dist/utils';
+
+
 
 
 export default function ListarItensOrcamento() {
@@ -19,11 +20,13 @@ export default function ListarItensOrcamento() {
   const [nome, setNome] = useState();
   const [numeroorcamento, setNumeroorcamento] = useState();
   const [total, setTotal] = useState(0);
+  const [tot, setTot] = useState(0);
   const [produtos, setProdutos] = useState([]);
   const [id_produto, setId_produto] = useState();
-  const [qtde, setQtde] = useState();
+  const [qtde, setQtde] = useState(0);
   const [valor_unitario, setValor_unitario] = useState();
   const [situacao, setSituacao] = useState();
+  const [loading, setLoading] = useState(true);
   const dados = {
     id_orcamento: id,
     quantidade: qtde,
@@ -38,6 +41,17 @@ export default function ListarItensOrcamento() {
       currency: 'BRL'
     }).format(valor);
   }
+
+  const load =()=>{
+    return(
+      <>
+        <img src={carregar} />
+      </>
+    )
+  }
+  useEffect(()=>{
+   setTot(valor_unitario*qtde)
+  },[valor_unitario])
  useEffect(()=>{
 aportavalor()
  },[id_produto])
@@ -54,11 +68,12 @@ aportavalor()
   {
     console.log ("id do produto nao foi definido")
   }
-else {
- await api.get(`/entrada/valorunitario/${id_produto}`)
-  .then(resposta=>{
-    setValor_unitario(resposta.data.valorunitario)
-  })
+        else {
+        await api.get(`/entrada/valorunitario/${id_produto}`)
+          .then(resposta=>{
+            setValor_unitario(resposta.data.valorunitario)
+            setTot(valor_unitario*qtde)
+          })
   .catch(error=>{
         alert("Houve um erro ao consulta o valor unitário")
   })
@@ -143,11 +158,9 @@ async  function mostrarOrcamento() {
         .then(res => {
           if (res.status === 201) {
             console.log(`Item adicionado com sucesso!`);
-            mostrarOrcamentos(); // Atualiza a lista após a inserção
             mostrarOrcamento();
-            setId_produto(null);
-            setQtde(null);
-            setValor_unitario(null);
+            mostrarOrcamentos(); // Atualiza a lista após a inserção
+          
           } else {
             console.error("Erro ao adicionar item", res.data);
           }
@@ -248,6 +261,17 @@ async  function mostrarOrcamento() {
               value={valor_unitario}
               onChange={e => setValor_unitario(e.target.value) }
             />
+
+            </div>
+            <div className='div_campos'>
+            <label>Total</label>
+                      <input
+                        placeholder='Total'
+                        type="text"
+                        value={tot}
+                        onChange={e =>setTot(e.target.value) }                       
+                      
+                      />
             </div>
             <div className='div_campos'>
             <FiPlusCircle size={24}  onClick={salvarDados} color="green" />
@@ -280,7 +304,11 @@ async  function mostrarOrcamento() {
               </tr>
             </thead>
             <tbody>
-              {orcamentos.map((orcamento, index) => (
+ 
+              {
+              
+         
+              orcamentos.map((orcamento, index) => (
                 <tr key={orcamento.id}>
                   <td>{index + 1}</td>
                   <td>{orcamento.descricao}</td>
@@ -296,7 +324,11 @@ async  function mostrarOrcamento() {
                     />
                   </td>
                 </tr>
-              ))}
+              ))
+              
+             
+              }
+          
             </tbody>
           </table>
         </div>
