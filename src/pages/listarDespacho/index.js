@@ -83,19 +83,24 @@ export default function ListarDespacho() {
                 <th>Número</th>
                 <th>Produto</th>
                 <th>Quantidade (m)</th>
-
               </tr>
             </thead>
             <tbody>
-             {orcamentos.map((orcamento, index) => (
-                  <tr key={orcamento.id}>
-                    <td>{index + 1}</td>
-                    <td>{orcamento.descricao}</td>
-                    <td>{orcamento.quantidade}</td>
-
-                  </tr>
-                ))}
-
+ 
+              {
+              
+         
+              orcamentos.map((orcamento, index) => (
+                <tr key={orcamento.id}>
+                  <td>{index + 1}</td>
+                  <td>{orcamento.descricao}</td>
+                  <td>{orcamento.quantidade}</td>
+                </tr>
+              ))
+              
+             
+              }
+          
             </tbody>
           </table>
         </div>

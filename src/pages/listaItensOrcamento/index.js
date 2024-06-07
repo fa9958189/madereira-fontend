@@ -51,7 +51,11 @@ export default function ListarItensOrcamento() {
   }
   useEffect(()=>{
    setTot(valor_unitario*qtde)
-  },[valor_unitario])
+  },[valor_unitario,qtde])
+
+
+
+
  useEffect(()=>{
 aportavalor()
  },[id_produto])
