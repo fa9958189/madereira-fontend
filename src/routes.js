@@ -20,7 +20,8 @@ import ListarItensOrcamento from './pages/listaItensOrcamento';
 import ListarDespacho from './pages/listarDespacho'; 
 import CadastroCliente from './pages/cadastroCliente';
 import ListarCliente from './pages/listarCliente';
-import EditarCliente from './pages/editarCliente'; // Adicione o import
+import EditarCliente from './pages/editarCliente'; 
+import ListarCaixa from './pages/listarCaixa'; 
 
 export default function Rotas() {
    return (
@@ -46,6 +47,7 @@ export default function Rotas() {
              <Route path="/listaritensorcamento/:id" element={<ListarItensOrcamento />} /> 
              <Route path="/cadastroCliente" element={<CadastroCliente />} />
              <Route path="/listarCliente" element={<ListarCliente />} />
+             <Route path="/listarCaixa/:id" element={<ListarCaixa />} />
              <Route path="/editarCliente/:id" element={<EditarCliente />} /> {/* Adicione esta linha */}
           </Routes>  
        </BrowserRouter>

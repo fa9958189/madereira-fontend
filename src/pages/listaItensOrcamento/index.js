@@ -291,7 +291,8 @@ async  function mostrarOrcamento() {
   
                     {
                     situacao==="ABERTO"?
-                    <Link to="/listarTabela" className='btn-fechar' style={{ marginRight: '10px' }}>Pagar</Link>:""
+                    
+                    <Link to={`/listarCaixa/${id}`} className='btn-fechar' style={{ marginRight: '10px' }}>Pagar</Link>:""
                   }
                     
        </div>
