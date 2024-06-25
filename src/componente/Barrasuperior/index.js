@@ -33,7 +33,7 @@ export default function Barrasuperior(){
     return(
         <div className="barra">
             <FaReply onClick={retornar} size={24} color='blue' />
-            <h1>Ideal Madeira</h1>
+            <h1 style={{color:"white"}}>Ideal Madeira</h1>
             <FiLogOut onClick={confirmarsaida} size={24} color='red' />
         </div>
     )

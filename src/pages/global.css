@@ -173,6 +173,7 @@ form{
         text-align: center;
         width: 95%;
     }
+  
     
     .Head{
         display: flex;
@@ -325,3 +326,16 @@ form{
 
 }
           
+.container_adicionar{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+
+}
+.container_adicionar > input{
+    width: 50%;
+}
+
+.container_adicionar > select{
+    width: 60%;
+}

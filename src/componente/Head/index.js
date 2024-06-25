@@ -37,7 +37,7 @@ export default function Head({ title, to="" }) {
         <div className="Head">
             <FaAlignJustify className='btn-menu' size={24} color="blue" />
             {to !== "" && <Link to={to} className='btn-novo'>Novo Cadastro</Link>}
-            <h3>{title}</h3>
+            <h3 style={{color:"black"}}>{title}</h3>
         </div>
     );
 }

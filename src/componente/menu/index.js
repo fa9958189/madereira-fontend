@@ -6,7 +6,7 @@ import { FiUsers } from "react-icons/fi"; // Importe o ícone para listar client
 export default function Menu() {
     return (
         <div>
-            <h1>Menu</h1>
+       
             <nav>
                 <Link to="/listausuario" className='link'><FiUser className='icos' />Usuário</Link> {/* User icon */}
                 <Link to="/listarCliente" className='link'><FiUsers className='icos' />Clientes</Link> {/* Cliente icon */}

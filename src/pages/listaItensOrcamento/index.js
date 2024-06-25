@@ -8,6 +8,9 @@ import carregar from '../../assets/img/loading.gif';
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import api from '../../server/api';
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 
@@ -27,6 +30,16 @@ export default function ListarItensOrcamento() {
   const [valor_unitario, setValor_unitario] = useState();
   const [situacao, setSituacao] = useState();
   const [loading, setLoading] = useState(true);
+
+  const [tipo, setTipo] = useState("");
+  const [recebido, setRecebido] = useState(0);
+  const [troco, setTroco] = useState(0);
+  const [situacaoPagamento, setSituacaoPagamento] = useState();
+
+  const [show, setShow] = useState(false);
+  const fechaModal = () => setShow(false);
+  const [showPagar, setShowPagar] = useState(false);
+  const fechaModalPagar = () => setShowPagar(false);
   const dados = {
     id_orcamento: id,
     quantidade: qtde,
@@ -67,6 +80,12 @@ aportavalor()
     
     
   }, [id]);
+  const abrirModal = () =>{
+    setShow(true);
+  }
+  const abrirModalPagar = () =>{
+    setShowPagar(true);
+  }
   async function aportavalor(){
   if (id_produto == "undefined" || id_produto == null || id_produto == "") 
   {
@@ -154,6 +173,11 @@ async  function mostrarOrcamento() {
     });
   };
 
+  const handleRecebidoChange = (e) => {
+    const valorRecebido = parseFloat(e.target.value);
+    setRecebido(valorRecebido);
+    setTroco(valorRecebido - total);
+  }
   const salvarDados = async () => {
     if (id_produto === "" || qtde === "" || valor_unitario === "") {
       alert("Há campos vazios");
@@ -164,6 +188,7 @@ async  function mostrarOrcamento() {
             console.log(`Item adicionado com sucesso!`);
             mostrarOrcamento();
             mostrarOrcamentos(); // Atualiza a lista após a inserção
+            fechaModal();
           
           } else {
             console.error("Erro ao adicionar item", res.data);
@@ -175,56 +200,133 @@ async  function mostrarOrcamento() {
     }
   }
   
-  const inserirItem = () => {
-    confirmAlert({
-      title: 'Inserir Produto no Orçamento',
-      message: (
-        <div>
-          <div>
-           
-            <select className='select-produto' value={id_produto} onChange={e => setId_produto(e.target.value)}>
-              <option value="">Selecione um produto</option>
-              {produtos.map(produto => (
-                <option key={produto.id} value={produto.id}>
-                  {produto.descricao}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div>
-            <input 
-              placeholder='Qtd em metros' 
-              value={qtde}
-              onChange={e => setQtde(e.target.value)}
-            />
-            <input 
-              placeholder='Valor unitário' 
-              value={valor_unitario}
-              onChange={e => setValor_unitario(e.target.value)}
-            />
-          </div>
-        </div>
-      ),
-      buttons: [
-        {
-          label: 'Adicionar',
-          onClick: () => {
-            salvarDados();
+  const salvarPagamento = async () => {
+    const pagamento ={
+      recebido,
+      troco,
+      situacaoPagamento
+    }
+
+      await api.post('/itensorcamento/pagamento', pagamento)
+        .then(res => {
+          if (res.status === 201) {
+            console.log(`Item adicionado com sucesso!`);
+            mostrarOrcamento();
+          } else {
+            console.error("Erro ao adicionar item", res.data);
           }
-        },
-        {
-          label: 'Cancelar',
-          onClick: () => console.log('Inserção cancelada')
-        }
-      ]
-    });
-  };
+        })
+        .catch(error => {
+          console.error("Erro ao adicionar item", error);
+        });
+    }
+  
+ 
   const enviardespacho=()=>{
     navigete(`/listarDespacho/${id}`)
   }
 
   return (
     <div className="dashboard-container">
+                            <Modal show={showPagar} onHide={fechaModalPagar}>
+                              <Modal.Header closeButton>
+                                  <Modal.Title>Pagamento</Modal.Title>
+                                      </Modal.Header>
+                                      <Modal.Body>
+                                          <div>
+                                          <div className='container_adicionar'>
+                                            <label> Tipo de Pagamento</label>
+                                          <select onChange={e => setTipo(e.target.value)}>
+                                          <option value="">Tipo de Pagamento</option>
+                                          <option value="Cartão Debito">Cartão Debito</option>
+                                          <option value="Cartão Crédito">Cartão Crédito</option>
+                                          <option value="A vista">À vista</option>
+                                          <option value="A prazo">À prazo</option>
+                                        </select>
+                                        </div>
+                                        <div className='container_adicionar'>
+                                        <label>Valor Recebido</label>
+                                        <input
+                                          type="number"
+                                          placeholder='Valor Recebido'
+                                          value={recebido}
+                                          
+                                        />
+                                        </div>
+                                        <div className='container_adicionar'>
+                                              <label>Troco</label>
+                                          <input
+                                            type="text"
+                                            placeholder='Troco'
+                                            value={formatarMoeda(troco)}
+                                            readOnly
+                                          />
+                                    
+                                    </div>
+                                        <div className='container_adicionar'>                                        <button class='btn btn-success' onClick={salvarPagamento}>Salvar Pagamento</button>
+                                        </div>
+                                          </div>
+
+                                      </Modal.Body>
+                            </Modal>
+
+                      <Modal show={show} onHide={fechaModal}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Adicionar Produto</Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body>
+                                <div>
+                                  <div className='container_adicionar'>
+                                  <label>Selecionar um Produto</label>
+                                  <select className='select-produto' value={id_produto} 
+                                   onChange={e => setId_produto(e.target.value)}>
+                                  <option value="">Selecione um produto</option>
+                               {produtos.map(produto => (
+                              <option key={produto.id} value={produto.id}>
+                            {produto.descricao}
+                          </option>
+                          
+                           ))}
+                            </select>
+                            </div>
+                            <div className='container_adicionar'>
+                         <label>Quantidade</label>
+                           <input 
+                            placeholder='Qtd em metros' 
+                            value={qtde}
+                            type="text"
+                            onChange={e => setQtde(e.target.value)}
+                          />
+                          </div>
+                          <div className='container_adicionar'>
+                        <label>Valor Unitário</label>
+                        <input 
+                          placeholder='Valor unitário' 
+                          type="text"
+                          value={valor_unitario}
+                          onChange={e => setValor_unitario(e.target.value) }
+                        />
+                        </div>
+                         <div className='container_adicionar'>
+                       <label>Total</label>
+                            <input
+                              placeholder='Total'
+                              type="text"
+                              value={tot}
+                              onChange={e =>setTot(e.target.value) }                       
+                      
+                      />  
+                      </div> 
+                      <div className='container_adicionar'>          
+                          
+                            <button type="button" onClick={salvarDados} class="btn btn-success">Salvar</button>
+                           
+                    </div>
+
+
+                            </div>
+                            </Modal.Body>
+                    </Modal>
       <Barrasuperior />
       <div className='dashboard-main'>
         <div className='principal'>
@@ -234,69 +336,16 @@ async  function mostrarOrcamento() {
             <p>Orçamento: {numeroorcamento}</p>
             <p>Total: {formatarMoeda(total)}</p>
             <p>Situação: {situacao}</p>
-          </div>
-          <div className='head-adicionar-itens'>
-            <div className='div_campos'>
-              {id_produto}
-              <label>Selecionar um Produto</label>
-                  <select className='select-produto' value={id_produto} onChange={e => setId_produto(e.target.value)}>
-                        <option value="">Selecione um produto</option>
-                        {produtos.map(produto => (
-                          <option key={produto.id} value={produto.id}>
-                            {produto.descricao}
-                          </option>
-                        ))}
-                      </select>
-            </div>
-            <div className='div_campos'>
-              <label>Quantidade</label>
-            <input 
-                  placeholder='Qtd em metros' 
-                  value={qtde}
-                  type="text"
-                  onChange={e => setQtde(e.target.value)}
-                />
-            </div>
-            <div className='div_campos'>
-              <label>Valor Unitário</label>
-            <input 
-              placeholder='Valor unitário' 
-              type="text"
-              value={valor_unitario}
-              onChange={e => setValor_unitario(e.target.value) }
-            />
-
-            </div>
-            <div className='div_campos'>
-            <label>Total</label>
-                      <input
-                        placeholder='Total'
-                        type="text"
-                        value={tot}
-                        onChange={e =>setTot(e.target.value) }                       
-                      
-                      />
-            </div>
-            <div className='div_campos'>
-            <FiPlusCircle size={24}  onClick={salvarDados} color="green" />
-            </div>
-            <div className="fechar-container">
-
-              <div onClick={enviardespacho} className='btn-fechar'>
-       
-                 <span>Imprimir para Despacho</span> 
-              
-             </div>
-
-  
-                    {
+            <button type="button" onClick={abrirModal}  class="btn btn-primary">Adicionar</button>
+            <button type="button" onClick={enviardespacho}   class="btn btn-secondary">Imprimir/Despachar</button>
+            <button type="button" onClick={abrirModalPagar} class="btn btn-info">Pagamento</button>
+            {
                     situacao==="ABERTO"?
                     
                     <Link to={`/listarCaixa/${id}`} className='btn-fechar' style={{ marginRight: '10px' }}>Pagar</Link>:""
                   }
-                    
-       </div>
           </div>
+
           <table>
             <thead>
               <tr>
