@@ -27,6 +27,7 @@ export default function ListarItensOrcamento() {
   const [valor_unitario, setValor_unitario] = useState();
   const [situacao, setSituacao] = useState();
   const [loading, setLoading] = useState(true);
+  const [parcelas,setParcelas] = useState([])
 
   const [tipo, setTipo] = useState("");
   const [recebido, setRecebido] = useState(0);
@@ -109,6 +110,7 @@ export default function ListarItensOrcamento() {
         console.error('Erro ao buscar produtos:', error);
       });
   }
+
 
   async function mostrarOrcamento() {
     await api.get(`/orcamento/${id}`)
@@ -200,6 +202,13 @@ export default function ListarItensOrcamento() {
  const gerarParcelas = () =>{
 
  }
+
+ const lista =()=>{
+  api.get("/parcela")
+  .then((resposta)=>{
+        setParcelas(resposta.data.parcelas)
+  })
+ }
   const salvarPagamento = async () => {
     const pagamento = {
       recebido,
@@ -275,9 +284,15 @@ export default function ListarItensOrcamento() {
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td>1</td> <td>2</td> <td>200</td> <td>26/07/2024</td>
-                      </tr>
+                    
+                    {parcelas.map(parcela => (
+                                    <tr key={parcela.quantidadeparcelas}>
+                                        <td>{parcela.numeroorcamento}</td>
+                                        <td>{parcela.valorparcela}</td>
+                                        <td>{parcela.cpf}</td>
+                                        <td>{parcela.cep}</td>
+                                    </tr>
+                                ))}
                     </tbody>
                   </table>
                 </div>
