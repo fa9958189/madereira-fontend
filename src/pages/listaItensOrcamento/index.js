@@ -238,9 +238,12 @@ export default function ListarItensOrcamento() {
     <div className="dashboard-container">
       <Modal show={showPagar} onHide={fechaModalPagar}>
         <Modal.Header closeButton>
-          <Modal.Title>Pagamento</Modal.Title>
+          <Modal.Title>Pagamento </Modal.Title>
         </Modal.Header>
         <Modal.Body>
+        <div className='head_orcamento'>
+            <p>Total: {formatarMoeda(total)}</p>
+          </div>
           <div>
             <div className='container_adicionar'>
               {tipo}

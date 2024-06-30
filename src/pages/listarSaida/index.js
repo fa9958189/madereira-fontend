@@ -58,6 +58,13 @@ export default function Listasaida() {
     });
   };
 
+  function formatDate(date) {
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;
+  }
+
   return (
     <div className="dashboard-container">
       <Barrasuperior />
@@ -87,7 +94,7 @@ export default function Listasaida() {
                   <td>{saida.descricao}</td>
                   <td>{saida.qtde}</td> {/* Modificação para representar a quantidade em metros */}
                   <td>{saida.valor_unitario}</td>
-                  <td>{saida.data_saida}</td>
+                  <td>{formatDate(new Date(saida.data_saida))}</td>
                   <td className='botoes'>
                     <FiTrash
                       size={18}

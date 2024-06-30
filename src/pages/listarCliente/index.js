@@ -26,6 +26,16 @@ export default function ListarCliente() {
             });
     }
 
+
+    function formatDate(date) {
+        const day = date.getDate().toString().padStart(2, '0');
+        const month = (date.getMonth() + 1).toString().padStart(2, '0');
+        const year = date.getFullYear();
+        return `${day}/${month}/${year}`;
+      }
+
+
+
     const removerCliente = (id_cliente) => {
         api.delete(`/cliente/${id_cliente}`)
             .then(res => {
@@ -99,7 +109,7 @@ export default function ListarCliente() {
                                         <td>{cliente.cidade}</td>
                                         <td>{cliente.uf}</td>
                                         <td>{cliente.contato}</td>
-                                        <td>{cliente.data}</td>
+                                        <td>{formatDate(new Date(cliente.data))}</td>
                                         <td className='botoes'>
                                             <Link to={`/editarcliente/${cliente.id_cliente}`}>
                                                 <FiEdit size={18} color='yellow' />

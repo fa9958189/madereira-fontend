@@ -58,6 +58,13 @@ function formatarMoeda(valor) {
     });
   };
 
+  function formatDate(date) {
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;
+  }
+
   return (
     <div className="dashboard-container">
                         <Barrasuperior />
@@ -87,7 +94,7 @@ function formatarMoeda(valor) {
                 <td>{enpr.descricao}</td>
                 <td>{enpr.qtde}</td>
                 <td>{formatarMoeda(enpr.valor_unitario)}</td>
-                <td>{enpr.data_entrada}</td>
+                <td>{formatDate(new Date(enpr.data_entrada))}</td>
                 <td className='botoes'>
                   <FiTrash
                     size={18}
