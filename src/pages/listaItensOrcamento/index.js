@@ -101,6 +101,7 @@ export default function ListarItensOrcamento() {
     }
   }
 
+
   async function mostrardados() {
     await api.get('/produto')
       .then(res => {
@@ -209,26 +210,31 @@ export default function ListarItensOrcamento() {
         setParcelas(resposta.data.parcelas)
   })
  }
-  const salvarPagamento = async () => {
-    const pagamento = {
-      recebido,
-      troco,
-      situacaoPagamento
-    }
 
-    await api.post('/itensorcamento/pagamento', pagamento)
-      .then(res => {
-        if (res.status === 201) {
-          console.log(`Item adicionado com sucesso!`);
-          mostrarOrcamento();
-        } else {
-          console.error("Erro ao adicionar item", res.data);
-        }
-      })
-      .catch(error => {
-        console.error("Erro ao adicionar item", error);
-      });
-  }
+
+
+                              const salvarPagamento = async () => {
+                                const pagamento = {
+                                    recebido,
+                                    troco,
+                                    situacaoPagamento,
+                                    id_orcamento: id // Inclua o ID do orçamento atual
+                                };
+
+                                await api.post('/itensorcamento/pagamento', pagamento)
+                                    .then(res => {
+                                        if (res.status === 201) {
+                                            console.log(`Pagamento registrado e estoque atualizado com sucesso!`);
+                                            mostrarOrcamento();
+                                        } else {
+                                            console.error("Erro ao registrar pagamento", res.data);
+                                        }
+                                    })
+                                    .catch(error => {
+                                        console.error("Erro ao registrar pagamento", error);
+                                    });
+                              };
+
 
   const enviardespacho = () => {
     navigete(`/listarDespacho/${id}`)
@@ -301,29 +307,33 @@ export default function ListarItensOrcamento() {
                 </div>
               </div>
             ) : (
-              <div className='container-avista'>
-                <div className='container_adicionar'>
-                  <label>Valor Recebido</label>
-                  <input
-                    type="text"
-                    placeholder='Valor Recebido'
-                    onChange={e => handleRecebidoChange(e.target.value)}
-                    value={recebido}
-                  />
-                </div>
-                <div className='container_adicionar'>
-                  <label>Troco</label>
-                  <input
-                    type="text"
-                    placeholder='Troco'
-                    value={formatarMoeda(troco)}
-                    readOnly
-                  />
-                </div>
-                <div className='container_adicionar'>
-              <button class='btn btn-success' onClick={salvarPagamento}>Salvar Pagamento</button>
-            </div>
-              </div>
+
+                                          <div className='container-avista'>
+                                          <div className='container_adicionar'>
+                                              <label>Valor Recebido</label>
+                                              <input
+                                                  type="number"
+                                                  inputMode="numeric"
+                                                  pattern="[0-9]*"
+                                                  placeholder='Valor Recebido'
+                                                  onChange={e => handleRecebidoChange(e.target.value)}
+                                                  value={recebido}
+                                              />
+                                          </div>
+                                          <div className='container_adicionar'>
+                                              <label>Troco</label>
+                                              <input
+                                                  type="text"
+                                                  placeholder='Troco'
+                                                  value={formatarMoeda(troco)}
+                                                  readOnly
+                                              />
+                                          </div>
+                                          <div className='container_adicionar'>
+                                              <button class='btn btn-success' onClick={salvarPagamento}>Salvar Pagamento</button>
+                                          </div>
+                                      </div>
+                                      
               
             )}
 
